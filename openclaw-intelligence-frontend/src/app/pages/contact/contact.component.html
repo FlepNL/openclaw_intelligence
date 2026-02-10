@@ -1,0 +1,99 @@
+<nav class="nav scrolled"><div class="nav__inner"><a routerLink="/" class="nav__logo"><div class="nav__logo-icon">OC</div> OpenClaw Intelligence</a><div class="nav__links"><a routerLink="/" class="nav__link">Home</a><a routerLink="/services" class="nav__link">Services</a><a routerLink="/saas" class="nav__link">SaaS Platform</a><a routerLink="/pricing" class="nav__link">Pricing</a><a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a><a routerLink="/contact" class="nav__link active">Contact</a><a routerLink="/contact" class="nav__cta">Get Started →</a></div><button class="nav__mobile" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+<section class="section" style="padding-top:var(--space-4xl);margin-top:80px;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl);align-items:start;">
+      <!-- LEFT: Info -->
+      <div class="fade-up">
+        <span class="label">Get in Touch</span>
+        <h1 style="margin:var(--space-md) 0 var(--space-lg);">Let's Build Your<br><span class="display" style="color:var(--accent);">Autonomous Business</span></h1>
+        <p style="font-size:var(--text-lg);color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-2xl);">
+          Book a free 30-minute consultation. We'll identify your top automation opportunities and estimate the ROI — no commitment required.
+        </p>
+        
+        <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+          <div style="display:flex;gap:var(--space-md);align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--accent-subtle);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;">📧</div>
+            <div>
+              <div style="font-weight:600;margin-bottom:2px;">Email</div>
+              <div style="color:var(--text-secondary);font-size:var(--text-sm);">hello@openclawIntelligence.com</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-md);align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--phosphor-dim);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;">📞</div>
+            <div>
+              <div style="font-weight:600;margin-bottom:2px;">Phone</div>
+              <div style="color:var(--text-secondary);font-size:var(--text-sm);">+1 (555) 0142 · Mon–Fri 9am–6pm EST</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-md);align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--signal-dim);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;">💬</div>
+            <div>
+              <div style="font-weight:600;margin-bottom:2px;">Live Chat</div>
+              <div style="color:var(--text-secondary);font-size:var(--text-sm);">Click the chat icon — our AI assistant responds instantly, humans within 2 hours.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-md);align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--accent-subtle);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;">📍</div>
+            <div>
+              <div style="font-weight:600;margin-bottom:2px;">Office</div>
+              <div style="color:var(--text-secondary);font-size:var(--text-sm);">Remote-first · New York · Amsterdam · Singapore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="fade-up" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-2xl);">
+        <h3 style="margin-bottom:var(--space-xl);">Book Your Consultation</h3>
+        <form (ngSubmit)="submit()" *ngIf="!success">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="Jane" name="firstName" [(ngModel)]="form.firstName" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Smith" name="lastName" [(ngModel)]="form.lastName" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Work Email</label>
+            <input type="email" class="form-input" placeholder="jane@company.com" name="email" [(ngModel)]="form.email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company Name</label>
+            <input type="text" class="form-input" placeholder="Acme Corp" name="company" [(ngModel)]="form.company">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company Size</label>
+            <select class="form-select" name="size" [(ngModel)]="form.size">
+              <option value="">Select...</option>
+              <option>Solo / Freelancer</option>
+              <option>2–10 employees</option>
+              <option>11–50 employees</option>
+              <option>51–200 employees</option>
+              <option>200+ employees</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">What would you like to automate?</label>
+            <textarea class="form-textarea" name="message" [(ngModel)]="form.message" placeholder="Tell us about your biggest pain points — email overload, manual reporting, slow proposal turnaround, customer service bottlenecks..." required></textarea>
+          </div>
+          <div *ngIf="error" style="color:var(--accent);margin-bottom:var(--space-md);font-size:var(--text-sm);">{{ error }}</div>
+          <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;" [disabled]="submitting">{{ submitting ? 'Sending...' : 'Book Free Consultation' }} <span class="arrow">→</span></button>
+        </form>
+        <div *ngIf="success" style="text-align:center;padding:3rem">
+          <div style="font-size:48px;margin-bottom:1rem">✓</div>
+          <h3>Thank you!</h3>
+          <p style="color:var(--text-secondary);margin-top:0.5rem">We will be in touch within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><div class="nav__logo-icon">OC</div> OpenClaw Intelligence</div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p></div><div><div class="footer__col-title">Company</div><a routerLink="/services" class="footer__link">Services</a><a routerLink="/saas" class="footer__link">SaaS Platform</a><a routerLink="/pricing" class="footer__link">Pricing</a><a routerLink="/contact" class="footer__link">Contact</a></div><div><div class="footer__col-title">Resources</div><a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a><a href="#" class="footer__link">Blog</a><a href="#" class="footer__link">API Docs</a></div><div><div class="footer__col-title">Legal</div><a href="#" class="footer__link">Privacy Policy</a><a href="#" class="footer__link">Terms of Service</a><a href="#" class="footer__link">GDPR</a></div></div><div class="footer__bottom"><span>© 2026 OpenClaw Intelligence. All rights reserved.</span><span>www.OpenClawIntelligence.com</span></div></div></footer>
+
+<button class="chatbot-toggle" aria-label="Open chat">💬</button>
+<div class="chatbot-window"><div class="chatbot-header"><div class="chatbot-header__title"><span class="chatbot-header__dot"></span> OCI Assistant</div><button class="chatbot-close" style="color:var(--text-muted);font-size:18px;">✕</button></div><div class="chatbot-body"><div class="chat-msg chat-msg--bot">Need help before booking? Ask me about our services, pricing, or what to expect in a consultation.</div></div><div class="chatbot-input"><input type="text" placeholder="Ask a question..."><button>Send</button></div></div>

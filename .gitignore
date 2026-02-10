@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+.env
+.env.*
+/dist
+/openclaw-intelligence-frontend/dist
+/backend/node_modules
+/openclaw-intelligence-frontend/node_modules
