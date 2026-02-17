@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b5a"/>
+      <stop offset="100%" stop-color="#e63a28"/>
+    </linearGradient>
+    <linearGradient id="p" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e5a0"/>
+      <stop offset="100%" stop-color="#00c890"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0a0a0f"/>
+  <!-- Simplified claw — 3 bold strokes -->
+  <path d="M 16 18 C 19 16, 27 14, 31 20 C 35 26, 34 32, 32 36" stroke="url(#c)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M 32 10 C 36 9, 42 14, 43 22 C 44 30, 40 38, 34 42" stroke="url(#c)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M 48 18 C 50 22, 50 30, 47 36 C 44 42, 39 45, 35 45" stroke="url(#c)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <!-- Intelligence node -->
+  <circle cx="33" cy="44" r="4.5" fill="url(#p)"/>
+  <circle cx="33" cy="44" r="2" fill="#0a0a0f"/>
+  <!-- Neural dots -->
+  <circle cx="25" cy="54" r="2" fill="url(#p)" opacity="0.6"/>
+  <circle cx="41" cy="54" r="2" fill="url(#p)" opacity="0.6"/>
+  <line x1="33" y1="48" x2="25" y2="54" stroke="url(#p)" stroke-width="1" opacity="0.4"/>
+  <line x1="33" y1="48" x2="41" y2="54" stroke="url(#p)" stroke-width="1" opacity="0.4"/>
+</svg>
