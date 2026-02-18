@@ -1,27 +1,28 @@
-<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/login" class="nav__cta">Get Started →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-dashboard-page">
+<div class="oci-dashboard-page">
 <div class="layout">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <a class="sb-logo" routerLink="/dashboard">
       <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
-      Open<span>Claw</span>
+      Open<span style="color:var(--coral)">Claw</span> Intelligence
     </a>
     <div class="sb-section">
       <div class="sb-label">Overview</div>
-      <a class="sb-link active" onclick="showTab('overview')"><span class="icon">📊</span> Dashboard</a>
-      <a class="sb-link" onclick="showTab('services')"><span class="icon">⚡</span> Services <span class="badge">2</span></a>
-      <a class="sb-link" onclick="showTab('meetings')"><span class="icon">📅</span> Meetings <span class="badge">1</span></a>
+      <a class="sb-link active" onclick="showTab('overview')">Dashboard</a>
+      <a class="sb-link" onclick="showTab('services')">Services <span class="badge">2</span></a>
+      <a class="sb-link" onclick="showTab('meetings')">Meetings <span class="badge">1</span></a>
     </div>
     <div class="sb-section">
       <div class="sb-label">Account</div>
-      <a class="sb-link" onclick="showTab('profile')"><span class="icon">👤</span> Profile</a>
-      <a class="sb-link" onclick="showTab('billing')"><span class="icon">💳</span> Billing & Payments</a>
-      <a class="sb-link" onclick="showTab('settings')"><span class="icon">⚙️</span> Settings</a>
+      <a class="sb-link" onclick="showTab('profile')">Profile</a>
+      <a class="sb-link" onclick="showTab('billing')">Billing & Payments</a>
+      <a class="sb-link" onclick="showTab('settings')">Settings</a>
     </div>
     <div class="sb-section">
       <div class="sb-label">Support</div>
-      <a class="sb-link" href="#"><span class="icon">📖</span> Documentation</a>
-      <a class="sb-link" href="#"><span class="icon">💬</span> Contact Support</a>
+      <a class="sb-link" onclick="showTab('knowledge-base')">Knowledge Base</a>
+      <a class="sb-link" href="#">Documentation</a>
+      <a class="sb-link" href="#">Contact Support</a>
     </div>
     <div class="sb-user">
       <div class="sb-avatar">PV</div>
@@ -101,6 +102,181 @@
             <tr><td><strong>Onboarding Call</strong></td><td>Jan 16, 2026</td><td>09:00 CET</td><td>Marcus L.</td><td><span class="status status--completed">Completed</span></td><td><a href="#" style="color:var(--t3);text-decoration:none;font-size:12px">Recording</a></td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+
+    <!-- ===== KNOWLEDGE BASE TAB ===== -->
+    <div class="tab-page" id="tab-knowledge-base">
+      <div class="kb-root">
+<!-- === HERO === -->
+  <section class="hero">
+    <div class="hdr-badge">Knowledge Base — AI Model Guide • 18 Feb 2026</div>
+    <div class="hero-lbl">Intelligence Compendium</div>
+    <h1>Which AI Model Should <em>You</em> Use?</h1>
+    <p>The definitive comparison of 25 large language models — rated across 10 dimensions including pricing. Built for founders, operators, and autonomous business builders.</p>
+    <div class="hero-meta">
+      <span>25 Models</span><span>10 Scoring Categories</span><span>Updated 18 Feb 2026</span><span>By OpenClaw Intelligence</span>
+    </div>
+  </section>
+
+  <!-- === CONTROLS === -->
+  <div class="ctl">
+    <div class="search-wrap"><input class="search" type="text" id="q" placeholder="Search models by name, provider, or capability…"></div>
+
+    <span class="fg-lbl">Provider</span>
+    <div class="fr" id="pf">
+      <button class="fb on" data-v="all">All</button>
+      <button class="fb" data-v="Anthropic">Anthropic</button>
+      <button class="fb" data-v="OpenAI">OpenAI</button>
+      <button class="fb" data-v="Google">Google</button>
+      <button class="fb" data-v="Meta">Meta</button>
+      <button class="fb" data-v="Mistral">Mistral</button>
+      <button class="fb" data-v="Alibaba">Alibaba (Qwen)</button>
+      <button class="fb" data-v="DeepSeek">DeepSeek</button>
+      <button class="fb" data-v="xAI">xAI</button>
+      <button class="fb" data-v="Cohere">Cohere</button>
+      <button class="fb" data-v="Microsoft">Microsoft</button>
+    </div>
+
+    <span class="fg-lbl">Type</span>
+    <div class="fr" id="tf">
+      <button class="fb on" data-v="all">All</button>
+      <button class="fb" data-v="proprietary">Proprietary</button>
+      <button class="fb" data-v="open">Open-Weight</button>
+      <button class="fb" data-v="frontier">Frontier</button>
+      <button class="fb" data-v="efficient">Efficient</button>
+      <button class="fb" data-v="specialist">Specialist</button>
+      <button class="fb" data-v="reasoning">Reasoning</button>
+    </div>
+
+    <span class="fg-lbl">Price Tier</span>
+    <div class="fr" id="xf">
+      <button class="fb on" data-v="all">All Tiers</button>
+      <button class="fb" data-v="free">Free / Open-Weight</button>
+      <button class="fb" data-v="budget">Budget (&lt;$1/M in)</button>
+      <button class="fb" data-v="mid">Mid-Range ($1–$3/M)</button>
+      <button class="fb" data-v="premium">Premium ($3+/M)</button>
+    </div>
+
+    <div style="margin-top:14px">
+      <span class="fg-lbl">Sort by</span>
+      <div class="sr" id="srt">
+        <button class="sb on" data-s="overall">Overall</button>
+        <button class="sb" data-s="reasoning">Reasoning</button>
+        <button class="sb" data-s="coding">Coding</button>
+        <button class="sb" data-s="office">Office</button>
+        <button class="sb" data-s="math">Math</button>
+        <button class="sb" data-s="vision">Vision</button>
+        <button class="sb" data-s="creative_media">Img/Video</button>
+        <button class="sb" data-s="fast_tasks">Fast Tasks</button>
+        <button class="sb" data-s="marketing">Marketing</button>
+        <button class="sb" data-s="writing">Writing</button>
+        <button class="sb" data-s="pricing">💰 Pricing</button>
+      </div>
+    </div>
+
+    <div class="vc">
+      <div class="rc" id="rcnt">Showing 25 models</div>
+      <div class="vt">
+        <button class="vb on" data-w="cards">Cards</button>
+        <button class="vb" data-w="table">Table</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === CARD VIEW === -->
+  <div class="grid act" id="cv"></div>
+
+  <!-- === TABLE VIEW === -->
+  <div class="tw" id="tv">
+    <table class="ct"><thead><tr>
+      <th>Model</th><th>Reason</th><th>Code</th><th>Office</th><th>Math</th><th>Vision</th><th>Img/Vid</th><th>Fast</th><th>Mktg</th><th>Write</th><th>💰Price</th><th>Overall</th>
+    </tr></thead><tbody id="tb"></tbody></table>
+  </div>
+
+  <!-- === RECOMMENDATIONS === -->
+  <section class="sec">
+    <h2>⚡ Quick-Pick Recommendations</h2>
+    <div class="rgrid">
+      <div class="rc2"><div class="ri">🧠</div><h3>Deep Reasoning</h3><div class="tp">→ GPT-5.2 Thinking / Pro</div><div class="ru">Also: Claude Opus 4.6, Grok 4.1 Think, DeepSeek R1</div></div>
+      <div class="rc2"><div class="ri">💻</div><h3>Coding</h3><div class="tp">→ Claude Sonnet 4.6</div><div class="ru">Also: Devstral 2, GPT-5.2-Codex, Claude Opus 4.6</div></div>
+      <div class="rc2"><div class="ri">📋</div><h3>Office Work</h3><div class="tp">→ GPT-5.2 Thinking</div><div class="ru">Also: Claude Sonnet 4.6, Gemini 3 Pro, Mistral Medium 3.1</div></div>
+      <div class="rc2"><div class="ri">📐</div><h3>Mathematics</h3><div class="tp">→ GPT-5.2 Pro (100% AIME)</div><div class="ru">Also: DeepSeek R1, Qwen 3 235B, Gemini 3 Pro</div></div>
+      <div class="rc2"><div class="ri">👁️</div><h3>Vision</h3><div class="tp">→ Gemini 3 Pro</div><div class="ru">Also: Gemini 3 Flash, Claude Sonnet 4.6, GPT-5.2</div></div>
+      <div class="rc2"><div class="ri">🎨</div><h3>Image & Video</h3><div class="tp">→ GPT-5.2 (DALL·E / Sora)</div><div class="ru">Also: Gemini 3 Pro (Veo 3), Grok 4.1 (Imagine)</div></div>
+      <div class="rc2"><div class="ri">⚡</div><h3>Fast Tasks</h3><div class="tp">→ Gemini 3 Flash</div><div class="ru">Also: Claude Haiku 4.5, GPT-5.2 Instant, Mistral Small 3.2</div></div>
+      <div class="rc2"><div class="ri">📣</div><h3>Marketing</h3><div class="tp">→ Claude Sonnet 4.6</div><div class="ru">Also: GPT-5.2 Thinking, Grok 4.1, Gemini 3 Pro</div></div>
+      <div class="rc2"><div class="ri">✍️</div><h3>Writing</h3><div class="tp">→ Claude Opus 4.6</div><div class="ru">Also: Claude Sonnet 4.6, Grok 4.1, GPT-5.2 Thinking</div></div>
+      <div class="rc2"><div class="ri">💰</div><h3>Best Value Overall</h3><div class="tp">→ Gemini 3 Flash ($0.50/M)</div><div class="ru">Also: DeepSeek V3.2, Qwen 3 30B-A3B, Devstral 2</div></div>
+    </div>
+  </section>
+
+  <!-- === SCORING METHODOLOGY === -->
+  <section class="sec">
+    <h2>📊 Scoring Methodology — 10 Categories</h2>
+    <div class="ggrid">
+      <div class="gc"><h3>🧠 Deep Reasoning</h3><p>Multi-step logic, complex decomposition, chain-of-thought coherence. Based on GPQA Diamond, ARC-AGI, ZebraLogic, LMArena Elo.</p></div>
+      <div class="gc"><h3>💻 Coding</h3><p>Code generation, debugging, multi-file refactoring, agentic coding. Based on SWE-Bench Verified, LiveCodeBench, HumanEval, Terminal-Bench.</p></div>
+      <div class="gc"><h3>📋 Office Work</h3><p>Planning, spreadsheets, slides, workflows, coordination. Based on GDPval (44 occupations), Arena-Hard, and practical assessment.</p></div>
+      <div class="gc"><h3>📐 Mathematics</h3><p>Arithmetic through formal proofs and competition math. Based on MATH-500, AIME 2024/2025, GSM8K, CodeForces Elo.</p></div>
+      <div class="gc"><h3>👁️ Vision</h3><p>Image understanding, charts, OCR, visual QA, multimodal reasoning. Based on MMMU-Pro, MathVista, DocVQA, ChartQA.</p></div>
+      <div class="gc"><h3>🎨 Image & Video</h3><p>Native generation for images, video, editing. Rated on availability, quality, prompt adherence. Text-only models on creative direction ability.</p></div>
+      <div class="gc"><h3>⚡ Fast Tasks</h3><p>Email triage, quick lookups, customer responses. Prioritizes latency, cost-efficiency, throughput for high-volume operations.</p></div>
+      <div class="gc"><h3>📣 Marketing</h3><p>Blog posts, product copy, ad copy, SEO content, campaigns. Evaluates creativity, brand voice, strategy awareness.</p></div>
+      <div class="gc"><h3>✍️ Insightful Writing</h3><p>Customer emails, thought leadership, nuanced communication, editorial. Evaluates depth, tonal precision, emotional intelligence.</p></div>
+      <div class="gc"><h3>💰 Pricing Value</h3><p>Cost-efficiency relative to capability. 10 = free/open-weight, 9 = very cheap API, 7 = good value, 5 = moderate, 3 = expensive, 1 = premium. Factors in token costs, open-weight availability, hosting.</p></div>
+    </div>
+  </section>
+
+  <!-- === SCORE SCALE === -->
+  <section class="sec">
+    <h2>🎯 Score Scale</h2>
+    <div class="scale-grid">
+      <div class="scale-item"><span class="ts sc-10">10</span><span>Best-in-class / Free</span></div>
+      <div class="scale-item"><span class="ts sc-9">9</span><span>Exceptional / Very cheap</span></div>
+      <div class="scale-item"><span class="ts sc-8">8</span><span>Excellent / Budget</span></div>
+      <div class="scale-item"><span class="ts sc-7">7</span><span>Very Good / Value</span></div>
+      <div class="scale-item"><span class="ts sc-6">6</span><span>Good / Moderate</span></div>
+      <div class="scale-item"><span class="ts sc-5">5</span><span>Adequate / Mid-range</span></div>
+      <div class="scale-item"><span class="ts sc-4">4</span><span>Below Avg / Pricey</span></div>
+      <div class="scale-item"><span class="ts sc-3">3</span><span>Weak / Expensive</span></div>
+      <div class="scale-item"><span class="ts sc-2">2</span><span>Poor / Very expensive</span></div>
+      <div class="scale-item"><span class="ts sc-1">1</span><span>N/A / Premium only</span></div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />
+  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Company</div>
+        <a routerLink="/services" class="footer__link">Services</a>
+        <a routerLink="/saas" class="footer__link">SaaS Platform</a>
+        <a routerLink="/pricing" class="footer__link">Pricing</a>
+        <a routerLink="/contact" class="footer__link">Contact</a>
+      </div>
+      <div>
+        <div class="footer__col-title">Resources</div>
+        <a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a>
+        <a href="#" class="footer__link">Blog</a>
+        <a href="#" class="footer__link">Case Studies</a>
+        <a href="#" class="footer__link">API Docs</a>
+      </div>
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <a href="#" class="footer__link">Privacy Policy</a>
+        <a href="#" class="footer__link">Terms of Service</a>
+        <a href="#" class="footer__link">Cookie Policy</a>
+        <a href="#" class="footer__link">GDPR</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>
+      <span>www.OpenClawIntelligence.com</span>
+    </div>
+  </div>
+</footer>
       </div>
     </div>
 

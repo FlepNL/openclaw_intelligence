@@ -54,6 +54,14 @@ export class GetStartedComponent implements AfterViewInit {
         if (sumDate) sumDate.textContent = dateTxt;
         if (sumEmail) sumEmail.textContent = email || '—';
         if (sumTotal) sumTotal.textContent = sel.svcPrice;
+
+        const isFree = sel.svc === 'discovery' || String(sel.svcPrice).toLowerCase() === 'free';
+        const paymentMethods = document.getElementById('paymentMethods');
+        const cardFields = document.getElementById('cardFields');
+        const billingSection = document.getElementById('billingSection');
+        if (paymentMethods) paymentMethods.style.display = isFree ? 'none' : '';
+        if (cardFields) cardFields.style.display = isFree ? 'none' : '';
+        if (billingSection) billingSection.style.display = isFree ? 'none' : '';
       }
       if (n === 4) {
         const d = (document.getElementById('consultDate') as HTMLInputElement | null)?.value;
@@ -69,6 +77,10 @@ export class GetStartedComponent implements AfterViewInit {
         if (cfDate) cfDate.textContent = dateTxt;
         if (cfEmail) cfEmail.textContent = email || '—';
         if (cfTotal) cfTotal.textContent = sel.svcPrice;
+
+        const isFree = sel.svc === 'discovery' || String(sel.svcPrice).toLowerCase() === 'free';
+        const invoice = document.getElementById('invoiceDownload');
+        if (invoice) invoice.style.display = isFree ? 'none' : '';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };

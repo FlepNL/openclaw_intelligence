@@ -1,4 +1,4 @@
-<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/login" class="nav__cta">Get Started →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-get-started-page">
+<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/login" class="nav__cta">Login/Sign up →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-get-started-page">
 <div class="wrap">
 
   <!-- STEPPER -->
@@ -155,7 +155,7 @@
       <div class="sum-total"><span>Total</span><span class="val" id="sumTotal">—</span></div>
     </div>
 
-    <div class="form-section">
+    <div class="form-section" id="paymentMethods">
       <div class="form-section__title">Payment Method</div>
       <div class="payment-cards" id="pmGrid">
         <div class="pm sel" onclick="selPM(this)"><span class="pm__icon">💳</span>Card</div>
@@ -177,7 +177,7 @@
       </div>
     </div>
 
-    <div class="form-section">
+    <div class="form-section" id="billingSection">
       <div class="form-section__title">Billing Address</div>
       <div class="form-row full">
         <div class="field"><label>Street Address</label><input type="text" placeholder="123 Main St" id="street"></div>
@@ -214,7 +214,7 @@
         <div class="row"><span class="lbl">Total Paid</span><span class="val" style="color:var(--coral)" id="cfTotal">—</span></div>
       </div>
       <button class="btn btn--phos" style="max-width:320px;margin:0 auto" onclick="window.location.href='/dashboard'">Go to Dashboard →</button>
-      <div class="login-link" style="margin-top:16px"><a href="#">Download Invoice (PDF)</a></div>
+      <div class="login-link" id="invoiceDownload" style="margin-top:16px"><a href="#">Download Invoice (PDF)</a></div>
     </div>
   </div>
 
