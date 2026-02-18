@@ -1,0 +1,274 @@
+<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/contact" class="nav__cta">Get Started →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-admin-page">
+<div class="layout">
+  <!-- ========= SIDEBAR ========= -->
+  <aside class="sidebar">
+    <a class="sb-logo" routerLink="/admin">
+      <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+      Open<span>Claw</span>
+    </a>
+    <div class="sb-admin-tag">Admin Panel</div>
+
+    <div class="sb-section">
+      <div class="sb-label">Analytics</div>
+      <a class="sb-link active" onclick="showTab(this,'overview')"><span class="icon">📊</span> Overview</a>
+      <a class="sb-link" onclick="showTab(this,'revenue')"><span class="icon">💰</span> Revenue</a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Management</div>
+      <a class="sb-link" onclick="showTab(this,'users')"><span class="icon">👥</span> Users <span class="badge badge--phos">42</span></a>
+      <a class="sb-link" onclick="showTab(this,'services')"><span class="icon">⚡</span> Subscriptions <span class="badge badge--coral">18</span></a>
+      <a class="sb-link" onclick="showTab(this,'meetings')"><span class="icon">📅</span> Meetings <span class="badge badge--warn">7</span></a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">System</div>
+      <a class="sb-link" data-tab="activity" onclick="showTab(this,'activity')"><span class="icon">📋</span> Activity Log</a>
+      <a class="sb-link" href="#"><span class="icon">⚙️</span> Settings</a>
+      <a class="sb-link" href="#"><span class="icon">🔑</span> API Keys</a>
+    </div>
+
+    <div class="sb-user">
+      <div class="sb-avatar">AD</div>
+      <div class="sb-user-info"><div class="name">Admin</div><div class="role">Super Admin</div></div>
+    </div>
+  </aside>
+
+  <!-- ========= MAIN ========= -->
+  <main class="main">
+
+    <!-- ====== OVERVIEW TAB ====== -->
+    <div class="tab-page active" id="tab-overview">
+      <div class="main-header">
+        <div><h1>Dashboard Overview</h1><p>Business intelligence at a glance · 18 Feb 2026</p></div>
+        <div class="header-actions">
+          <button class="btn-sm btn-ghost">Export CSV ↓</button>
+          <button class="btn-sm btn-coral">+ Invite User</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat stat--phos"><div class="stat__label">Total Users</div><div class="stat__value">42</div><div class="stat__delta up">↑ 8 this month</div></div>
+        <div class="stat stat--coral"><div class="stat__label">MRR</div><div class="stat__value">€38.4K</div><div class="stat__delta up">↑ 12% vs Jan</div></div>
+        <div class="stat stat--blue"><div class="stat__label">Active Subs</div><div class="stat__value">18</div><div class="stat__delta up">↑ 3 new</div></div>
+        <div class="stat stat--warn"><div class="stat__label">Meetings (Feb)</div><div class="stat__value">23</div><div class="stat__delta up">↑ 5 vs Jan</div></div>
+        <div class="stat stat--purple"><div class="stat__label">Avg. LTV</div><div class="stat__value">€8.2K</div><div class="stat__delta up">↑ 6%</div></div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-header"><h3>Monthly Revenue (€K)</h3><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3)">Last 8 months</span></div>
+          <div class="chart-body" id="revenueChart" style="height:200px;padding-bottom:0"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header"><h3>Service Breakdown</h3></div>
+          <div class="donut-body">
+            <div class="donut-ring" style="background:conic-gradient(var(--coral) 0% 38%,var(--phos) 38% 58%,var(--blue) 58% 76%,var(--warn) 76% 88%,var(--purple) 88% 100%)">
+              <div class="donut-center">18</div>
+            </div>
+            <div class="donut-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:var(--coral)"></span>Retainer<span class="legend-val">7</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--phos)"></span>Agent Setup<span class="legend-val">4</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>Strategy<span class="legend-val">3</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span>Workshop<span class="legend-val">2</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span>Enterprise<span class="legend-val">2</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY QUICK VIEW -->
+      <div class="card">
+        <div class="card-header"><h3>Recent Activity</h3><button class="btn-xs" onclick="showTab(document.querySelector('[data-tab=activity]'),'activity')">View All →</button></div>
+        <div class="card-body">
+          <div class="activity">
+            <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Elena Marchetti</strong> signed up and booked a Discovery Call</div><div class="activity-time">2 minutes ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot coral"></div><div><div class="activity-text"><strong>Philippe V.</strong> — Monthly Retainer renewed (€2,997)</div><div class="activity-time">3 hours ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot blue"></div><div><div class="activity-text"><strong>David Kim</strong> completed AI Strategy Session</div><div class="activity-time">Yesterday · 16:42</div></div></div>
+            <div class="activity-item"><div class="activity-dot warn"></div><div><div class="activity-text"><strong>Sarah Chen</strong> rescheduled meeting to Feb 25</div><div class="activity-time">Yesterday · 11:20</div></div></div>
+            <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Marcus Weber</strong> upgraded to Enterprise Automation</div><div class="activity-time">Feb 16 · 09:15</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== USERS TAB ====== -->
+    <div class="tab-page" id="tab-users">
+      <div class="main-header">
+        <div><h1>Users</h1><p>42 registered users · 34 active</p></div>
+        <div class="header-actions"><button class="btn-sm btn-ghost">Export ↓</button><button class="btn-sm btn-coral">+ Invite User</button></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-search"><input type="text" placeholder="Search by name, email, company…" id="userSearch" oninput="filterUsers()"></div>
+        <button class="filter-btn on" data-f="all" onclick="setUserFilter(this,'all')">All</button>
+        <button class="filter-btn" data-f="active" onclick="setUserFilter(this,'active')">Active</button>
+        <button class="filter-btn" data-f="trial" onclick="setUserFilter(this,'trial')">Trial</button>
+        <button class="filter-btn" data-f="cancelled" onclick="setUserFilter(this,'cancelled')">Cancelled</button>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>User</th><th>Company</th><th>Services</th><th>Status</th><th>Joined</th><th>MRR</th><th>Actions</th></tr></thead>
+          <tbody id="userTable"></tbody>
+        </table>
+        <div class="pagination" style="padding:12px 14px">
+          <span>Showing 1–10 of 42</span>
+          <div class="page-btns"><button class="page-btn on">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">5</button><button class="page-btn">→</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== SUBSCRIPTIONS TAB ====== -->
+    <div class="tab-page" id="tab-services">
+      <div class="main-header">
+        <div><h1>Subscriptions & Services</h1><p>18 active subscriptions · €38.4K MRR</p></div>
+        <div class="header-actions"><button class="btn-sm btn-ghost">Export ↓</button></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-search"><input type="text" placeholder="Search services…"></div>
+        <button class="filter-btn on">All Services</button>
+        <button class="filter-btn">Retainer</button>
+        <button class="filter-btn">Agent Setup</button>
+        <button class="filter-btn">Strategy</button>
+        <button class="filter-btn">Enterprise</button>
+        <button class="filter-btn">Workshop</button>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>Client</th><th>Service</th><th>Type</th><th>Status</th><th>Start Date</th><th>Renewal</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--coral),#ff8c6b)">PV</div><div><div class="u-name">Philippe V.</div><div class="u-email">Flep Holding</div></div></div></td><td><span class="tag tag--retainer">Retainer</span></td><td>Recurring</td><td><span class="status status--active">Active</span></td><td>Jan 15</td><td>Mar 1</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€2,997/mo</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--blue),#7ba8ff)">MW</div><div><div class="u-name">Marcus Weber</div><div class="u-email">Weber Digital</div></div></div></td><td><span class="tag tag--enterprise">Enterprise</span></td><td>Recurring</td><td><span class="status status--active">Active</span></td><td>Feb 2</td><td>Mar 2</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€8,500/mo</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--phos),#4deabc)">SC</div><div><div class="u-name">Sarah Chen</div><div class="u-email">Nexus Labs</div></div></div></td><td><span class="tag tag--retainer">Retainer</span></td><td>Recurring</td><td><span class="status status--active">Active</span></td><td>Dec 1</td><td>Mar 1</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€2,997/mo</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--warn),#ffd280)">DK</div><div><div class="u-name">David Kim</div><div class="u-email">Kinetic AI</div></div></div></td><td><span class="tag tag--strategy">Strategy</span></td><td>One-time</td><td><span class="status status--completed">Completed</span></td><td>Feb 17</td><td>—</td><td style="font-family:'JetBrains Mono',monospace">€497</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--purple),#c4adfe)">EM</div><div><div class="u-name">Elena Marchetti</div><div class="u-email">Marchetti & Co</div></div></div></td><td><span class="tag tag--discovery">Discovery</span></td><td>Free</td><td><span class="status status--pending">Scheduled</span></td><td>Feb 22</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;color:var(--t3)">Free</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#e879a8,#ff6b9d)">LS</div><div><div class="u-name">Lisa Strand</div><div class="u-email">Nordic Group</div></div></div></td><td><span class="tag tag--workshop">Workshop</span></td><td>One-time</td><td><span class="status status--pending">Scheduled</span></td><td>Feb 28</td><td>—</td><td style="font-family:'JetBrains Mono',monospace">€1,997</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#6bb8e0,#4d9ec8)">TJ</div><div><div class="u-name">Tom Jensen</div><div class="u-email">Velocity SaaS</div></div></div></td><td><span class="tag tag--setup">Agent Setup</span></td><td>One-time</td><td><span class="status status--active">In Progress</span></td><td>Feb 10</td><td>—</td><td style="font-family:'JetBrains Mono',monospace">€1,497</td></tr>
+            <tr><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#7be09d,#52c87b)">AR</div><div><div class="u-name">Anna Rossi</div><div class="u-email">Freelance</div></div></div></td><td><span class="tag tag--retainer">Retainer</span></td><td>Recurring</td><td><span class="status status--cancelled">Cancelled</span></td><td>Oct 15</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;color:var(--t3);text-decoration:line-through">€2,997/mo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====== MEETINGS TAB ====== -->
+    <div class="tab-page" id="tab-meetings">
+      <div class="main-header">
+        <div><h1>Meetings</h1><p>7 upcoming · 23 total this month</p></div>
+        <div class="header-actions"><button class="btn-sm btn-ghost">Sync Calendar</button><button class="btn-sm btn-coral">+ Schedule Meeting</button></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-search"><input type="text" placeholder="Search meetings…"></div>
+        <button class="filter-btn on">All</button>
+        <button class="filter-btn">Upcoming</button>
+        <button class="filter-btn">Completed</button>
+        <button class="filter-btn">Cancelled</button>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>Meeting</th><th>Client</th><th>Date</th><th>Time</th><th>Host</th><th>Status</th><th>Platform</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Discovery Call</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--purple),#c4adfe);width:26px;height:26px;font-size:9px">EM</div><div><div class="u-name" style="font-size:12px">Elena Marchetti</div></div></div></td><td>Feb 22</td><td>10:00 CET</td><td>Sophia R.</td><td><span class="status status--pending">Upcoming</span></td><td>Zoom</td><td><button class="btn-xs">Reschedule</button></td></tr>
+            <tr><td><strong>Weekly Strategy</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--coral),#ff8c6b);width:26px;height:26px;font-size:9px">PV</div><div><div class="u-name" style="font-size:12px">Philippe V.</div></div></div></td><td>Feb 24</td><td>10:00 CET</td><td>Sophia R.</td><td><span class="status status--pending">Upcoming</span></td><td>Zoom</td><td><button class="btn-xs">Reschedule</button></td></tr>
+            <tr><td><strong>Team Workshop</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#e879a8,#ff6b9d);width:26px;height:26px;font-size:9px">LS</div><div><div class="u-name" style="font-size:12px">Lisa Strand</div></div></div></td><td>Feb 28</td><td>09:00 CET</td><td>Marcus L.</td><td><span class="status status--pending">Upcoming</span></td><td>On-site</td><td><button class="btn-xs">Reschedule</button></td></tr>
+            <tr><td><strong>Performance Review</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--coral),#ff8c6b);width:26px;height:26px;font-size:9px">PV</div><div><div class="u-name" style="font-size:12px">Philippe V.</div></div></div></td><td>Mar 3</td><td>14:00 CET</td><td>Team</td><td><span class="status status--pending">Upcoming</span></td><td>Google Meet</td><td><button class="btn-xs">Reschedule</button></td></tr>
+            <tr><td><strong>Enterprise Kickoff</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--blue),#7ba8ff);width:26px;height:26px;font-size:9px">MW</div><div><div class="u-name" style="font-size:12px">Marcus Weber</div></div></div></td><td>Mar 5</td><td>11:00 CET</td><td>Sophia R.</td><td><span class="status status--pending">Upcoming</span></td><td>Zoom</td><td><button class="btn-xs">Reschedule</button></td></tr>
+            <tr style="opacity:.6"><td><strong>Weekly Strategy</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--coral),#ff8c6b);width:26px;height:26px;font-size:9px">PV</div><div><div class="u-name" style="font-size:12px">Philippe V.</div></div></div></td><td>Feb 17</td><td>10:00 CET</td><td>Sophia R.</td><td><span class="status status--completed">Completed</span></td><td>Zoom</td><td><a href="#" style="color:var(--t3);font-size:11px;text-decoration:none">Recording</a></td></tr>
+            <tr style="opacity:.6"><td><strong>Strategy Session</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--warn),#ffd280);width:26px;height:26px;font-size:9px">DK</div><div><div class="u-name" style="font-size:12px">David Kim</div></div></div></td><td>Feb 17</td><td>14:00 CET</td><td>Sophia R.</td><td><span class="status status--completed">Completed</span></td><td>Google Meet</td><td><a href="#" style="color:var(--t3);font-size:11px;text-decoration:none">Recording</a></td></tr>
+            <tr style="opacity:.6"><td><strong>Discovery Call</strong></td><td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,var(--phos),#4deabc);width:26px;height:26px;font-size:9px">SC</div><div><div class="u-name" style="font-size:12px">Sarah Chen</div></div></div></td><td>Feb 14</td><td>15:00 CET</td><td>Marcus L.</td><td><span class="status status--completed">Completed</span></td><td>Zoom</td><td><a href="#" style="color:var(--t3);font-size:11px;text-decoration:none">Recording</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====== REVENUE TAB ====== -->
+    <div class="tab-page" id="tab-revenue">
+      <div class="main-header"><div><h1>Revenue</h1><p>Financial performance and projections</p></div><div class="header-actions"><button class="btn-sm btn-ghost">Export Report ↓</button></div></div>
+      <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat stat--coral"><div class="stat__label">Total Revenue (2026)</div><div class="stat__value">€72.8K</div><div class="stat__delta up">↑ 34% vs 2025</div></div>
+        <div class="stat stat--phos"><div class="stat__label">MRR</div><div class="stat__value">€38.4K</div><div class="stat__delta up">↑ 12% mom</div></div>
+        <div class="stat stat--blue"><div class="stat__label">ARR (projected)</div><div class="stat__value">€461K</div><div class="stat__delta up">↑ growth trajectory</div></div>
+        <div class="stat stat--warn"><div class="stat__label">Avg. Deal Size</div><div class="stat__value">€2.1K</div><div class="stat__delta up">↑ 8%</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Revenue by Service Type</h3></div>
+        <div class="card-body">
+          <table>
+            <thead><tr><th>Service</th><th>Active Clients</th><th>Revenue (Feb)</th><th>Revenue (YTD)</th><th>% of Total</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag tag--retainer">Monthly Retainer</span></td><td>7</td><td style="font-family:'JetBrains Mono',monospace">€20,979</td><td style="font-family:'JetBrains Mono',monospace">€41,958</td><td>57.6%</td></tr>
+              <tr><td><span class="tag tag--enterprise">Enterprise</span></td><td>2</td><td style="font-family:'JetBrains Mono',monospace">€17,000</td><td style="font-family:'JetBrains Mono',monospace">€17,000</td><td>23.3%</td></tr>
+              <tr><td><span class="tag tag--setup">Agent Setup</span></td><td>4</td><td style="font-family:'JetBrains Mono',monospace">€1,497</td><td style="font-family:'JetBrains Mono',monospace">€5,988</td><td>8.2%</td></tr>
+              <tr><td><span class="tag tag--workshop">Workshop</span></td><td>2</td><td style="font-family:'JetBrains Mono',monospace">€1,997</td><td style="font-family:'JetBrains Mono',monospace">€3,994</td><td>5.5%</td></tr>
+              <tr><td><span class="tag tag--strategy">Strategy Session</span></td><td>3</td><td style="font-family:'JetBrains Mono',monospace">€497</td><td style="font-family:'JetBrains Mono',monospace">€1,988</td><td>2.7%</td></tr>
+              <tr><td><span class="tag tag--discovery">Discovery Call</span></td><td>5</td><td style="font-family:'JetBrains Mono',monospace;color:var(--t3)">Free</td><td style="font-family:'JetBrains Mono',monospace;color:var(--t3)">Free</td><td>—</td></tr>
+              <tr style="font-weight:700;border-top:2px solid var(--bdr)"><td>Total</td><td>18</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€41,970</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€72,826</td><td>100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== ACTIVITY LOG TAB ====== -->
+    <div class="tab-page" id="tab-activity">
+      <div class="main-header"><div><h1>Activity Log</h1><p>Full audit trail of all system events</p></div><div class="header-actions"><button class="btn-sm btn-ghost">Export ↓</button></div></div>
+      <div class="toolbar">
+        <div class="toolbar-search"><input type="text" placeholder="Search activity…"></div>
+        <button class="filter-btn on">All Events</button>
+        <button class="filter-btn">Signups</button>
+        <button class="filter-btn">Payments</button>
+        <button class="filter-btn">Meetings</button>
+      </div>
+      <div class="card"><div class="card-body">
+        <div class="activity">
+          <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Elena Marchetti</strong> signed up — new account via Google OAuth</div><div class="activity-time">18 Feb · 14:32 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot blue"></div><div><div class="activity-text"><strong>Elena Marchetti</strong> booked Discovery Call for Feb 22, 10:00</div><div class="activity-time">18 Feb · 14:35 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot coral"></div><div><div class="activity-text"><strong>Philippe V.</strong> — payment captured €2,997 (Monthly Retainer renewal, INV-2026-0023)</div><div class="activity-time">18 Feb · 11:00 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot blue"></div><div><div class="activity-text"><strong>David Kim</strong> completed 90-min AI Strategy Session with Sophia R.</div><div class="activity-time">17 Feb · 16:42 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot warn"></div><div><div class="activity-text"><strong>Sarah Chen</strong> rescheduled Weekly Strategy from Feb 21 → Feb 25</div><div class="activity-time">17 Feb · 11:20 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Marcus Weber</strong> upgraded from Retainer → Enterprise Automation (€8,500/mo)</div><div class="activity-time">16 Feb · 09:15 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot coral"></div><div><div class="activity-text"><strong>Marcus Weber</strong> — payment captured €8,500 (Enterprise, INV-2026-0021)</div><div class="activity-time">16 Feb · 09:16 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Tom Jensen</strong> signed up — new account via email</div><div class="activity-time">15 Feb · 22:10 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot blue"></div><div><div class="activity-text"><strong>Tom Jensen</strong> purchased Starter Agent Setup (€1,497)</div><div class="activity-time">15 Feb · 22:18 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot warn"></div><div><div class="activity-text"><strong>Lisa Strand</strong> booked Team AI Workshop for Feb 28, Nordic Group (8 attendees)</div><div class="activity-time">14 Feb · 16:05 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot coral"></div><div><div class="activity-text"><strong>Lisa Strand</strong> — payment captured €1,997 (Workshop, INV-2026-0019)</div><div class="activity-time">14 Feb · 16:06 CET</div></div></div>
+          <div class="activity-item"><div class="activity-dot phos"></div><div><div class="activity-text"><strong>Anna Rossi</strong> cancelled Monthly Retainer subscription (effective Mar 1)</div><div class="activity-time">13 Feb · 10:30 CET</div></div></div>
+        </div>
+      </div></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- USER DETAIL DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer__close" onclick="closeDrawer()">×</button>
+  <h2 id="drawerName">User Details</h2>
+  <div class="sub" id="drawerEmail">email@example.com</div>
+  <div class="drawer-section">
+    <h4>Account</h4>
+    <div class="drawer-row"><span class="lbl">Status</span><span class="val" id="drawerStatus">Active</span></div>
+    <div class="drawer-row"><span class="lbl">Joined</span><span class="val" id="drawerJoined">—</span></div>
+    <div class="drawer-row"><span class="lbl">Company</span><span class="val" id="drawerCompany">—</span></div>
+    <div class="drawer-row"><span class="lbl">Industry</span><span class="val" id="drawerIndustry">—</span></div>
+    <div class="drawer-row"><span class="lbl">Total Spent</span><span class="val" style="color:var(--coral)" id="drawerSpent">—</span></div>
+  </div>
+  <div class="drawer-section">
+    <h4>Active Services</h4>
+    <div id="drawerServices" class="drawer-tags"></div>
+  </div>
+  <div class="drawer-section">
+    <h4>Recent Activity</h4>
+    <div id="drawerActivity" class="activity"></div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:16px">
+    <button class="btn-sm btn-coral" style="flex:1">Send Email</button>
+    <button class="btn-sm btn-ghost" style="flex:1">Edit User</button>
+  </div>
+</div>
+</div>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>      </div>      <div>        <div class="footer__col-title">Company</div>        <a routerLink="/services" class="footer__link">Services</a>        <a routerLink="/saas" class="footer__link">SaaS Platform</a>        <a routerLink="/pricing" class="footer__link">Pricing</a>        <a routerLink="/contact" class="footer__link">Contact</a>      </div>      <div>        <div class="footer__col-title">Resources</div>        <a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a>        <a href="#" class="footer__link">Blog</a>        <a href="#" class="footer__link">Case Studies</a>        <a href="#" class="footer__link">API Docs</a>      </div>      <div>        <div class="footer__col-title">Legal</div>        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>        <a routerLink="/terms" class="footer__link">Terms of Service</a>        <a href="#" class="footer__link">Cookie Policy</a>        <a href="#" class="footer__link">GDPR</a>      </div>    </div>    <div class="footer__bottom">      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>      <span>www.OpenClawIntelligence.com</span>    </div>  </div></footer>

@@ -1,0 +1,223 @@
+<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/contact" class="nav__cta">Get Started →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-get-started-page">
+<div class="wrap">
+
+  <!-- STEPPER -->
+  <div class="stepper" id="stepper">
+    <div class="step active" data-s="1"><div class="step__num">1</div><div class="step__lbl">Select Service</div></div>
+    <div class="step__conn" id="c1"></div>
+    <div class="step" data-s="2"><div class="step__num">2</div><div class="step__lbl">Your Details</div></div>
+    <div class="step__conn" id="c2"></div>
+    <div class="step" data-s="3"><div class="step__num">3</div><div class="step__lbl">Payment</div></div>
+    <div class="step__conn" id="c3"></div>
+    <div class="step" data-s="4"><div class="step__num">4</div><div class="step__lbl">Confirmed</div></div>
+  </div>
+
+  <!-- ======== STEP 1: SELECT SERVICE ======== -->
+  <div class="page active" id="p1">
+    <h1 class="page__title">Choose a Service</h1>
+    <p class="page__sub">Select the service that best fits your needs. All include a complimentary discovery call.</p>
+
+    <div class="services" id="svcGrid">
+      <div class="svc" onclick="selSvc(this,'discovery','Discovery Call','Free')" data-id="discovery">
+        <div class="svc__icon">📞</div>
+        <div class="svc__name">Discovery Call</div>
+        <div class="svc__desc">30-minute intro call to explore how AI agents can automate your business operations.</div>
+        <div class="svc__price">Free</div>
+      </div>
+      <div class="svc" onclick="selSvc(this,'strategy','AI Strategy Session','€497')" data-id="strategy">
+        <div class="svc__icon">🧠</div>
+        <div class="svc__name">AI Strategy Session</div>
+        <div class="svc__desc">90-minute deep dive into your workflows. Walk away with a custom AI automation roadmap.</div>
+        <div class="svc__price">€497 <small>/session</small></div>
+      </div>
+      <div class="svc" onclick="selSvc(this,'starter','Starter Agent Setup','€1,497')" data-id="starter">
+        <div class="svc__icon">⚡</div>
+        <div class="svc__name">Starter Agent Setup</div>
+        <div class="svc__desc">We build and deploy your first OpenClaw agent. Includes 2-week onboarding and training.</div>
+        <div class="svc__price">€1,497 <small>one-time</small></div>
+      </div>
+      <div class="svc" onclick="selSvc(this,'enterprise','Enterprise Automation','Custom')" data-id="enterprise">
+        <div class="svc__icon">🏢</div>
+        <div class="svc__name">Enterprise Automation</div>
+        <div class="svc__desc">Full-scale autonomous business system. Multi-agent orchestration, custom integrations, dedicated support.</div>
+        <div class="svc__price">Custom <small>quote</small></div>
+      </div>
+      <div class="svc" onclick="selSvc(this,'monthly','Monthly Retainer','€2,997')" data-id="monthly">
+        <div class="svc__icon">🔄</div>
+        <div class="svc__name">Monthly Retainer</div>
+        <div class="svc__desc">Ongoing AI optimization, agent management, weekly strategy calls, priority support.</div>
+        <div class="svc__price">€2,997 <small>/month</small></div>
+      </div>
+      <div class="svc" onclick="selSvc(this,'workshop','Team AI Workshop','€1,997')" data-id="workshop">
+        <div class="svc__icon">🎓</div>
+        <div class="svc__name">Team AI Workshop</div>
+        <div class="svc__desc">Half-day hands-on training for your team. Learn to build, deploy, and manage AI agents.</div>
+        <div class="svc__price">€1,997 <small>/team</small></div>
+      </div>
+    </div>
+
+    <div class="consult-section">
+      <h3>📅 Preferred Consultation Date</h3>
+      <p>Select a time slot for your initial call or session.</p>
+      <div class="form-row" style="margin-bottom:16px">
+        <div class="field"><label>Date</label><input type="date" id="consultDate" min="2026-02-20"></div>
+        <div class="field"><label>Timezone</label>
+          <select id="tz">
+            <option>CET (Berlin, Amsterdam)</option>
+            <option>GMT (London)</option>
+            <option>EST (New York)</option>
+            <option>PST (San Francisco)</option>
+          </select>
+        </div>
+      </div>
+      <div class="time-grid" id="timeGrid">
+        <div class="time-slot" onclick="selTime(this)">09:00</div>
+        <div class="time-slot" onclick="selTime(this)">10:00</div>
+        <div class="time-slot" onclick="selTime(this)">11:00</div>
+        <div class="time-slot" onclick="selTime(this)">13:00</div>
+        <div class="time-slot" onclick="selTime(this)">14:00</div>
+        <div class="time-slot" onclick="selTime(this)">15:00</div>
+        <div class="time-slot" onclick="selTime(this)">16:00</div>
+        <div class="time-slot" onclick="selTime(this)">17:00</div>
+      </div>
+    </div>
+
+    <button class="btn btn--coral" id="btn1" disabled onclick="goTo(2)">Continue to Details →</button>
+  </div>
+
+  <!-- ======== STEP 2: YOUR DETAILS ======== -->
+  <div class="page" id="p2">
+    <h1 class="page__title">Create Your Account</h1>
+    <p class="page__sub">Already have an account? <a routerLink="/login" style="color:var(--coral);text-decoration:none;font-weight:600">Log in</a></p>
+
+    <div class="form-section">
+      <div class="form-section__title">Personal Information</div>
+      <div class="form-row">
+        <div class="field"><label>First Name *</label><input type="text" placeholder="Philippe" id="fname"></div>
+        <div class="field"><label>Last Name *</label><input type="text" placeholder="van der Berg" id="lname"></div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>Email Address *</label><input type="email" placeholder="you@company.com" id="email"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Password *</label><input type="password" placeholder="Min. 12 characters" id="pw"></div>
+        <div class="field"><label>Confirm Password *</label><input type="password" placeholder="Repeat password" id="pw2"></div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>Phone</label><input type="tel" placeholder="+49 ..." id="phone"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section__title">Company Details</div>
+      <div class="form-row">
+        <div class="field"><label>Company Name</label><input type="text" placeholder="Acme Corp" id="company"></div>
+        <div class="field"><label>Website</label><input type="url" placeholder="https://..." id="website"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Industry</label>
+          <select id="industry">
+            <option value="">Select…</option><option>SaaS / Software</option><option>E-commerce</option><option>Finance / Fintech</option><option>Marketing / Agency</option><option>Consulting</option><option>Healthcare</option><option>Manufacturing</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Company Size</label>
+          <select id="csize">
+            <option value="">Select…</option><option>Solo / Freelancer</option><option>2–10</option><option>11–50</option><option>51–200</option><option>201–1000</option><option>1000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>What do you want to automate?</label><textarea id="goals" placeholder="Tell us about your automation goals..."></textarea></div>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="terms">
+      <label for="terms">I agree to the <a routerLink="/terms">Terms of Service</a> and <a routerLink="/privacy">Privacy Policy</a></label>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn--ghost" onclick="goTo(1)">← Back</button>
+      <button class="btn btn--coral" onclick="goTo(3)">Continue to Payment →</button>
+    </div>
+  </div>
+
+  <!-- ======== STEP 3: PAYMENT ======== -->
+  <div class="page" id="p3">
+    <h1 class="page__title">Payment</h1>
+    <p class="page__sub">Secure checkout powered by Stripe. Your data is encrypted end-to-end.</p>
+
+    <div class="summary">
+      <h3>Order Summary</h3>
+      <div class="sum-row"><span class="lbl">Service</span><span class="val" id="sumSvc">—</span></div>
+      <div class="sum-row"><span class="lbl">Date & Time</span><span class="val" id="sumDate">—</span></div>
+      <div class="sum-row"><span class="lbl">Account</span><span class="val" id="sumEmail">—</span></div>
+      <div class="sum-total"><span>Total</span><span class="val" id="sumTotal">—</span></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section__title">Payment Method</div>
+      <div class="payment-cards" id="pmGrid">
+        <div class="pm sel" onclick="selPM(this)"><span class="pm__icon">💳</span>Card</div>
+        <div class="pm" onclick="selPM(this)"><span class="pm__icon">🏦</span>SEPA</div>
+        <div class="pm" onclick="selPM(this)"><span class="pm__icon">🅿️</span>PayPal</div>
+      </div>
+    </div>
+
+    <div class="form-section" id="cardFields">
+      <div class="form-row full">
+        <div class="field"><label>Name on Card</label><input type="text" placeholder="Full name as on card" id="cardName"></div>
+      </div>
+      <div class="form-row full">
+        <div class="field"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242" id="cardNum" maxlength="19"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Expiry</label><input type="text" placeholder="MM / YY" id="cardExp" maxlength="7"></div>
+        <div class="field"><label>CVC</label><input type="text" placeholder="123" id="cardCvc" maxlength="4"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section__title">Billing Address</div>
+      <div class="form-row full">
+        <div class="field"><label>Street Address</label><input type="text" placeholder="123 Main St" id="street"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>City</label><input type="text" placeholder="Frankfurt" id="city"></div>
+        <div class="field"><label>Postal Code</label><input type="text" placeholder="60311" id="zip"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Country</label>
+          <select id="country"><option>Germany</option><option>Netherlands</option><option>United States</option><option>United Kingdom</option><option>France</option><option>Other</option></select>
+        </div>
+        <div class="field"><label>VAT Number (optional)</label><input type="text" placeholder="DE123456789" id="vat"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn--ghost" onclick="goTo(2)">← Back</button>
+      <button class="btn btn--coral" onclick="goTo(4)">Complete Order →</button>
+    </div>
+  </div>
+
+  <!-- ======== STEP 4: CONFIRMATION ======== -->
+  <div class="page" id="p4">
+    <div class="confirm-box">
+      <div class="confirm-icon">✓</div>
+      <h2>You're All Set!</h2>
+      <p>Your booking is confirmed. We'll send a calendar invite to your email.</p>
+      <div class="confirm-id">Order #OC-2026-<span id="orderId">4829</span></div>
+      <div class="confirm-details">
+        <div class="row"><span class="lbl">Service</span><span class="val" id="cfSvc">—</span></div>
+        <div class="row"><span class="lbl">Date & Time</span><span class="val" id="cfDate">—</span></div>
+        <div class="row"><span class="lbl">Account</span><span class="val" id="cfEmail">—</span></div>
+        <div class="row"><span class="lbl">Total Paid</span><span class="val" style="color:var(--coral)" id="cfTotal">—</span></div>
+      </div>
+      <button class="btn btn--phos" style="max-width:320px;margin:0 auto" onclick="window.location.href='/dashboard'">Go to Dashboard →</button>
+      <div class="login-link" style="margin-top:16px"><a href="#">Download Invoice (PDF)</a></div>
+    </div>
+  </div>
+
+</div>
+</div>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>      </div>      <div>        <div class="footer__col-title">Company</div>        <a routerLink="/services" class="footer__link">Services</a>        <a routerLink="/saas" class="footer__link">SaaS Platform</a>        <a routerLink="/pricing" class="footer__link">Pricing</a>        <a routerLink="/contact" class="footer__link">Contact</a>      </div>      <div>        <div class="footer__col-title">Resources</div>        <a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a>        <a href="#" class="footer__link">Blog</a>        <a href="#" class="footer__link">Case Studies</a>        <a href="#" class="footer__link">API Docs</a>      </div>      <div>        <div class="footer__col-title">Legal</div>        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>        <a routerLink="/terms" class="footer__link">Terms of Service</a>        <a href="#" class="footer__link">Cookie Policy</a>        <a href="#" class="footer__link">GDPR</a>      </div>    </div>    <div class="footer__bottom">      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>      <span>www.OpenClawIntelligence.com</span>    </div>  </div></footer>

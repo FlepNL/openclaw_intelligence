@@ -11,6 +11,14 @@ import { SaasComponent } from './pages/saas/saas.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
 import { KnowledgeBaseComponent } from './pages/knowledge-base/knowledge-base.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { OrderComponent } from './pages/order/order.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { LoginComponent } from './pages/login/login.component';
+import { GetStartedComponent } from './pages/get-started/get-started.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +28,15 @@ import { ContactComponent } from './pages/contact/contact.component';
     SaasComponent,
     PricingComponent,
     KnowledgeBaseComponent,
-    ContactComponent
+    ContactComponent,
+    OrderComponent,
+    SignupComponent,
+    DashboardComponent,
+    AdminComponent,
+    LoginComponent,
+    GetStartedComponent,
+    PrivacyComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,

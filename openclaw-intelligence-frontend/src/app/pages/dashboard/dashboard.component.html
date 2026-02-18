@@ -1,0 +1,189 @@
+<nav class="nav scrolled">  <div class="nav__inner">    <a routerLink="/" class="nav__logo"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></a>    <div class="nav__links">      <a routerLink="/" class="nav__link">Home</a>      <a routerLink="/services" class="nav__link">Services</a>      <a routerLink="/saas" class="nav__link">SaaS Platform</a>      <a routerLink="/pricing" class="nav__link">Pricing</a>      <a routerLink="/knowledge-base" class="nav__link">Knowledge Base</a>      <a routerLink="/contact" class="nav__link">Contact</a>      <a routerLink="/contact" class="nav__cta">Get Started →</a>    </div>    <button class="nav__mobile" aria-label="Menu">      <span></span><span></span><span></span>    </button>  </div></nav><div class="oci-dashboard-page">
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a class="sb-logo" routerLink="/dashboard">
+      <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+      Open<span>Claw</span>
+    </a>
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <a class="sb-link active" onclick="showTab('overview')"><span class="icon">📊</span> Dashboard</a>
+      <a class="sb-link" onclick="showTab('services')"><span class="icon">⚡</span> Services <span class="badge">2</span></a>
+      <a class="sb-link" onclick="showTab('meetings')"><span class="icon">📅</span> Meetings <span class="badge">1</span></a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Account</div>
+      <a class="sb-link" onclick="showTab('profile')"><span class="icon">👤</span> Profile</a>
+      <a class="sb-link" onclick="showTab('billing')"><span class="icon">💳</span> Billing & Payments</a>
+      <a class="sb-link" onclick="showTab('settings')"><span class="icon">⚙️</span> Settings</a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Support</div>
+      <a class="sb-link" href="#"><span class="icon">📖</span> Documentation</a>
+      <a class="sb-link" href="#"><span class="icon">💬</span> Contact Support</a>
+    </div>
+    <div class="sb-user">
+      <div class="sb-avatar">PV</div>
+      <div class="sb-user-info"><div class="name">Philippe V.</div><div class="email">philippe@flepholding.com</div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ===== OVERVIEW TAB ===== -->
+    <div class="tab-page active" id="tab-overview">
+      <div class="main-header">
+        <div><h1>Welcome back, Philippe</h1><p>Here's what's happening with your AI agents.</p></div>
+        <button class="btn-sm btn-coral" onclick="window.location.href='/get-started'">+ Book New Service</button>
+      </div>
+      <div class="stats">
+        <div class="stat stat--phos"><div class="stat__label">Active Services</div><div class="stat__value">2</div><div class="stat__sub">Monthly Retainer + Agent Setup</div></div>
+        <div class="stat stat--coral"><div class="stat__label">Next Meeting</div><div class="stat__value">Feb 24</div><div class="stat__sub">Strategy Call · 10:00 CET</div></div>
+        <div class="stat stat--blue"><div class="stat__label">Agent Tasks</div><div class="stat__value">1,247</div><div class="stat__sub">Completed this month</div></div>
+        <div class="stat stat--warn"><div class="stat__label">Monthly Spend</div><div class="stat__value">€2,997</div><div class="stat__sub">Next invoice: Mar 1</div></div>
+      </div>
+
+      <div class="section-title">📅 Upcoming Meetings</div>
+      <div class="card"><div class="card-body">
+        <div class="meeting-card">
+          <div class="meeting-date"><div class="day">24</div><div class="month">Feb</div></div>
+          <div class="meeting-info"><h4>Weekly Strategy Call</h4><p>10:00 – 10:45 CET · Zoom · With Sophia (AI Strategist)</p></div>
+          <div class="meeting-actions"><button class="btn-sm btn-ghost">Reschedule</button><button class="btn-sm btn-coral">Join</button></div>
+        </div>
+        <div class="meeting-card">
+          <div class="meeting-date"><div class="day">03</div><div class="month">Mar</div></div>
+          <div class="meeting-info"><h4>Agent Performance Review</h4><p>14:00 – 15:00 CET · Google Meet · Monthly review</p></div>
+          <div class="meeting-actions"><button class="btn-sm btn-ghost">Reschedule</button></div>
+        </div>
+      </div></div>
+
+      <div class="section-title">⚡ Active Services</div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Service</th><th>Status</th><th>Started</th><th>Next Renewal</th><th>Cost</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Monthly Retainer</strong><br><span style="font-size:11px;color:var(--t3)">AI optimization + weekly calls + priority support</span></td><td><span class="status status--active">Active</span></td><td>Jan 15, 2026</td><td>Mar 1, 2026</td><td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€2,997/mo</td></tr>
+            <tr><td><strong>Starter Agent Setup</strong><br><span style="font-size:11px;color:var(--t3)">3x AI agents deployed (Johnny, Billy, Cody)</span></td><td><span class="status status--completed">Completed</span></td><td>Dec 10, 2025</td><td>—</td><td style="font-family:'JetBrains Mono',monospace">€1,497</td></tr>
+            <tr><td><strong>AI Strategy Session</strong><br><span style="font-size:11px;color:var(--t3)">90-min deep dive · Automation roadmap delivered</span></td><td><span class="status status--completed">Completed</span></td><td>Nov 28, 2025</td><td>—</td><td style="font-family:'JetBrains Mono',monospace">€497</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== SERVICES TAB ===== -->
+    <div class="tab-page" id="tab-services">
+      <div class="main-header"><div><h1>Your Services</h1><p>All current and past services.</p></div><button class="btn-sm btn-coral" onclick="window.location.href='/get-started'">+ Book New Service</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Service</th><th>Type</th><th>Status</th><th>Date</th><th>Amount</th><th>Invoice</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Monthly Retainer</strong></td><td>Recurring</td><td><span class="status status--active">Active</span></td><td>Jan 15, 2026</td><td style="font-family:'JetBrains Mono',monospace">€2,997/mo</td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td><strong>Starter Agent Setup</strong></td><td>One-time</td><td><span class="status status--completed">Completed</span></td><td>Dec 10, 2025</td><td style="font-family:'JetBrains Mono',monospace">€1,497</td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td><strong>AI Strategy Session</strong></td><td>One-time</td><td><span class="status status--completed">Completed</span></td><td>Nov 28, 2025</td><td style="font-family:'JetBrains Mono',monospace">€497</td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td><strong>Discovery Call</strong></td><td>Free</td><td><span class="status status--completed">Completed</span></td><td>Nov 20, 2025</td><td style="font-family:'JetBrains Mono',monospace">Free</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== MEETINGS TAB ===== -->
+    <div class="tab-page" id="tab-meetings">
+      <div class="main-header"><div><h1>Meetings</h1><p>Scheduled and past meetings.</p></div><button class="btn-sm btn-coral">+ Schedule Meeting</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Meeting</th><th>Date</th><th>Time</th><th>With</th><th>Status</th><th>Link</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Weekly Strategy Call</strong></td><td>Feb 24, 2026</td><td>10:00 CET</td><td>Sophia R.</td><td><span class="status status--pending">Upcoming</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">Join →</a></td></tr>
+            <tr><td><strong>Agent Performance Review</strong></td><td>Mar 3, 2026</td><td>14:00 CET</td><td>Team</td><td><span class="status status--pending">Upcoming</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">Join →</a></td></tr>
+            <tr><td><strong>Weekly Strategy Call</strong></td><td>Feb 17, 2026</td><td>10:00 CET</td><td>Sophia R.</td><td><span class="status status--completed">Completed</span></td><td><a href="#" style="color:var(--t3);text-decoration:none;font-size:12px">Recording</a></td></tr>
+            <tr><td><strong>Onboarding Call</strong></td><td>Jan 16, 2026</td><td>09:00 CET</td><td>Marcus L.</td><td><span class="status status--completed">Completed</span></td><td><a href="#" style="color:var(--t3);text-decoration:none;font-size:12px">Recording</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== PROFILE TAB ===== -->
+    <div class="tab-page" id="tab-profile">
+      <div class="main-header"><div><h1>Profile</h1><p>Manage your personal and company information.</p></div></div>
+      <div class="card"><div class="card-body">
+        <div class="profile-grid">
+          <div class="avatar-section">
+            <div class="avatar-lg">PV</div>
+            <button class="avatar-upload-btn">Change Photo</button>
+          </div>
+          <div>
+            <div class="form-row"><div class="field"><label>First Name</label><input value="Philippe"></div><div class="field"><label>Last Name</label><input value="van der Berg"></div></div>
+            <div class="field"><label>Email</label><input value="philippe@flepholding.com" type="email"></div>
+            <div class="field"><label>Phone</label><input value="+49 69 1234 5678"></div>
+            <div class="form-row"><div class="field"><label>Company</label><input value="Flep Holding B.V."></div><div class="field"><label>Website</label><input value="https://openclawintelligence.com"></div></div>
+            <div class="form-row"><div class="field"><label>Industry</label><select><option selected>SaaS / Software</option><option>E-commerce</option><option>Marketing / Agency</option></select></div><div class="field"><label>Company Size</label><select><option>Solo / Freelancer</option><option selected>2–10</option><option>11–50</option></select></div></div>
+            <div class="form-actions"><button class="btn-sm btn-coral">Save Changes</button><button class="btn-sm btn-ghost">Cancel</button></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ===== BILLING TAB ===== -->
+    <div class="tab-page" id="tab-billing">
+      <div class="main-header"><div><h1>Billing & Payments</h1><p>Manage your payment methods and view invoices.</p></div></div>
+      <div class="section-title">💳 Payment Methods</div>
+      <div class="pm-grid" style="margin-bottom:32px">
+        <div class="pm-card default">
+          <div class="default-badge">DEFAULT</div>
+          <div class="pm-card__type">💳</div>
+          <div class="pm-card__number">•••• •••• •••• 4242</div>
+          <div class="pm-card__exp">Expires 08/2028 · Visa</div>
+          <div class="pm-card__actions"><button>Edit</button><button>Remove</button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card__type">🏦</div>
+          <div class="pm-card__number">DE89 •••• •••• •••• 3456</div>
+          <div class="pm-card__exp">SEPA Direct Debit · Commerzbank</div>
+          <div class="pm-card__actions"><button>Set Default</button><button>Remove</button></div>
+        </div>
+        <div class="add-pm" onclick="alert('Add Payment Method modal')">
+          <div class="plus">+</div>
+          Add Payment Method
+        </div>
+      </div>
+
+      <div class="section-title">📄 Invoice History</div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th>Download</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:'JetBrains Mono',monospace">INV-2026-0023</td><td>Feb 1, 2026</td><td style="font-family:'JetBrains Mono',monospace">€2,997.00</td><td><span class="status status--active">Paid</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace">INV-2026-0014</td><td>Jan 15, 2026</td><td style="font-family:'JetBrains Mono',monospace">€2,997.00</td><td><span class="status status--active">Paid</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace">INV-2025-0098</td><td>Dec 10, 2025</td><td style="font-family:'JetBrains Mono',monospace">€1,497.00</td><td><span class="status status--active">Paid</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace">INV-2025-0091</td><td>Nov 28, 2025</td><td style="font-family:'JetBrains Mono',monospace">€497.00</td><td><span class="status status--active">Paid</span></td><td><a href="#" style="color:var(--coral);text-decoration:none;font-size:12px">PDF ↓</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS TAB ===== -->
+    <div class="tab-page" id="tab-settings">
+      <div class="main-header"><div><h1>Settings</h1><p>Account preferences and security.</p></div></div>
+      <div class="card"><div class="card-header"><h3>🔒 Security</h3></div><div class="card-body">
+        <div class="field"><label>Current Password</label><input type="password" placeholder="Enter current password"></div>
+        <div class="form-row"><div class="field"><label>New Password</label><input type="password" placeholder="Min. 12 characters"></div><div class="field"><label>Confirm New Password</label><input type="password" placeholder="Repeat"></div></div>
+        <div class="form-actions"><button class="btn-sm btn-coral">Update Password</button></div>
+      </div></div>
+      <div class="card"><div class="card-header"><h3>🔔 Notifications</h3></div><div class="card-body" style="display:grid;gap:14px">
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--coral);width:16px;height:16px"> Email notifications for meetings</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--coral);width:16px;height:16px"> Invoice & billing emails</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--coral);width:16px;height:16px"> Marketing & product updates</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--coral);width:16px;height:16px"> Agent performance alerts</label>
+      </div></div>
+      <div class="card" style="border-color:rgba(255,77,106,.15)"><div class="card-header"><h3 style="color:#ff4d6a">⚠️ Danger Zone</h3></div><div class="card-body">
+        <p style="font-size:13px;color:var(--t2);margin-bottom:12px">Permanently delete your account and all associated data. This action cannot be undone.</p>
+        <button class="btn-sm" style="background:rgba(255,77,106,.1);color:#ff4d6a;border:1px solid rgba(255,77,106,.2)">Delete Account</button>
+      </div></div>
+    </div>
+
+  </main>
+</div>
+</div>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>      </div>      <div>        <div class="footer__col-title">Company</div>        <a routerLink="/services" class="footer__link">Services</a>        <a routerLink="/saas" class="footer__link">SaaS Platform</a>        <a routerLink="/pricing" class="footer__link">Pricing</a>        <a routerLink="/contact" class="footer__link">Contact</a>      </div>      <div>        <div class="footer__col-title">Resources</div>        <a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a>        <a href="#" class="footer__link">Blog</a>        <a href="#" class="footer__link">Case Studies</a>        <a href="#" class="footer__link">API Docs</a>      </div>      <div>        <div class="footer__col-title">Legal</div>        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>        <a routerLink="/terms" class="footer__link">Terms of Service</a>        <a href="#" class="footer__link">Cookie Policy</a>        <a href="#" class="footer__link">GDPR</a>      </div>    </div>    <div class="footer__bottom">      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>      <span>www.OpenClawIntelligence.com</span>    </div>  </div></footer>
