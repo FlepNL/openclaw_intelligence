@@ -1348,7 +1348,7 @@ h4 { font-size: var(--text-xl); }
 .sbf { height:100%; border-radius:3px; transition:width .8s cubic-bezier(.16,1,.3,1); }
 .sv { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; text-align:right; }
 
-.os { position:absolute; top:16px; right:16px; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:16px; font-weight:700; border:2px solid; background:rgba(0,0,0,.35); }
+.os { position:absolute; top:16px; right:16px; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:16px; font-weight:700; line-height:1; border:2px solid; background:rgba(0,0,0,.35); }
 
 .bf { margin-top:10px; padding-top:10px; border-top:1px solid var(--bdr); display:flex; gap:5px; flex-wrap:wrap; }
 .bt { font-size:11px; padding:3px 9px; border-radius:4px; background:var(--bg-4); color:var(--t2); font-weight:500; }
