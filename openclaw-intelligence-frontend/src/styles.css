@@ -1223,7 +1223,6 @@ h4 { font-size: var(--text-xl); }
   appearance: none;
   cursor: pointer;
 }
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 .kb-root {
   /* OpenClaw Intelligence Brand Palette */
