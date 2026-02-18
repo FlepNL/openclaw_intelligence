@@ -1424,3 +1424,9 @@ h4 { font-size: var(--text-xl); }
   .rgrid, .ggrid { grid-template-columns:1fr; }
 }
 @keyframes fu { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+/* ---- KB layout overrides ---- */
+.kb-root { display: block; }
+.kb-root .hero { display: block; min-height: auto; padding-top: 5rem; }
+.kb-root .hero > * { display: block; }
+.kb-root .hero-meta { display: flex; }
