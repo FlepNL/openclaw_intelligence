@@ -1,0 +1,324 @@
+<style>
+:root {
+  --bg-primary:#0a0a0f;--bg-secondary:#111118;--bg-card:#16161f;--bg-elevated:#1c1c28;
+  --text-primary:#f0eff4;--text-secondary:#9895a7;--text-muted:#5c586b;
+  --accent:#ff4d3a;--accent-hover:#ff6b5a;--accent-glow:rgba(255,77,58,0.15);--accent-subtle:rgba(255,77,58,0.08);
+  --phosphor:#00e5a0;--phosphor-dim:rgba(0,229,160,0.12);
+  --signal:#4d8bff;--signal-dim:rgba(77,139,255,0.1);
+  --border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);
+  --error:#ff4d6a;--error-dim:rgba(255,77,106,0.1);
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.65;min-height:100vh;display:flex;align-items:center;justify-content:center}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* === LAYOUT === */
+.signup-layout{display:grid;grid-template-columns:420px 1fr;min-height:100vh;width:100%;position:relative;z-index:1}
+
+/* === LEFT PANEL (Branding) === */
+.brand-panel{background:linear-gradient(160deg,#0f0a08 0%,var(--bg-primary) 40%,#0a0f0d 100%);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);position:relative;overflow:hidden}
+.brand-panel::before{content:'';position:absolute;top:-30%;right:-30%;width:60%;height:60%;background:radial-gradient(circle,rgba(255,77,58,0.06) 0%,transparent 70%);pointer-events:none}
+.brand-panel::after{content:'';position:absolute;bottom:-20%;left:-20%;width:50%;height:50%;background:radial-gradient(circle,rgba(0,229,160,0.04) 0%,transparent 70%);pointer-events:none}
+
+.brand-panel__logo{display:flex;align-items:center;gap:14px;font-size:20px;font-weight:700;letter-spacing:-0.5px;position:relative}
+.brand-panel__logo span{color:var(--accent)}
+
+.brand-panel__hero{position:relative}
+.brand-panel__tagline{font-family:'Playfair Display',serif;font-size:32px;font-weight:600;line-height:1.2;margin-bottom:20px;letter-spacing:-0.5px}
+.brand-panel__tagline em{color:var(--accent);font-style:italic}
+.brand-panel__desc{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:40px}
+
+.brand-panel__stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat{padding:16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-md)}
+.stat__value{font-size:24px;font-weight:700;letter-spacing:-1px;margin-bottom:2px}
+.stat__value--coral{color:var(--accent)}
+.stat__value--phosphor{color:var(--phosphor)}
+.stat__label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em}
+
+.brand-panel__trust{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-muted);position:relative}
+.brand-panel__trust::before{content:'🔒'}
+
+/* === RIGHT PANEL (Form) === */
+.form-panel{display:flex;align-items:center;justify-content:center;padding:48px}
+.form-container{width:100%;max-width:480px}
+
+.form-page{display:none;animation:fadeSlide 0.4s var(--ease-out)}
+.form-page.active{display:block}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* Mini stepper */
+.mini-stepper{display:flex;align-items:center;gap:8px;margin-bottom:40px}
+.mini-step{width:40px;height:4px;border-radius:2px;background:var(--bg-elevated);transition:all 0.4s var(--ease-out)}
+.mini-step.active{background:var(--accent);width:60px}
+.mini-step.done{background:var(--phosphor)}
+
+.form-title{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:6px}
+.form-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:32px}
+
+/* Social Auth */
+.social-auth{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.social-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;border:1px solid var(--border);background:var(--bg-card);color:var(--text-primary);font-family:inherit}
+.social-btn:hover{border-color:var(--border-hover);background:var(--bg-elevated)}
+.social-btn__icon{font-size:18px}
+
+.divider{display:flex;align-items:center;gap:16px;margin:24px 0;font-size:12px;color:var(--text-muted)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Form Fields */
+.field{margin-bottom:20px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 16px;font-size:14px;color:var(--text-primary);font-family:inherit;outline:none;transition:all 0.2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.field input::placeholder{color:var(--text-muted)}
+.field textarea{resize:vertical;min-height:80px}
+.field select{appearance:none;cursor:pointer}
+.field--error input{border-color:var(--error);box-shadow:0 0 0 3px var(--error-dim)}
+.field__error{font-size:11px;color:var(--error);margin-top:4px;display:none}
+.field--error .field__error{display:block}
+.field__hint{font-size:11px;color:var(--text-muted);margin-top:4px}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Password Strength */
+.pw-strength{display:flex;gap:4px;margin-top:8px}
+.pw-bar{flex:1;height:3px;border-radius:2px;background:var(--bg-elevated);transition:background 0.3s}
+.pw-bar.weak{background:var(--error)}
+.pw-bar.medium{background:#ffb800}
+.pw-bar.strong{background:var(--phosphor)}
+.pw-label{font-size:11px;margin-top:4px;color:var(--text-muted)}
+
+/* Checkbox */
+.checkbox{display:flex;align-items:flex-start;gap:10px;margin:24px 0;cursor:pointer}
+.checkbox input{display:none}
+.checkbox__box{width:20px;height:20px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;font-size:12px;color:transparent;margin-top:1px}
+.checkbox input:checked+.checkbox__box{background:var(--accent);border-color:var(--accent);color:#fff}
+.checkbox__label{font-size:13px;color:var(--text-secondary);line-height:1.5}
+
+/* Tool Connection Cards */
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.tool-card{padding:16px;background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;text-align:center}
+.tool-card:hover{border-color:var(--border-hover)}
+.tool-card.connected{border-color:var(--phosphor);background:linear-gradient(135deg,var(--phosphor-dim),var(--bg-card))}
+.tool-card__icon{font-size:28px;margin-bottom:6px;display:block}
+.tool-card__name{font-size:13px;font-weight:600;margin-bottom:2px}
+.tool-card__status{font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.tool-card.connected .tool-card__status{color:var(--phosphor)}
+
+/* Avatar Upload */
+.avatar-upload{display:flex;align-items:center;gap:20px;margin-bottom:24px}
+.avatar-upload__preview{width:64px;height:64px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-muted)}
+.avatar-upload__btn{padding:8px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;font-family:inherit}
+.avatar-upload__btn:hover{border-color:var(--border-hover);color:var(--text-primary)}
+
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s var(--ease-out);border:none;font-family:inherit;letter-spacing:0.01em}
+.btn--primary{background:var(--accent);color:#fff}
+.btn--primary:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow)}
+.btn--outline{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+.btn--outline:hover{border-color:var(--text-secondary);color:var(--text-primary)}
+.btn--phosphor{background:var(--phosphor);color:#0a0a0f}
+.btn--phosphor:hover{box-shadow:0 8px 30px var(--phosphor-dim);transform:translateY(-2px)}
+.btn .arrow{transition:transform 0.2s}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-row{display:flex;gap:12px;margin-top:8px}
+.btn-row .btn{flex:1}
+.btn--ghost{background:none;border:none;color:var(--text-muted);font-size:13px;padding:14px 0;cursor:pointer;font-family:inherit;transition:color 0.2s}
+.btn--ghost:hover{color:var(--text-primary)}
+
+.login-link{text-align:center;margin-top:24px;font-size:13px;color:var(--text-muted)}
+
+/* Success State */
+.success-state{text-align:center;padding:40px 0}
+.success-state__icon{width:72px;height:72px;border-radius:50%;background:var(--phosphor-dim);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;animation:pop 0.5s var(--ease-out)}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success-state__title{font-size:24px;font-weight:700;margin-bottom:8px}
+.success-state__desc{font-size:14px;color:var(--text-secondary);margin-bottom:32px;line-height:1.7}
+
+@media(max-width:900px){
+  .signup-layout{grid-template-columns:1fr}
+  .brand-panel{display:none}
+  .form-panel{padding:32px 20px}
+}
+</style>
+<div class="signup-layout">
+
+  <!-- === LEFT: BRANDING PANEL === -->
+  <div class="brand-panel">
+    <div class="brand-panel__logo">
+      <img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />
+      Open<span>Claw</span> Intelligence
+    </div>
+
+    <div class="brand-panel__hero">
+      <h2 class="brand-panel__tagline">Deploy <em>intelligent agents</em> that never sleep</h2>
+      <p class="brand-panel__desc">Join hundreds of businesses automating their operations with OpenClaw's AI agent platform. Set up in minutes, not months.</p>
+      <div class="brand-panel__stats">
+        <div class="stat"><div class="stat__value stat__value--coral">847+</div><div class="stat__label">Active Companies</div></div>
+        <div class="stat"><div class="stat__value stat__value--phosphor">12M+</div><div class="stat__label">Agent Actions / Month</div></div>
+        <div class="stat"><div class="stat__value stat__value--coral">4.2x</div><div class="stat__label">Average ROI</div></div>
+        <div class="stat"><div class="stat__value stat__value--phosphor">< 5 min</div><div class="stat__label">Setup Time</div></div>
+      </div>
+    </div>
+
+    <div class="brand-panel__trust">SSL encrypted · SOC 2 Type II · GDPR Compliant</div>
+  </div>
+
+  <!-- === RIGHT: FORM PANEL === -->
+  <div class="form-panel">
+    <div class="form-container">
+
+      <!-- Mini stepper -->
+      <div class="mini-stepper" id="miniStepper">
+        <div class="mini-step active"></div>
+        <div class="mini-step"></div>
+        <div class="mini-step"></div>
+      </div>
+
+      <!-- ============ STEP 1: CREATE ACCOUNT ============ -->
+      <div class="form-page active" id="signupPage1">
+        <h2 class="form-title">Create your account</h2>
+        <p class="form-subtitle">Start your 14-day free trial — no credit card required.</p>
+
+        <div class="social-auth">
+          <button class="social-btn"><span class="social-btn__icon">G</span> Continue with Google</button>
+          <button class="social-btn"><span class="social-btn__icon">🔗</span> Continue with Microsoft</button>
+        </div>
+
+        <div class="divider">or sign up with email</div>
+
+        <div class="field-row">
+          <div class="field"><label>First Name</label><input type="text" placeholder="Philippe" id="firstName"></div>
+          <div class="field"><label>Last Name</label><input type="text" placeholder="Theunissen" id="lastName"></div>
+        </div>
+        <div class="field"><label>Work Email</label><input type="email" placeholder="you@company.com" id="email"><div class="field__error">Please enter a valid work email address</div></div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" placeholder="Min. 12 characters" id="password" oninput="checkPwStrength(this.value)">
+          <div class="pw-strength"><div class="pw-bar" id="pw1"></div><div class="pw-bar" id="pw2"></div><div class="pw-bar" id="pw3"></div><div class="pw-bar" id="pw4"></div></div>
+          <div class="pw-label" id="pwLabel">Use 12+ characters with uppercase, numbers, and symbols</div>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" checked id="termsAgree">
+          <div class="checkbox__box">✓</div>
+          <div class="checkbox__label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></div>
+        </label>
+
+        <button class="btn btn--primary" onclick="signupGoTo(2)">Create Account <span class="arrow">→</span></button>
+        <div class="login-link">Already have an account? <a href="#">Log in</a></div>
+      </div>
+
+      <!-- ============ STEP 2: COMPANY PROFILE ============ -->
+      <div class="form-page" id="signupPage2">
+        <h2 class="form-title">About your company</h2>
+        <p class="form-subtitle">Help us personalize your experience and pre-configure the right agents.</p>
+
+        <div class="avatar-upload">
+          <div class="avatar-upload__preview">🏢</div>
+          <button class="avatar-upload__btn">Upload Logo</button>
+        </div>
+
+        <div class="field"><label>Company Name</label><input type="text" placeholder="Acme Corp" id="companyName"></div>
+        <div class="field"><label>Website</label><input type="url" placeholder="https://yourcompany.com" id="companyWebsite"><div class="field__hint">We'll auto-detect your industry and tech stack</div></div>
+        <div class="field-row">
+          <div class="field"><label>Industry</label>
+            <select id="companyIndustry">
+              <option value="">Select industry…</option>
+              <option>SaaS / Technology</option>
+              <option>E-commerce / Retail</option>
+              <option>Professional Services</option>
+              <option>Manufacturing</option>
+              <option>Healthcare</option>
+              <option>Finance / Insurance</option>
+              <option>Real Estate</option>
+              <option>Education</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Company Size</label>
+            <select id="companySize">
+              <option value="">Select size…</option>
+              <option>1–10 employees</option>
+              <option>11–50 employees</option>
+              <option>51–200 employees</option>
+              <option>201–1,000 employees</option>
+              <option>1,000+ employees</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>What do you want to automate first?</label>
+          <textarea placeholder="E.g., We want to automate lead qualification and follow-up emails in our sales process…" id="automationGoal"></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn--ghost" onclick="signupGoTo(1)">← Back</button>
+          <button class="btn btn--primary" onclick="signupGoTo(3)">Continue <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 3: CONNECT TOOLS ============ -->
+      <div class="form-page" id="signupPage3">
+        <h2 class="form-title">Connect your tools</h2>
+        <p class="form-subtitle">Link the platforms you already use so your agents can hit the ground running. Skip any for now.</p>
+
+        <div class="tools-grid">
+          <div class="tool-card" data-tool="gmail" onclick="connectTool(this)">
+            <span class="tool-card__icon">📧</span>
+            <div class="tool-card__name">Gmail / Outlook</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+          <div class="tool-card" data-tool="slack" onclick="connectTool(this)">
+            <span class="tool-card__icon">💬</span>
+            <div class="tool-card__name">Slack</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+          <div class="tool-card" data-tool="salesforce" onclick="connectTool(this)">
+            <span class="tool-card__icon">📋</span>
+            <div class="tool-card__name">Salesforce / HubSpot</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+          <div class="tool-card" data-tool="sheets" onclick="connectTool(this)">
+            <span class="tool-card__icon">📊</span>
+            <div class="tool-card__name">Google Sheets</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+          <div class="tool-card" data-tool="zapier" onclick="connectTool(this)">
+            <span class="tool-card__icon">🔄</span>
+            <div class="tool-card__name">Zapier</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+          <div class="tool-card" data-tool="notion" onclick="connectTool(this)">
+            <span class="tool-card__icon">🗂️</span>
+            <div class="tool-card__name">Notion</div>
+            <div class="tool-card__status">not connected</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn--ghost" onclick="signupGoTo(2)">← Back</button>
+          <button class="btn btn--phosphor" onclick="signupGoTo(4)">Launch Dashboard <span class="arrow">→</span></button>
+        </div>
+        <button class="btn--ghost" onclick="signupGoTo(4)" style="display:block;text-align:center;width:100%;margin-top:4px">Skip for now →</button>
+      </div>
+
+      <!-- ============ SUCCESS STATE ============ -->
+      <div class="form-page" id="signupPage4">
+        <div class="success-state">
+          <div class="success-state__icon">🚀</div>
+          <h2 class="success-state__title">Welcome aboard!</h2>
+          <p class="success-state__desc">Your workspace is ready. We've pre-configured your dashboard based on your industry and team size. Your first agent is standing by.</p>
+          <button class="btn btn--primary" style="max-width:300px;margin:0 auto">Open Dashboard <span class="arrow">→</span></button>
+          <p style="margin-top:16px;font-size:12px;color:var(--text-muted)">Check your email for your activation link and getting-started guide.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
