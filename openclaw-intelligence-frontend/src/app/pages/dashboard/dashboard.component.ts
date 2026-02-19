@@ -36,6 +36,7 @@ export class DashboardComponent implements AfterViewInit {
   private kbInitialized = false;
 
   ngAfterViewInit(): void {
+    this.loadDashboard();
     (window as any).showTab = (id: string) => {
       document.querySelectorAll('.tab-page').forEach(t => t.classList.remove('active'));
       document.getElementById('tab-' + id)?.classList.add('active');
@@ -48,6 +49,58 @@ export class DashboardComponent implements AfterViewInit {
       }
       window.scrollTo({ top: 0 });
     };
+  }
+
+  private async loadDashboard(): Promise<void> {
+    try {
+      const token = localStorage.getItem('ociToken');
+      const resp = await fetch('https://openclawintelligence.com/api/dashboard/summary', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (!resp.ok) return;
+      const data = await resp.json();
+      const user = data.user || {};
+      const stats = data.stats || {};
+
+      const nameEl = document.querySelector('.sb-user-info .name');
+      if (nameEl) nameEl.textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'User';
+      const emailEl = document.querySelector('.sb-user-info .email');
+      if (emailEl) emailEl.textContent = user.email || '';
+
+      const statEls = document.querySelectorAll('.stat__value');
+      if (statEls[0]) statEls[0].textContent = String(stats.activeServices || 0);
+      if (statEls[1]) statEls[1].textContent = '—';
+      if (statEls[2]) statEls[2].textContent = String(stats.totalOrders || 0);
+      if (statEls[3]) statEls[3].textContent = stats.totalSpend ? `€${stats.totalSpend}` : '€0';
+
+      const servicesTbody = document.querySelector('#tab-services tbody');
+      if (servicesTbody) {
+        servicesTbody.innerHTML = (data.orders || []).map((o:any) => `
+          <tr>
+            <td><strong>${o.plan || 'Service'}</strong></td>
+            <td>${o.billing_cycle || 'One-time'}</td>
+            <td><span class="status status--active">Active</span></td>
+            <td>${new Date(o.created_at).toLocaleDateString()}</td>
+            <td style="font-family:'JetBrains Mono',monospace">€${o.total || 0}</td>
+            <td>—</td>
+          </tr>`).join('');
+      }
+
+      const meetingsTbody = document.querySelector('#tab-meetings tbody');
+      if (meetingsTbody) {
+        meetingsTbody.innerHTML = (data.meetings || []).map((m:any) => `
+          <tr>
+            <td><strong>${m.title}</strong></td>
+            <td>${m.date}</td>
+            <td>${m.time}</td>
+            <td>OpenClaw</td>
+            <td><span class="status status--pending">${m.status}</span></td>
+            <td>—</td>
+          </tr>`).join('');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   private initKnowledgeBase(): void {

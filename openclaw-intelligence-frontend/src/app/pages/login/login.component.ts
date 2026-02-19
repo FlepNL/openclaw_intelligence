@@ -24,12 +24,23 @@ export class LoginComponent implements AfterViewInit {
       if (form) form.style.display = 'none';
       if (success) success.style.display = 'block';
     };
-    (window as any).doLogin = () => {
+    (window as any).doLogin = async () => {
       const email = (document.getElementById('loginEmail') as HTMLInputElement | null)?.value || '';
-      const role = email.toLowerCase().endsWith('@openclawintelligence.com') ? 'admin' : 'user';
+      const resp = await fetch('https://openclawintelligence.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: (document.getElementById('loginPw') as HTMLInputElement).value })
+      });
+      if (!resp.ok) {
+        const err = document.getElementById('loginErr');
+        if (err) err.style.display = 'block';
+        return;
+      }
+      const data = await resp.json();
+      localStorage.setItem('ociToken', data.token);
       localStorage.setItem('ociLoggedIn', 'true');
-      localStorage.setItem('ociRole', role);
-      localStorage.setItem('ociUserEmail', email);
+      localStorage.setItem('ociRole', data.user?.role || 'user');
+      localStorage.setItem('ociUserEmail', data.user?.email || email);
       window.location.href = '/dashboard';
     };
     document.getElementById('forgotModal')?.addEventListener('click', (e) => {
