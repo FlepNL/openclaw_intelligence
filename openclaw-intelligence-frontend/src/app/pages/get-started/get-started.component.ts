@@ -29,6 +29,113 @@ export class GetStartedComponent implements AfterViewInit {
       document.querySelectorAll('.pm').forEach(p => p.classList.remove('sel'));
       el.classList.add('sel');
     };
+    const parsePrice = (val: string) => {
+      if (!val) return 0;
+      const n = Number(String(val).replace(/[^0-9.]/g, ''));
+      return isNaN(n) ? 0 : Math.round(n * 100);
+    };
+
+    (window as any).completeOrder = async () => {
+      const btn = document.querySelector('#p3 .btn.btn--coral') as HTMLButtonElement | null;
+      if (btn) btn.disabled = true;
+      try {
+        const firstName = (document.getElementById('fname') as HTMLInputElement | null)?.value || '';
+        const lastName = (document.getElementById('lname') as HTMLInputElement | null)?.value || '';
+        const email = (document.getElementById('email') as HTMLInputElement | null)?.value || '';
+        const password = (document.getElementById('pw') as HTMLInputElement | null)?.value || '';
+        const password2 = (document.getElementById('pw2') as HTMLInputElement | null)?.value || '';
+        const phone = (document.getElementById('phone') as HTMLInputElement | null)?.value || '';
+        const company = (document.getElementById('company') as HTMLInputElement | null)?.value || '';
+        const website = (document.getElementById('website') as HTMLInputElement | null)?.value || '';
+        const industry = (document.getElementById('industry') as HTMLSelectElement | null)?.value || '';
+        const companySize = (document.getElementById('csize') as HTMLSelectElement | null)?.value || '';
+        const goals = (document.getElementById('goals') as HTMLTextAreaElement | null)?.value || '';
+        const termsAccepted = (document.getElementById('terms') as HTMLInputElement | null)?.checked || false;
+        const meetingDate = (document.getElementById('consultDate') as HTMLInputElement | null)?.value || '';
+        const meetingTime = (sel.time || '').trim();
+        const vatNumber = (document.getElementById('vat') as HTMLInputElement | null)?.value || '';
+        const country = (document.getElementById('country') as HTMLSelectElement | null)?.value || '';
+        const city = (document.getElementById('city') as HTMLInputElement | null)?.value || '';
+
+        if (!firstName || !lastName || !email || !password || !termsAccepted) {
+          alert('Please complete all required fields and accept the terms.');
+          if (btn) btn.disabled = false;
+          return;
+        }
+        if (password !== password2) {
+          alert('Passwords do not match.');
+          if (btn) btn.disabled = false;
+          return;
+        }
+
+        await fetch('https://openclawintelligence.com/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            phone,
+            company,
+            website,
+            industry,
+            companySize,
+            automationGoal: goals,
+            toolsConnected: [],
+            termsAccepted
+          })
+        });
+
+        const orderResp = await fetch('https://openclawintelligence.com/api/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            plan: sel.svcName,
+            billingCycle: sel.svc === 'monthly' ? 'monthly' : 'one-time',
+            agents: [],
+            currency: 'eur',
+            subtotal: parsePrice(sel.svcPrice) / 100,
+            vat: 0,
+            total: parsePrice(sel.svcPrice) / 100,
+            paymentMethod: 'card',
+            firstName,
+            lastName,
+            email,
+            company,
+            vatNumber,
+            country,
+            city,
+            meetingDate,
+            meetingTime
+          })
+        });
+        const orderData = await orderResp.json();
+
+        const loginResp = await fetch('https://openclawintelligence.com/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (loginResp.ok) {
+          const loginData = await loginResp.json();
+          localStorage.setItem('ociToken', loginData.token);
+          localStorage.setItem('ociLoggedIn', 'true');
+          localStorage.setItem('ociRole', loginData.user?.role || 'user');
+          localStorage.setItem('ociUserEmail', loginData.user?.email || email);
+        }
+
+        (window as any).goTo(4);
+        const orderId = document.getElementById('orderId');
+        if (orderId && orderData?.orderId) orderId.textContent = String(orderData.orderId).replace('OCI-', '');
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong. Please try again.');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    };
+
     (window as any).goTo = (n: number) => {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('p' + n)?.classList.add('active');
