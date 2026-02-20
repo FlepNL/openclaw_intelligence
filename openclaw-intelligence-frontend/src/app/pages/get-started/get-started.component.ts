@@ -37,6 +37,17 @@ export class GetStartedComponent implements AfterViewInit {
 
     (window as any).completeOrder = async () => {
       const btn = document.querySelector('#p3 .btn.btn--coral') as HTMLButtonElement | null;
+      const errEl = document.getElementById('orderError');
+      const showError = (msg: string) => {
+        if (errEl) {
+          errEl.textContent = msg;
+          errEl.style.display = 'block';
+        }
+      };
+      if (errEl) {
+        errEl.textContent = '';
+        errEl.style.display = 'none';
+      }
       if (btn) btn.disabled = true;
       try {
         const firstName = (document.getElementById('fname') as HTMLInputElement | null)?.value || '';
@@ -58,17 +69,17 @@ export class GetStartedComponent implements AfterViewInit {
         const city = (document.getElementById('city') as HTMLInputElement | null)?.value || '';
 
         if (!firstName || !lastName || !email || !password || !termsAccepted) {
-          alert('Please complete all required fields and accept the terms.');
+          showError('Please complete all required fields and accept the terms.');
           if (btn) btn.disabled = false;
           return;
         }
         if (password !== password2) {
-          alert('Passwords do not match.');
+          showError('Passwords do not match.');
           if (btn) btn.disabled = false;
           return;
         }
 
-        await fetch('https://openclawintelligence.com/api/signup', {
+        const signupResp = await fetch('https://openclawintelligence.com/api/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -86,6 +97,12 @@ export class GetStartedComponent implements AfterViewInit {
             termsAccepted
           })
         });
+        const signupData = await signupResp.json().catch(() => ({}));
+        if (!signupResp.ok || signupData?.ok === false) {
+          showError(signupData?.message || 'Signup failed. Please try again.');
+          if (btn) btn.disabled = false;
+          return;
+        }
 
         const orderResp = await fetch('https://openclawintelligence.com/api/order', {
           method: 'POST',
@@ -110,27 +127,35 @@ export class GetStartedComponent implements AfterViewInit {
             meetingTime
           })
         });
-        const orderData = await orderResp.json();
+        const orderData = await orderResp.json().catch(() => ({}));
+        if (!orderResp.ok || orderData?.ok === false) {
+          showError(orderData?.message || 'Order failed. Please try again.');
+          if (btn) btn.disabled = false;
+          return;
+        }
 
         const loginResp = await fetch('https://openclawintelligence.com/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
-        if (loginResp.ok) {
-          const loginData = await loginResp.json();
-          localStorage.setItem('ociToken', loginData.token);
-          localStorage.setItem('ociLoggedIn', 'true');
-          localStorage.setItem('ociRole', loginData.user?.role || 'user');
-          localStorage.setItem('ociUserEmail', loginData.user?.email || email);
+        const loginData = await loginResp.json().catch(() => ({}));
+        if (!loginResp.ok || loginData?.ok === false) {
+          showError(loginData?.message || 'Account created, but login failed. Please log in from the login page.');
+          if (btn) btn.disabled = false;
+          return;
         }
+        localStorage.setItem('ociToken', loginData.token);
+        localStorage.setItem('ociLoggedIn', 'true');
+        localStorage.setItem('ociRole', loginData.user?.role || 'user');
+        localStorage.setItem('ociUserEmail', loginData.user?.email || email);
 
+        const orderIdEl = document.getElementById('orderId');
+        if (orderIdEl && orderData?.orderId) orderIdEl.textContent = String(orderData.orderId).replace('OCI-', '');
         (window as any).goTo(4);
-        const orderId = document.getElementById('orderId');
-        if (orderId && orderData?.orderId) orderId.textContent = String(orderData.orderId).replace('OCI-', '');
       } catch (err) {
         console.error(err);
-        alert('Something went wrong. Please try again.');
+        showError('Something went wrong. Please try again.');
       } finally {
         if (btn) btn.disabled = false;
       }
@@ -174,8 +199,6 @@ export class GetStartedComponent implements AfterViewInit {
         const d = (document.getElementById('consultDate') as HTMLInputElement | null)?.value;
         const email = (document.getElementById('email') as HTMLInputElement | null)?.value;
         const dateTxt = (d || 'TBD') + ' at ' + (sel.time || 'TBD');
-        const orderId = document.getElementById('orderId');
-        if (orderId) orderId.textContent = String(Math.floor(1000 + Math.random() * 9000));
         const cfSvc = document.getElementById('cfSvc');
         const cfDate = document.getElementById('cfDate');
         const cfEmail = document.getElementById('cfEmail');
