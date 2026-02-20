@@ -70,7 +70,11 @@ export class DashboardComponent implements AfterViewInit {
       const statEls = document.querySelectorAll('.stat__value');
       if (statEls[0]) statEls[0].textContent = String(stats.activeServices || 0);
       const nextMeeting = (data.meetings || [])[0];
-      if (statEls[1]) statEls[1].textContent = nextMeeting ? (nextMeeting.date || '—') : '—';
+      const formatDate = (d: string) => {
+        const date = new Date(d);
+        return date.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+      };
+      if (statEls[1]) statEls[1].textContent = nextMeeting ? formatDate(nextMeeting.date) : '—';
       if (statEls[2]) statEls[2].textContent = String(stats.totalOrders || 1);
       if (statEls[3]) statEls[3].textContent = stats.totalSpend ? `€${stats.totalSpend}` : '€0';
       
@@ -126,7 +130,7 @@ export class DashboardComponent implements AfterViewInit {
         }
       }
       
-      const overviewServicesTable = document.querySelector('#tab-overview .section-title:nth-of-type(2) + .card tbody');
+      const overviewServicesTable = document.querySelector('#tab-overview table tbody');
       if (overviewServicesTable) {
         const orders = data.orders || [];
         if (orders.length === 0) {
