@@ -20,7 +20,7 @@
     </div>
     <div class="sb-section">
       <div class="sb-label">Support</div>
-      <a class="sb-link" onclick="showTab('knowledge-base')">Knowledge Base</a>
+      <a class="sb-link" onclick="showTab('knowledge-base')">Resources</a>
       <a class="sb-link" href="#">Documentation</a>
       <a class="sb-link" href="#">Contact Support</a>
     </div>
@@ -108,179 +108,255 @@
 
     <!-- ===== KNOWLEDGE BASE TAB ===== -->
     <div class="tab-page" id="tab-knowledge-base">
-      <div class="kb-root">
-<!-- === HERO === -->
-  <section class="hero">
-    <div class="hdr-badge">Knowledge Base — AI Model Guide • 18 Feb 2026</div>
-    <div class="hero-lbl">Intelligence Compendium</div>
-    <h1>Which AI Model Should <em>You</em> Use?</h1>
-    <p>The definitive comparison of 25 large language models — rated across 10 dimensions including pricing. Built for founders, operators, and autonomous business builders.</p>
-    <div class="hero-meta">
-      <span>25 Models</span><span>10 Scoring Categories</span><span>Updated 18 Feb 2026</span><span>By OpenClaw Intelligence</span>
-    </div>
-  </section>
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 
-  <!-- === CONTROLS === -->
-  <div class="ctl">
-    <div class="search-wrap"><input class="search" type="text" id="q" placeholder="Search models by name, provider, or capability…"></div>
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__links{display:flex;gap:24px}
+.nav__links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s}
+.nav__links a:hover{color:var(--t1)}
 
-    <span class="fg-lbl">Provider</span>
-    <div class="fr" id="pf">
-      <button class="fb on" data-v="all">All</button>
-      <button class="fb" data-v="Anthropic">Anthropic</button>
-      <button class="fb" data-v="OpenAI">OpenAI</button>
-      <button class="fb" data-v="Google">Google</button>
-      <button class="fb" data-v="Meta">Meta</button>
-      <button class="fb" data-v="Mistral">Mistral</button>
-      <button class="fb" data-v="Alibaba">Alibaba (Qwen)</button>
-      <button class="fb" data-v="DeepSeek">DeepSeek</button>
-      <button class="fb" data-v="xAI">xAI</button>
-      <button class="fb" data-v="Cohere">Cohere</button>
-      <button class="fb" data-v="Microsoft">Microsoft</button>
-    </div>
+/* HERO */
+.hero{position:relative;max-width:900px;margin:0 auto;padding:72px 32px 48px;text-align:center;z-index:1}
+.hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(255,77,58,.06) 0%,rgba(0,229,160,.03) 40%,transparent 70%);pointer-events:none}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--coral);margin-bottom:16px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:16px;position:relative}
+.hero p{font-size:16px;color:var(--t2);max-width:560px;margin:0 auto;line-height:1.8;position:relative}
 
-    <span class="fg-lbl">Type</span>
-    <div class="fr" id="tf">
-      <button class="fb on" data-v="all">All</button>
-      <button class="fb" data-v="proprietary">Proprietary</button>
-      <button class="fb" data-v="open">Open-Weight</button>
-      <button class="fb" data-v="frontier">Frontier</button>
-      <button class="fb" data-v="efficient">Efficient</button>
-      <button class="fb" data-v="specialist">Specialist</button>
-      <button class="fb" data-v="reasoning">Reasoning</button>
-    </div>
+/* SECTION */
+.section{max-width:1080px;margin:0 auto;padding:0 32px 64px;position:relative;z-index:1}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--bdr)}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--phos)}
+.section-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3)}
 
-    <span class="fg-lbl">Price Tier</span>
-    <div class="fr" id="xf">
-      <button class="fb on" data-v="all">All Tiers</button>
-      <button class="fb" data-v="free">Free / Open-Weight</button>
-      <button class="fb" data-v="budget">Budget (&lt;$1/M in)</button>
-      <button class="fb" data-v="mid">Mid-Range ($1–$3/M)</button>
-      <button class="fb" data-v="premium">Premium ($3+/M)</button>
-    </div>
+/* CARD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;display:flex;flex-direction:column;transition:border-color .3s,transform .2s,box-shadow .3s;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.card:hover{border-color:var(--bdr2);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),var(--phos));opacity:0;transition:opacity .3s}
+.card:hover::after{opacity:1}
 
-    <div style="margin-top:14px">
-      <span class="fg-lbl">Sort by</span>
-      <div class="sr" id="srt">
-        <button class="sb on" data-s="overall">Overall</button>
-        <button class="sb" data-s="reasoning">Reasoning</button>
-        <button class="sb" data-s="coding">Coding</button>
-        <button class="sb" data-s="office">Office</button>
-        <button class="sb" data-s="math">Math</button>
-        <button class="sb" data-s="vision">Vision</button>
-        <button class="sb" data-s="creative_media">Img/Video</button>
-        <button class="sb" data-s="fast_tasks">Fast Tasks</button>
-        <button class="sb" data-s="marketing">Marketing</button>
-        <button class="sb" data-s="writing">Writing</button>
-        <button class="sb" data-s="pricing">💰 Pricing</button>
+.card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;flex-shrink:0}
+.card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;line-height:1.3;margin-bottom:8px;color:var(--t1)}
+.card p{font-size:13.5px;color:var(--t2);line-height:1.7;flex:1;margin-bottom:14px}
+.card-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:20px;border:1px solid var(--bdr);color:var(--t3)}
+.card-tag.guide{border-color:rgba(255,77,58,.2);color:var(--coral);background:rgba(255,77,58,.05)}
+.card-tag.tool{border-color:rgba(0,229,160,.2);color:var(--phos);background:rgba(0,229,160,.05)}
+.card-tag.new{border-color:rgba(255,77,58,.3);color:#fff;background:var(--coral);font-weight:600}
+.card-tag.reading{color:var(--t3)}
+
+/* FEATURED CARD (full width) */
+.featured{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;overflow:hidden}
+.featured .feat-visual{background:linear-gradient(135deg,rgba(0,229,160,.08),rgba(255,77,58,.06));padding:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:16px;border-right:1px solid var(--bdr)}
+.featured .feat-visual .feat-badge{font-family:'JetBrains Mono',monospace;font-size:42px;line-height:1;color:var(--phos);text-shadow:0 0 30px rgba(0,229,160,.3)}
+.featured .feat-visual .feat-sub{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
+.featured .feat-content{padding:32px 28px;display:flex;flex-direction:column;justify-content:center}
+.featured .feat-content h3{font-size:20px;margin-bottom:10px}
+.featured .feat-content p{margin-bottom:16px}
+.featured .feat-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--coral);transition:gap .2s}
+.featured:hover .feat-cta{gap:10px}
+
+/* BOOK BANNER */
+.book-banner{max-width:1080px;margin:0 auto 64px;padding:0 32px;position:relative;z-index:1}
+.book-inner{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:32px 36px;display:flex;align-items:center;gap:28px}
+.book-icon{font-size:40px;flex-shrink:0}
+.book-inner h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px}
+.book-inner h3 em{color:var(--coral);font-style:italic}
+.book-inner p{font-size:13.5px;color:var(--t2);line-height:1.7}
+.book-inner .book-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--coral);text-decoration:none;transition:color .2s}
+.book-inner .book-link:hover{color:var(--coral-h)}
+
+/* CTA */
+.cta{max-width:1080px;margin:0 auto;padding:0 32px 80px;position:relative;z-index:1}
+.cta-inner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:48px;text-align:center}
+.cta-inner h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:10px}
+.cta-inner p{color:var(--t2);font-size:15px;margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-inner a{display:inline-block;background:var(--coral);color:white;padding:14px 36px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s,transform .1s}
+.cta-inner a:hover{background:var(--coral-h);transform:translateY(-1px)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+@media(max-width:768px){
+  .hero{padding:48px 20px 32px}
+  .section{padding:0 20px 48px}
+  .grid{grid-template-columns:1fr}
+  .featured{grid-template-columns:1fr}
+  .featured .feat-visual{border-right:none;border-bottom:1px solid var(--bdr);padding:28px}
+  .nav{padding:14px 20px}
+  .nav__links{gap:16px}
+  .book-banner{padding:0 20px}
+  .book-inner{flex-direction:column;text-align:center;gap:16px;padding:24px 20px}
+  .cta{padding:0 20px 64px}
+  .cta-inner{padding:32px 20px}
+}
+@media(max-width:400px){
+  .grid{grid-template-columns:1fr}
+  .card{padding:20px}
+}
+</style>
+<div class="kb-root">
+<header class="hero">
+  <div class="hero-label">Resources</div>
+  <h1>Guides &amp; Tools for AI-Powered Businesses</h1>
+  <p>Everything you need to evaluate, deploy, and scale AI agent automation — from your first agent to fully autonomous operations.</p>
+</header>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- INTERACTIVE TOOLS                       -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-label">Interactive Tools</div>
+    <div class="section-count">1 tool</div>
+  </div>
+  <div class="grid">
+
+    <a href="https://openclawintelligence.com/resources/ai-model-comparison" class="card featured">
+      <div class="feat-visual">
+        <div class="feat-badge">25+</div>
+        <div class="feat-sub">AI Models Scored &amp; Compared</div>
       </div>
-    </div>
-
-    <div class="vc">
-      <div class="rc" id="rcnt">Showing 25 models</div>
-      <div class="vt">
-        <button class="vb on" data-w="cards">Cards</button>
-        <button class="vb" data-w="table">Table</button>
+      <div class="feat-content">
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <span class="card-tag tool">Interactive Tool</span>
+          <span class="card-tag new">Popular</span>
+        </div>
+        <h3>AI Model Intelligence Guide</h3>
+        <p>Interactive comparison of 25+ AI models across 10 scoring categories. Filter by use case, compare providers side-by-side, and find the right model for your business — with real pricing, speed benchmarks, and capability scores.</p>
+        <div class="feat-cta">Explore the guide →</div>
       </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- GUIDES                                  -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-label">Guides</div>
+    <div class="section-count">6 guides</div>
+  </div>
+  <div class="grid">
+
+    <!-- Guide 1: Automation Roadmap -->
+    <a href="https://openclawintelligence.com/resources/business-automation-roadmap" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(0,229,160,.12),rgba(0,229,160,.05))">🗺️</div>
+      <h3>From Manual to Autonomous: Your Business Automation Roadmap</h3>
+      <p>A 5-phase roadmap for transforming your business from manual operations to autonomous AI-driven workflows. Assessment frameworks, pilot strategies, scaling playbooks, and real-world benchmarks.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag new">New</span>
+        <span class="card-tag reading">13 min read</span>
+      </div>
+    </a>
+
+    <!-- Guide 2: First AI Agent -->
+    <a href="https://openclawintelligence.com/resources/build-ai-agent-business" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(255,77,58,.12),rgba(255,77,58,.05))">🤖</div>
+      <h3>How to Build Your First AI Agent for Business</h3>
+      <p>Step-by-step guide to building a functional AI agent — from defining its purpose and selecting the right model, to connecting tools, writing system prompts, and deploying to production.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag new">New</span>
+        <span class="card-tag reading">14 min read</span>
+      </div>
+    </a>
+
+    <!-- Guide 3: ROI -->
+    <a href="https://openclawintelligence.com/resources/ai-automation-roi" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(255,200,87,.12),rgba(255,200,87,.05))">📊</div>
+      <h3>AI Automation ROI: How to Calculate the Business Case</h3>
+      <p>Calculate the real return on investment for AI automation. Cost frameworks, time savings formulas, payback period analysis, industry benchmarks, and a practical decision matrix.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag new">New</span>
+        <span class="card-tag reading">12 min read</span>
+      </div>
+    </a>
+
+    <!-- Guide 4: Orchestration -->
+    <a href="https://openclawintelligence.com/resources/ai-agent-orchestration" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(138,100,255,.12),rgba(138,100,255,.05))">🔗</div>
+      <h3>The Complete Guide to AI Agent Orchestration</h3>
+      <p>Master multi-agent architectures: sequential, parallel, router, and hierarchical patterns. Communication protocols, state management, error handling, and cost-optimized model mixing.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag new">New</span>
+        <span class="card-tag reading">16 min read</span>
+      </div>
+    </a>
+
+    <!-- Guide 5: GDPR Checklist -->
+    <a href="https://openclawintelligence.com/resources/gdpr-ai-compliance-checklist" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(0,180,216,.12),rgba(0,180,216,.05))">🛡️</div>
+      <h3>GDPR Compliance Checklist for AI-Powered Businesses</h3>
+      <p>Practical compliance checklist covering lawful bases, DPIAs, data subject rights, DPA requirements, EU AI Act alignment, record-keeping, and the 10-step compliance action plan.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag new">New</span>
+        <span class="card-tag reading">15 min read</span>
+      </div>
+    </a>
+
+    <!-- Guide 6: DPA Overview -->
+    <a href="https://openclawintelligence.com/resources/ai-dpa-compliance-guide" class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,rgba(255,77,58,.12),rgba(0,229,160,.05))">📋</div>
+      <h3>AI Provider DPA Compliance Guide</h3>
+      <p>Complete reference of Data Processing Agreement signing pages, key terms, and compliance specifics for the top 10 AI cloud providers — OpenAI, Anthropic, Google, Microsoft, AWS, Mistral, xAI, Cohere, IBM, and Hugging Face.</p>
+      <div class="card-meta">
+        <span class="card-tag guide">Guide</span>
+        <span class="card-tag reading">18 min read</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- BOOK REFERENCE                          -->
+<!-- ═══════════════════════════════════════ -->
+<div class="book-banner">
+  <div class="book-inner">
+    <div class="book-icon">📖</div>
+    <div>
+      <h3><em>The Autonomous Business</em></h3>
+      <p>How AI Agents and OpenClaw Are Creating a New Era of Business Growth. The complete strategic framework for building businesses that operate with AI agent autonomy — from first agent to fully orchestrated operations. By Philippe, published by Novum Imperium Press.</p>
+      <a href="https://openclawintelligence.com/book" class="book-link">Learn more about the book →</a>
     </div>
   </div>
+</div>
 
-  <!-- === CARD VIEW === -->
-  <div class="grid act" id="cv"></div>
-
-  <!-- === TABLE VIEW === -->
-  <div class="tw" id="tv">
-    <table class="ct"><thead><tr>
-      <th>Model</th><th>Reason</th><th>Code</th><th>Office</th><th>Math</th><th>Vision</th><th>Img/Vid</th><th>Fast</th><th>Mktg</th><th>Write</th><th>💰Price</th><th>Overall</th>
-    </tr></thead><tbody id="tb"></tbody></table>
+<!-- ═══════════════════════════════════════ -->
+<!-- CTA                                     -->
+<!-- ═══════════════════════════════════════ -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Ready to automate your business?</h2>
+    <p>OpenClaw Intelligence designs, deploys, and manages AI agent systems for businesses across Europe.</p>
+    <a href="https://openclawintelligence.com/signup">Book a Free Consultation →</a>
   </div>
+</section>
 
-  <!-- === RECOMMENDATIONS === -->
-  <section class="sec">
-    <h2>⚡ Quick-Pick Recommendations</h2>
-    <div class="rgrid">
-      <div class="rc2"><div class="ri">🧠</div><h3>Deep Reasoning</h3><div class="tp">→ GPT-5.2 Thinking / Pro</div><div class="ru">Also: Claude Opus 4.6, Grok 4.1 Think, DeepSeek R1</div></div>
-      <div class="rc2"><div class="ri">💻</div><h3>Coding</h3><div class="tp">→ Claude Sonnet 4.6</div><div class="ru">Also: Devstral 2, GPT-5.2-Codex, Claude Opus 4.6</div></div>
-      <div class="rc2"><div class="ri">📋</div><h3>Office Work</h3><div class="tp">→ GPT-5.2 Thinking</div><div class="ru">Also: Claude Sonnet 4.6, Gemini 3 Pro, Mistral Medium 3.1</div></div>
-      <div class="rc2"><div class="ri">📐</div><h3>Mathematics</h3><div class="tp">→ GPT-5.2 Pro (100% AIME)</div><div class="ru">Also: DeepSeek R1, Qwen 3 235B, Gemini 3 Pro</div></div>
-      <div class="rc2"><div class="ri">👁️</div><h3>Vision</h3><div class="tp">→ Gemini 3 Pro</div><div class="ru">Also: Gemini 3 Flash, Claude Sonnet 4.6, GPT-5.2</div></div>
-      <div class="rc2"><div class="ri">🎨</div><h3>Image & Video</h3><div class="tp">→ GPT-5.2 (DALL·E / Sora)</div><div class="ru">Also: Gemini 3 Pro (Veo 3), Grok 4.1 (Imagine)</div></div>
-      <div class="rc2"><div class="ri">⚡</div><h3>Fast Tasks</h3><div class="tp">→ Gemini 3 Flash</div><div class="ru">Also: Claude Haiku 4.5, GPT-5.2 Instant, Mistral Small 3.2</div></div>
-      <div class="rc2"><div class="ri">📣</div><h3>Marketing</h3><div class="tp">→ Claude Sonnet 4.6</div><div class="ru">Also: GPT-5.2 Thinking, Grok 4.1, Gemini 3 Pro</div></div>
-      <div class="rc2"><div class="ri">✍️</div><h3>Writing</h3><div class="tp">→ Claude Opus 4.6</div><div class="ru">Also: Claude Sonnet 4.6, Grok 4.1, GPT-5.2 Thinking</div></div>
-      <div class="rc2"><div class="ri">💰</div><h3>Best Value Overall</h3><div class="tp">→ Gemini 3 Flash ($0.50/M)</div><div class="ru">Also: DeepSeek V3.2, Qwen 3 30B-A3B, Devstral 2</div></div>
-    </div>
-  </section>
 
-  <!-- === SCORING METHODOLOGY === -->
-  <section class="sec">
-    <h2>📊 Scoring Methodology — 10 Categories</h2>
-    <div class="ggrid">
-      <div class="gc"><h3>🧠 Deep Reasoning</h3><p>Multi-step logic, complex decomposition, chain-of-thought coherence. Based on GPQA Diamond, ARC-AGI, ZebraLogic, LMArena Elo.</p></div>
-      <div class="gc"><h3>💻 Coding</h3><p>Code generation, debugging, multi-file refactoring, agentic coding. Based on SWE-Bench Verified, LiveCodeBench, HumanEval, Terminal-Bench.</p></div>
-      <div class="gc"><h3>📋 Office Work</h3><p>Planning, spreadsheets, slides, workflows, coordination. Based on GDPval (44 occupations), Arena-Hard, and practical assessment.</p></div>
-      <div class="gc"><h3>📐 Mathematics</h3><p>Arithmetic through formal proofs and competition math. Based on MATH-500, AIME 2024/2025, GSM8K, CodeForces Elo.</p></div>
-      <div class="gc"><h3>👁️ Vision</h3><p>Image understanding, charts, OCR, visual QA, multimodal reasoning. Based on MMMU-Pro, MathVista, DocVQA, ChartQA.</p></div>
-      <div class="gc"><h3>🎨 Image & Video</h3><p>Native generation for images, video, editing. Rated on availability, quality, prompt adherence. Text-only models on creative direction ability.</p></div>
-      <div class="gc"><h3>⚡ Fast Tasks</h3><p>Email triage, quick lookups, customer responses. Prioritizes latency, cost-efficiency, throughput for high-volume operations.</p></div>
-      <div class="gc"><h3>📣 Marketing</h3><p>Blog posts, product copy, ad copy, SEO content, campaigns. Evaluates creativity, brand voice, strategy awareness.</p></div>
-      <div class="gc"><h3>✍️ Insightful Writing</h3><p>Customer emails, thought leadership, nuanced communication, editorial. Evaluates depth, tonal precision, emotional intelligence.</p></div>
-      <div class="gc"><h3>💰 Pricing Value</h3><p>Cost-efficiency relative to capability. 10 = free/open-weight, 9 = very cheap API, 7 = good value, 5 = moderate, 3 = expensive, 1 = premium. Factors in token costs, open-weight availability, hosting.</p></div>
-    </div>
-  </section>
-
-  <!-- === SCORE SCALE === -->
-  <section class="sec">
-    <h2>🎯 Score Scale</h2>
-    <div class="scale-grid">
-      <div class="scale-item"><span class="ts sc-10">10</span><span>Best-in-class / Free</span></div>
-      <div class="scale-item"><span class="ts sc-9">9</span><span>Exceptional / Very cheap</span></div>
-      <div class="scale-item"><span class="ts sc-8">8</span><span>Excellent / Budget</span></div>
-      <div class="scale-item"><span class="ts sc-7">7</span><span>Very Good / Value</span></div>
-      <div class="scale-item"><span class="ts sc-6">6</span><span>Good / Moderate</span></div>
-      <div class="scale-item"><span class="ts sc-5">5</span><span>Adequate / Mid-range</span></div>
-      <div class="scale-item"><span class="ts sc-4">4</span><span>Below Avg / Pricey</span></div>
-      <div class="scale-item"><span class="ts sc-3">3</span><span>Weak / Expensive</span></div>
-      <div class="scale-item"><span class="ts sc-2">2</span><span>Poor / Very expensive</span></div>
-      <div class="scale-item"><span class="ts sc-1">1</span><span>N/A / Premium only</span></div>
-    </div>
-  </section>
-
-  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />
-  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>
-      </div>
-      <div>
-        <div class="footer__col-title">Company</div>
-        <a routerLink="/services" class="footer__link">Services</a>
-        <a routerLink="/saas" class="footer__link">SaaS Platform</a>
-        <a routerLink="/pricing" class="footer__link">Pricing</a>
-        <a routerLink="/contact" class="footer__link">Contact</a>
-      </div>
-      <div>
-        <div class="footer__col-title">Resources</div>
-        <a routerLink="/ai-model-comparison" class="footer__link">AI model chooser</a>
-        <a routerLink="/resources" class="footer__link">Resources</a>
-        <a href="#" class="footer__link">Case Studies</a>
-        
-      </div>
-      <div>
-        <div class="footer__col-title">Legal</div>
-        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>
-        <a routerLink="/terms" class="footer__link">Terms of Use</a>
-        
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>
-      <span>www.OpenClawIntelligence.com</span>
-    </div>
-  </div>
-</footer>
-      </div>
+</div>
     </div>
 
-    <!-- ===== PROFILE TAB ===== -->
-    <div class="tab-page" id="tab-profile">
+
+<div class="tab-page" id="tab-profile">
       <div class="main-header"><div><h1>Profile</h1><p>Manage your personal and company information.</p></div></div>
       <div class="card"><div class="card-body">
         <div class="profile-grid">

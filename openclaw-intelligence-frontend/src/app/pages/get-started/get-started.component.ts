@@ -9,10 +9,21 @@ import { AfterViewInit, Component } from '@angular/core';
 export class GetStartedComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const sel: any = { svc: null, svcName: '', svcPrice: '', time: null };
+    const updateFreeServiceUI = () => {
+      const isFree = sel.svc === 'discovery' || String(sel.svcPrice).toLowerCase() === 'free';
+      const step3Lbl = document.querySelector('.step[data-s="3"] .step__lbl');
+      const step3Title = document.querySelector('#p3 .page__title');
+      const btn2 = document.querySelector('#p2 .btn.btn--coral') as HTMLButtonElement | null;
+      if (step3Lbl) step3Lbl.textContent = isFree ? 'Confirmation' : 'Payment';
+      if (step3Title) step3Title.textContent = isFree ? 'Confirmation' : 'Payment';
+      if (btn2) btn2.textContent = isFree ? 'Finalize →' : 'Continue to Payment →';
+    };
+
     (window as any).selSvc = (el: HTMLElement, id: string, name: string, price: string) => {
       document.querySelectorAll('.svc').forEach(s => s.classList.remove('sel'));
       el.classList.add('sel');
       sel.svc = id; sel.svcName = name; sel.svcPrice = price;
+      updateFreeServiceUI();
       (window as any).checkStep1();
     };
     (window as any).selTime = (el: HTMLElement) => {
@@ -21,6 +32,44 @@ export class GetStartedComponent implements AfterViewInit {
       sel.time = el.textContent;
       (window as any).checkStep1();
     };
+
+    const tzSelect = document.getElementById('tz') as HTMLSelectElement | null;
+    const timeGrid = document.getElementById('timeGrid');
+    const timeOptions: Record<string, string[]> = {
+      'CET (Berlin, Amsterdam)': ['10:00', '13:00'],
+      'GMT (London)': ['09:00', '12:00'],
+      'EST (New York)': ['11:00', '13:00'],
+      'PST (San Francisco)': ['08:00', '10:00']
+    };
+    const renderTimes = () => {
+      if (!timeGrid) return;
+      timeGrid.innerHTML = '';
+      sel.time = null;
+      const tz = tzSelect?.value || 'CET (Berlin, Amsterdam)';
+      (timeOptions[tz] || []).forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'time-slot';
+        div.textContent = t;
+        div.onclick = () => (window as any).selTime(div);
+        timeGrid.appendChild(div);
+      });
+      (window as any).checkStep1();
+    };
+    tzSelect?.addEventListener('change', renderTimes);
+    renderTimes();
+
+    const dateInput = document.getElementById('consultDate') as HTMLInputElement | null;
+    if (dateInput) {
+      const today = new Date();
+      const min = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 4);
+      // skip weekends
+      while (min.getDay() === 0 || min.getDay() === 6) {
+        min.setDate(min.getDate() + 1);
+      }
+      const iso = min.toISOString().split('T')[0];
+      dateInput.min = iso;
+      dateInput.value = iso;
+    }
     (window as any).checkStep1 = () => {
       const btn = document.getElementById('btn1') as HTMLButtonElement | null;
       if (btn) btn.disabled = !(sel.svc && sel.time);
