@@ -151,7 +151,7 @@ export class GetStartedComponent implements AfterViewInit {
         localStorage.setItem('ociUserEmail', loginData.user?.email || email);
 
         const orderIdEl = document.getElementById('orderId');
-        if (orderIdEl && orderData?.orderId) orderIdEl.textContent = String(orderData.orderId).replace('OCI-', '');
+        if (orderIdEl && orderData?.orderId) orderIdEl.textContent = String(orderData.orderId);
         (window as any).goTo(4);
       } catch (err) {
         console.error(err);
