@@ -1,0 +1,387 @@
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__back{font-size:13px;color:var(--t2);cursor:pointer;transition:color .2s;text-decoration:none}
+.nav__back:hover{color:var(--t1)}
+
+/* WRAP / HERO */
+.wrap{max-width:820px;margin:0 auto;padding:48px 32px 100px;position:relative;z-index:1}
+.hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--bdr)}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--coral);margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:10px}
+.hero .subtitle{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:12px;max-width:620px}
+.hero .meta-line{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);display:flex;gap:16px;flex-wrap:wrap}
+
+/* TOC */
+.toc{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin-bottom:48px}
+.toc h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.toc ol{list-style:none;counter-reset:toc;padding:0}
+.toc.two-col ol{columns:2;column-gap:24px}
+.toc li{counter-increment:toc;padding:5px 0;break-inside:avoid}
+.toc li a{color:var(--t2);text-decoration:none;font-size:13.5px;transition:color .2s;display:flex;gap:8px}
+.toc li a::before{content:counter(toc) ".";font-family:'JetBrains Mono',monospace;color:var(--coral);font-weight:600;min-width:24px}
+.toc li a:hover{color:var(--coral)}
+
+/* SECTIONS */
+.section{margin-bottom:48px}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:16px;padding-top:8px;color:var(--t1)}
+.section h2 .num{font-family:'JetBrains Mono',monospace;color:var(--coral);font-size:16px;margin-right:6px}
+.section h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--t1)}
+.section p{color:var(--t2);font-size:14.5px;margin-bottom:12px;line-height:1.8}
+.section ul,.section ol{color:var(--t2);font-size:14.5px;margin:0 0 16px 20px;line-height:1.8}
+.section li{margin-bottom:6px}
+.section strong{color:var(--t1);font-weight:600}
+.section a{color:var(--coral);text-decoration:none}
+.section a:hover{text-decoration:underline}
+.section code{font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:var(--phos)}
+
+/* CARDS / BOXES */
+.info-box{background:var(--bg3);border-left:3px solid var(--coral);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0;font-size:13.5px;color:var(--t2);line-height:1.7}
+.info-box strong{color:var(--t1)}
+.notable{background:rgba(0,229,160,.05);border-left:3px solid var(--phos);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:14px 0;font-size:13px;color:var(--t2);line-height:1.7}
+.notable strong{color:var(--phos)}
+.book-ref{background:rgba(255,77,58,.04);border:1px solid rgba(255,77,58,.12);border-radius:var(--r);padding:16px 20px;margin:20px 0;font-size:13px;color:var(--t2);line-height:1.7;display:flex;gap:14px;align-items:flex-start}
+.book-ref .book-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.book-ref strong{color:var(--t1)}
+.book-ref em{color:var(--coral);font-style:italic}
+
+/* STEP CARDS */
+.step-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:20px 0}
+.step-card:hover{border-color:var(--bdr2)}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--coral);margin-bottom:8px}
+.step-card h3{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:10px}
+
+/* COMPARISON TABLE */
+.comp-wrap{overflow-x:auto;margin:16px 0 20px;border-radius:var(--r);border:1px solid var(--bdr)}
+.comp-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px}
+.comp-table th{text-align:left;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--bdr);font-weight:600;background:var(--bg3);position:sticky;top:0;white-space:nowrap}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--bdr);color:var(--t2);vertical-align:top}
+.comp-table tbody tr:hover{background:var(--bg3)}
+.comp-table td:first-child{font-weight:600;color:var(--t1);white-space:nowrap}
+.yes{color:var(--phos)}.no{color:var(--coral)}
+
+/* PROVIDER CARD (DPA guide specific) */
+.provider-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;margin:20px 0 32px;transition:border-color .3s}
+.provider-card:hover{border-color:var(--bdr2)}
+.provider-card .provider-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.provider-card .provider-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.provider-card .provider-name{font-size:18px;font-weight:700;color:var(--t1)}
+.provider-card .provider-models{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-top:2px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-bottom:16px;padding:14px 16px;background:var(--bg4);border-radius:var(--r);font-size:13px}
+.meta-grid .meta-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:2px}
+.meta-grid .meta-val{color:var(--t2)}
+.meta-grid .meta-val a{color:var(--coral);text-decoration:none;word-break:break-all;font-size:12px}
+.meta-grid .meta-val a:hover{text-decoration:underline}
+.dpa-summary{margin:0 0 14px;color:var(--t2);font-size:13.5px;line-height:1.75}
+.dpa-summary li{margin-bottom:5px}
+
+/* CHECKLIST */
+.check-list{list-style:none;margin:12px 0 20px;padding:0}
+.check-list li{padding:8px 0 8px 32px;position:relative;color:var(--t2);font-size:14px;line-height:1.7;border-bottom:1px solid var(--bdr)}
+.check-list li::before{content:'☐';position:absolute;left:4px;top:8px;font-size:15px;color:var(--coral)}
+
+/* METRIC GRID */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:20px 0}
+.metric-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;text-align:center}
+.metric-box .metric-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--coral);margin-bottom:4px}
+.metric-box .metric-label{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+
+/* CROSS-LINKS */
+.related{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:48px 0 0}
+.related h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:14px}
+.related a{display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr);transition:color .2s}
+.related a:last-child{border-bottom:none}
+.related a:hover{color:var(--coral)}
+.related a::before{content:'→ ';color:var(--coral)}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:32px;margin:48px 0 0;text-align:center}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px}
+.cta-banner p{color:var(--t2);font-size:14px;margin-bottom:20px}
+.cta-banner a{display:inline-block;background:var(--coral);color:white;padding:12px 32px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s}
+.cta-banner a:hover{background:var(--coral-h)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+/* PHASE INDICATOR */
+.phase{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--bg);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.phase-1{background:var(--coral)}
+.phase-2{background:#ff8c42}
+.phase-3{background:#ffc857}
+.phase-4{background:var(--phos)}
+.phase-5{background:#00b4d8}
+
+@media(max-width:768px){
+  .wrap{padding:32px 20px 80px}
+  .toc.two-col ol{columns:1}
+  .meta-grid{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+  .metric-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<nav class="nav">
+  <a class="nav__brand" href="https://openclawintelligence.com">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+    Open<span>Claw</span> Intelligence
+  </a>
+  <a class="nav__back" href="https://openclawintelligence.com/resources">← Back to Resources</a>
+</nav>
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-label">Resources / Guides</div>
+    <h1>GDPR Compliance Checklist for AI-Powered Businesses</h1>
+    <p class="subtitle">GDPR compliance checklist built for AI-powered businesses. 25+ actionable items covering DPAs, DPIAs, lawful bases, EU AI Act obligations, data subject rights, and a 10-step compliance action plan.</p>
+    <div class="meta-line">
+      <span>Last updated: 20 February 2026</span>
+      <span>·</span>
+      <span>15 min read</span>
+      <span>·</span>
+      <span>By OpenClaw Intelligence</span>
+    </div>
+  </div>
+
+
+  <div class="info-box">
+    <strong>What you'll learn:</strong> A practical, actionable GDPR compliance checklist specifically for businesses using AI agents, cloud AI APIs, and automated data processing. Covers the six lawful bases, DPIAs, data subject rights, DPA requirements, EU AI Act alignment, and record-keeping obligations.
+  </div>
+
+  <div class="toc">
+    <h3>In This Guide</h3>
+    <ol>
+      <li><a href="#why">Why GDPR Matters More for AI Businesses</a></li>
+      <li><a href="#lawful">The Six Lawful Bases for AI Processing</a></li>
+      <li><a href="#checklist">The Master Compliance Checklist</a></li>
+      <li><a href="#dpia">When and How to Conduct a DPIA</a></li>
+      <li><a href="#dpa">DPA Requirements for AI Providers</a></li>
+      <li><a href="#rights">Data Subject Rights in AI Systems</a></li>
+      <li><a href="#euai">EU AI Act: What Changes for Your Business</a></li>
+      <li><a href="#records">Record-Keeping &amp; Documentation</a></li>
+      <li><a href="#mistakes">Common Compliance Mistakes</a></li>
+      <li><a href="#action">Your Compliance Action Plan</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <div class="section" id="why">
+    <h2><span class="num">1.</span> Why GDPR Matters More for AI Businesses</h2>
+    <p>AI introduces unique data protection challenges that traditional software doesn't face. When you send personal data to an AI API, that data may be processed on servers in different jurisdictions, potentially used for model training (unless your provider's terms explicitly prevent this), and transformed in ways that make lineage tracking difficult.</p>
+    <p>European Data Protection Authorities are increasingly scrutinizing AI deployments. The Italian DPA's temporary ban on ChatGPT in 2023, the Irish DPC's permanent suspension of xAI's EU data processing, and multiple ongoing investigations across the EEA signal a regulatory environment that demands proactive compliance — not reactive fixes.</p>
+    <p>For businesses using AI agents to process client data, non-compliance risk isn't theoretical. Art. 83 GDPR penalties can reach <strong>€20 million or 4% of annual global turnover</strong>, whichever is higher.</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="section" id="lawful">
+    <h2><span class="num">2.</span> The Six Lawful Bases for AI Processing</h2>
+    <p>Every data processing activity needs a valid lawful basis under Art. 6 GDPR. For AI business use cases, the most relevant are:</p>
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Lawful Basis</th><th>When to Use</th><th>AI-Specific Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Contract (Art. 6(1)(b))</td><td>Processing necessary to deliver a service the customer signed up for</td><td>Most common for B2B AI agent services. Your service agreement should clearly describe AI processing.</td></tr>
+        <tr><td>Legitimate interest (Art. 6(1)(f))</td><td>Processing serves a legitimate business interest, balanced against data subject rights</td><td>Requires a documented Legitimate Interest Assessment (LIA). Good for internal automation, analytics.</td></tr>
+        <tr><td>Consent (Art. 6(1)(a))</td><td>Data subject has freely given specific, informed consent</td><td>Weakest basis for AI — consent must be granular, withdrawable, and not a condition of service. Avoid if possible.</td></tr>
+        <tr><td>Legal obligation (Art. 6(1)(c))</td><td>Processing required by law</td><td>Relevant for compliance monitoring, AML checks, mandatory reporting.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="info-box"><strong>Best practice:</strong> For most B2B AI automation services, <strong>contractual necessity</strong> is the strongest and most practical lawful basis. Ensure your service agreements explicitly describe the AI processing activities and their purpose.</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="section" id="checklist">
+    <h2><span class="num">3.</span> The Master Compliance Checklist</h2>
+    <p>Use this checklist to audit your AI-powered business operations against GDPR requirements:</p>
+    
+    <h3>Data Processing Foundations</h3>
+    <ul class="check-list">
+      <li>Documented lawful basis for each AI processing activity</li>
+      <li>Data Processing Agreements signed with all AI cloud providers</li>
+      <li>Records of Processing Activities (Art. 30) maintained and current</li>
+      <li>Data Protection Impact Assessment completed for high-risk processing</li>
+      <li>Data Protection Officer appointed (if required by Art. 37)</li>
+    </ul>
+
+    <h3>Transparency &amp; Information</h3>
+    <ul class="check-list">
+      <li>Privacy notice updated to reflect AI processing activities</li>
+      <li>Clear disclosure that AI/automated processing is used</li>
+      <li>Information about which data is sent to third-party AI providers</li>
+      <li>Purpose and lawful basis stated for each AI processing activity</li>
+      <li>Retention periods defined for AI-processed data</li>
+    </ul>
+
+    <h3>Data Subject Rights</h3>
+    <ul class="check-list">
+      <li>Process in place to handle access requests (Art. 15) for AI-processed data</li>
+      <li>Ability to provide meaningful information about automated decision logic (Art. 22)</li>
+      <li>Mechanism for data subjects to request human review of automated decisions</li>
+      <li>Erasure procedures account for data stored by AI providers</li>
+      <li>Data portability capability for structured AI outputs</li>
+    </ul>
+
+    <h3>Technical &amp; Organizational Measures</h3>
+    <ul class="check-list">
+      <li>Data minimization: only necessary personal data sent to AI APIs</li>
+      <li>Pseudonymization or anonymization applied where feasible</li>
+      <li>Encryption in transit (TLS 1.2+) for all API communications</li>
+      <li>Access controls: only authorized personnel can configure AI agents</li>
+      <li>Audit logging of all data processing by AI agents</li>
+      <li>Regular security assessments of AI integration points</li>
+    </ul>
+
+    <h3>International Transfers</h3>
+    <ul class="check-list">
+      <li>Transfer mechanisms in place for non-EU AI providers (EU SCCs, adequacy decisions)</li>
+      <li>Transfer Impact Assessment documented</li>
+      <li>Supplementary measures implemented where needed (encryption, pseudonymization)</li>
+      <li>EU-based processing options evaluated and preferred where available</li>
+    </ul>
+  </div>
+
+  <!-- 4 -->
+  <div class="section" id="dpia">
+    <h2><span class="num">4.</span> When and How to Conduct a DPIA</h2>
+    <p>A Data Protection Impact Assessment is <strong>mandatory</strong> under Art. 35 GDPR when processing is "likely to result in a high risk to the rights and freedoms of natural persons." AI processing often triggers this requirement, particularly when:</p>
+    <ul>
+      <li>Using AI for automated decision-making that significantly affects individuals</li>
+      <li>Processing special categories of data (health, biometric, political opinions) through AI</li>
+      <li>Systematic monitoring or profiling of individuals at scale</li>
+      <li>Processing personal data of vulnerable individuals (employees, patients, minors)</li>
+      <li>Using innovative technologies in new ways</li>
+    </ul>
+    <p>A DPIA should include: a description of processing operations and purposes, an assessment of necessity and proportionality, an assessment of risks to data subjects, and the measures you've implemented to mitigate those risks.</p>
+    <div class="notable"><strong>Practical tip:</strong> Even when a DPIA isn't strictly required, conducting one for your AI agents demonstrates due diligence and provides excellent documentation if a supervisory authority ever asks questions.</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="section" id="dpa">
+    <h2><span class="num">5.</span> DPA Requirements for AI Providers</h2>
+    <p>Under Art. 28 GDPR, when you use an AI cloud provider to process personal data on behalf of your clients, a Data Processing Agreement is legally required. This is non-negotiable.</p>
+    <p>Essential DPA elements to verify with each provider:</p>
+    <ul>
+      <li>Provider acts as <strong>Data Processor</strong> (not controller)</li>
+      <li>Processing only on your documented instructions</li>
+      <li>Data not used for model training (opt-out or default off)</li>
+      <li>Appropriate security measures (SOC 2, ISO 27001)</li>
+      <li>Subprocessor transparency with notification of changes</li>
+      <li>Data deletion upon contract termination</li>
+      <li>Audit rights (directly or through third-party reports)</li>
+      <li>EU Standard Contractual Clauses for non-EU transfers</li>
+    </ul>
+    <div class="info-box"><strong>Comprehensive reference:</strong> For a detailed comparison of DPA signing pages, key terms, and compliance specifics across all 10 major AI providers, see our <a href="/resources/ai-dpa-compliance-guide">AI Provider DPA Compliance Guide</a>.</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="section" id="rights">
+    <h2><span class="num">6.</span> Data Subject Rights in AI Systems</h2>
+    <p>Art. 22 GDPR gives data subjects the right not to be subject to decisions based solely on automated processing that produce legal or similarly significant effects. For AI agents that make decisions about people (hiring, credit scoring, insurance, service eligibility), you must:</p>
+    <ul>
+      <li>Inform individuals that automated decision-making is used</li>
+      <li>Provide meaningful information about the logic involved</li>
+      <li>Offer a way to obtain human intervention</li>
+      <li>Allow data subjects to contest the decision</li>
+    </ul>
+    <p>For most business AI agents (email triage, scheduling, FAQ handling), Art. 22 doesn't apply because the processing doesn't produce "legal or similarly significant effects." But if your agents are involved in anything that affects people's access to services, employment, or financial outcomes, build human review into the workflow from day one.</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="section" id="euai">
+    <h2><span class="num">7.</span> EU AI Act: What Changes for Your Business</h2>
+    <p>The EU AI Act (Regulation 2024/1689) entered into force in August 2024, with requirements being phased in through 2027. Key provisions affecting businesses using AI agents:</p>
+    <ul>
+      <li><strong>Prohibited AI practices</strong> (effective Feb 2025): Social scoring, manipulative AI, real-time biometric identification (with limited exceptions)</li>
+      <li><strong>High-risk AI systems</strong> (effective Aug 2026): AI used in employment, credit, insurance, education, or law enforcement requires conformity assessments, risk management systems, technical documentation, and human oversight</li>
+      <li><strong>Transparency obligations</strong> (effective Aug 2026): AI systems interacting with humans must disclose they are AI. AI-generated content must be labeled.</li>
+      <li><strong>General-purpose AI models</strong> (effective Aug 2025): Providers of GPAI models (OpenAI, Anthropic, Google, etc.) have their own obligations — but as a deployer, you should verify your providers are compliant</li>
+    </ul>
+    <p>For most business AI agents, the primary impact is the <strong>transparency obligation</strong>: your customers/users must know they're interacting with AI, not a human. Additionally, if your agents are involved in high-risk domains (HR, finance, insurance), plan now for the August 2026 requirements.</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="section" id="records">
+    <h2><span class="num">8.</span> Record-Keeping &amp; Documentation</h2>
+    <p>Art. 30 GDPR requires you to maintain Records of Processing Activities. For each AI agent, document:</p>
+    <ul>
+      <li>Name and purpose of the processing activity</li>
+      <li>Categories of data subjects and personal data</li>
+      <li>Recipients (which AI provider processes the data)</li>
+      <li>Transfers to third countries (with safeguards)</li>
+      <li>Retention periods</li>
+      <li>Technical and organizational security measures</li>
+    </ul>
+    <p>Maintain a centralized register that covers all AI agents in your business. Update it whenever you add a new agent, change providers, or modify processing activities.</p>
+
+    <div class="book-ref">
+      <div class="book-icon">📖</div>
+      <div>
+        <strong>Compliance at scale:</strong> As businesses deploy multiple AI agents across departments, compliance documentation becomes a significant operational challenge. <em>The Autonomous Business</em> by Philippe (Novum Imperium Press) addresses this with practical governance frameworks for managing compliance across multi-agent systems.
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="section" id="mistakes">
+    <h2><span class="num">9.</span> Common Compliance Mistakes</h2>
+    <ul>
+      <li><strong>Using free-tier AI APIs for client data:</strong> Most free tiers don't offer DPAs and may use your data for training. Always use paid/business tiers for any processing involving personal data.</li>
+      <li><strong>No data minimization:</strong> Sending full customer records to an AI API when only a name and query are needed. Strip unnecessary data before every API call.</li>
+      <li><strong>Missing privacy notice updates:</strong> Your privacy notice must reflect that AI/automated processing occurs and which third parties are involved.</li>
+      <li><strong>Assuming one DPA covers everything:</strong> Each AI provider needs its own DPA. Using OpenAI and Anthropic? You need DPAs with both.</li>
+      <li><strong>Ignoring subprocessor changes:</strong> AI providers regularly add subprocessors. Subscribe to their notification lists and review changes.</li>
+      <li><strong>No human fallback for Art. 22 decisions:</strong> If your AI makes decisions affecting individuals, the right to human review isn't optional.</li>
+    </ul>
+  </div>
+
+  <!-- 10 -->
+  <div class="section" id="action">
+    <h2><span class="num">10.</span> Your Compliance Action Plan</h2>
+    <p>Here's the recommended order for getting your AI-powered business GDPR-compliant:</p>
+    <ol>
+      <li><strong>Audit current AI usage:</strong> Map every AI tool and API that processes personal data</li>
+      <li><strong>Sign DPAs:</strong> Ensure every AI provider has a valid DPA in place (see our <a href="/resources/ai-dpa-compliance-guide">DPA Guide</a>)</li>
+      <li><strong>Document lawful bases:</strong> Determine and record the lawful basis for each processing activity</li>
+      <li><strong>Update privacy notices:</strong> Reflect AI processing, providers, and purposes</li>
+      <li><strong>Conduct DPIAs:</strong> For any high-risk processing activities</li>
+      <li><strong>Implement data minimization:</strong> Review what data each agent actually needs</li>
+      <li><strong>Set up Art. 30 register:</strong> Create and maintain your Records of Processing Activities</li>
+      <li><strong>Plan for EU AI Act:</strong> Assess which requirements will affect your operations by August 2026</li>
+      <li><strong>Train your team:</strong> Ensure everyone who configures or manages AI agents understands compliance requirements</li>
+      <li><strong>Schedule regular reviews:</strong> Quarterly compliance checks as your AI deployment evolves</li>
+    </ol>
+  </div>
+
+
+<div class="related">
+  <h3>More Guides</h3>
+  <a href="https://openclawintelligence.com/resources/ai-dpa-compliance-guide">AI Provider DPA Compliance Guide</a>
+<a href="https://openclawintelligence.com/resources/build-ai-agent-business">Build Your First AI Agent for Business</a>
+<a href="https://openclawintelligence.com/resources/ai-automation-roi">AI Automation ROI: Calculate the Business Case</a>
+<a href="https://openclawintelligence.com/resources/ai-agent-orchestration">Guide to AI Agent Orchestration</a>
+<a href="https://openclawintelligence.com/resources/business-automation-roadmap">From Manual to Autonomous: Your Business Automation Roadmap</a>
+</div>
+<div class="cta-banner">
+  <h3>Ready to automate your business?</h3>
+  <p>OpenClaw Intelligence designs, deploys, and manages AI agent systems for businesses across Europe.</p>
+  <a href="https://openclawintelligence.com/signup">Book a Free Consultation →</a>
+</div>
+
+</div>
+</main>
+<footer class="footer">
+  <p>© 2026 OpenClaw Intelligence B.V. · KvK 70891818 · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+</footer>

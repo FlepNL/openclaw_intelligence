@@ -1,0 +1,395 @@
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__back{font-size:13px;color:var(--t2);cursor:pointer;transition:color .2s;text-decoration:none}
+.nav__back:hover{color:var(--t1)}
+
+/* WRAP / HERO */
+.wrap{max-width:820px;margin:0 auto;padding:48px 32px 100px;position:relative;z-index:1}
+.hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--bdr)}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--coral);margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:10px}
+.hero .subtitle{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:12px;max-width:620px}
+.hero .meta-line{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);display:flex;gap:16px;flex-wrap:wrap}
+
+/* TOC */
+.toc{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin-bottom:48px}
+.toc h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.toc ol{list-style:none;counter-reset:toc;padding:0}
+.toc.two-col ol{columns:2;column-gap:24px}
+.toc li{counter-increment:toc;padding:5px 0;break-inside:avoid}
+.toc li a{color:var(--t2);text-decoration:none;font-size:13.5px;transition:color .2s;display:flex;gap:8px}
+.toc li a::before{content:counter(toc) ".";font-family:'JetBrains Mono',monospace;color:var(--coral);font-weight:600;min-width:24px}
+.toc li a:hover{color:var(--coral)}
+
+/* SECTIONS */
+.section{margin-bottom:48px}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:16px;padding-top:8px;color:var(--t1)}
+.section h2 .num{font-family:'JetBrains Mono',monospace;color:var(--coral);font-size:16px;margin-right:6px}
+.section h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--t1)}
+.section p{color:var(--t2);font-size:14.5px;margin-bottom:12px;line-height:1.8}
+.section ul,.section ol{color:var(--t2);font-size:14.5px;margin:0 0 16px 20px;line-height:1.8}
+.section li{margin-bottom:6px}
+.section strong{color:var(--t1);font-weight:600}
+.section a{color:var(--coral);text-decoration:none}
+.section a:hover{text-decoration:underline}
+.section code{font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:var(--phos)}
+
+/* CARDS / BOXES */
+.info-box{background:var(--bg3);border-left:3px solid var(--coral);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0;font-size:13.5px;color:var(--t2);line-height:1.7}
+.info-box strong{color:var(--t1)}
+.notable{background:rgba(0,229,160,.05);border-left:3px solid var(--phos);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:14px 0;font-size:13px;color:var(--t2);line-height:1.7}
+.notable strong{color:var(--phos)}
+.book-ref{background:rgba(255,77,58,.04);border:1px solid rgba(255,77,58,.12);border-radius:var(--r);padding:16px 20px;margin:20px 0;font-size:13px;color:var(--t2);line-height:1.7;display:flex;gap:14px;align-items:flex-start}
+.book-ref .book-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.book-ref strong{color:var(--t1)}
+.book-ref em{color:var(--coral);font-style:italic}
+
+/* STEP CARDS */
+.step-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:20px 0}
+.step-card:hover{border-color:var(--bdr2)}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--coral);margin-bottom:8px}
+.step-card h3{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:10px}
+
+/* COMPARISON TABLE */
+.comp-wrap{overflow-x:auto;margin:16px 0 20px;border-radius:var(--r);border:1px solid var(--bdr)}
+.comp-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px}
+.comp-table th{text-align:left;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--bdr);font-weight:600;background:var(--bg3);position:sticky;top:0;white-space:nowrap}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--bdr);color:var(--t2);vertical-align:top}
+.comp-table tbody tr:hover{background:var(--bg3)}
+.comp-table td:first-child{font-weight:600;color:var(--t1);white-space:nowrap}
+.yes{color:var(--phos)}.no{color:var(--coral)}
+
+/* PROVIDER CARD (DPA guide specific) */
+.provider-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;margin:20px 0 32px;transition:border-color .3s}
+.provider-card:hover{border-color:var(--bdr2)}
+.provider-card .provider-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.provider-card .provider-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.provider-card .provider-name{font-size:18px;font-weight:700;color:var(--t1)}
+.provider-card .provider-models{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-top:2px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-bottom:16px;padding:14px 16px;background:var(--bg4);border-radius:var(--r);font-size:13px}
+.meta-grid .meta-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:2px}
+.meta-grid .meta-val{color:var(--t2)}
+.meta-grid .meta-val a{color:var(--coral);text-decoration:none;word-break:break-all;font-size:12px}
+.meta-grid .meta-val a:hover{text-decoration:underline}
+.dpa-summary{margin:0 0 14px;color:var(--t2);font-size:13.5px;line-height:1.75}
+.dpa-summary li{margin-bottom:5px}
+
+/* CHECKLIST */
+.check-list{list-style:none;margin:12px 0 20px;padding:0}
+.check-list li{padding:8px 0 8px 32px;position:relative;color:var(--t2);font-size:14px;line-height:1.7;border-bottom:1px solid var(--bdr)}
+.check-list li::before{content:'☐';position:absolute;left:4px;top:8px;font-size:15px;color:var(--coral)}
+
+/* METRIC GRID */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:20px 0}
+.metric-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;text-align:center}
+.metric-box .metric-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--coral);margin-bottom:4px}
+.metric-box .metric-label{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+
+/* CROSS-LINKS */
+.related{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:48px 0 0}
+.related h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:14px}
+.related a{display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr);transition:color .2s}
+.related a:last-child{border-bottom:none}
+.related a:hover{color:var(--coral)}
+.related a::before{content:'→ ';color:var(--coral)}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:32px;margin:48px 0 0;text-align:center}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px}
+.cta-banner p{color:var(--t2);font-size:14px;margin-bottom:20px}
+.cta-banner a{display:inline-block;background:var(--coral);color:white;padding:12px 32px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s}
+.cta-banner a:hover{background:var(--coral-h)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+/* PHASE INDICATOR */
+.phase{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--bg);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.phase-1{background:var(--coral)}
+.phase-2{background:#ff8c42}
+.phase-3{background:#ffc857}
+.phase-4{background:var(--phos)}
+.phase-5{background:#00b4d8}
+
+@media(max-width:768px){
+  .wrap{padding:32px 20px 80px}
+  .toc.two-col ol{columns:1}
+  .meta-grid{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+  .metric-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<nav class="nav">
+  <a class="nav__brand" href="https://openclawintelligence.com">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+    Open<span>Claw</span> Intelligence
+  </a>
+  <a class="nav__back" href="https://openclawintelligence.com/resources">← Back to Resources</a>
+</nav>
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-label">Resources / Guides</div>
+    <h1>How to Build Your First AI Agent for Business</h1>
+    <p class="subtitle">Build your first AI business agent step by step. Choose the right model, connect APIs, write system prompts, add memory, and deploy — with cost estimates and a practical use case table.</p>
+    <div class="meta-line">
+      <span>Last updated: 20 February 2026</span>
+      <span>·</span>
+      <span>14 min read</span>
+      <span>·</span>
+      <span>By OpenClaw Intelligence</span>
+    </div>
+  </div>
+
+
+  <div class="info-box">
+    <strong>What you'll learn:</strong> This guide walks you through building a functional AI agent for your business — from defining its purpose and selecting the right model, to connecting tools, handling errors, and deploying to production. No prior AI experience required.
+  </div>
+
+  <div class="toc">
+    <h3>In This Guide</h3>
+    <ol>
+      <li><a href="#what">What Is an AI Agent (and What It Isn't)</a></li>
+      <li><a href="#use-cases">Best First Use Cases</a></li>
+      <li><a href="#architecture">Agent Architecture 101</a></li>
+      <li><a href="#model">Choosing Your AI Model</a></li>
+      <li><a href="#tools">Connecting Tools &amp; APIs</a></li>
+      <li><a href="#system">Writing Effective System Prompts</a></li>
+      <li><a href="#memory">Adding Memory &amp; Context</a></li>
+      <li><a href="#testing">Testing &amp; Guardrails</a></li>
+      <li><a href="#deploy">Deployment Strategies</a></li>
+      <li><a href="#next">What Comes After Your First Agent</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <div class="section" id="what">
+    <h2><span class="num">1.</span> What Is an AI Agent (and What It Isn't)</h2>
+    <p>An AI agent is software that receives a goal, makes decisions about how to achieve it, and takes actions autonomously — calling APIs, querying databases, sending messages, or transforming data. Unlike a simple chatbot that responds to prompts, an agent has a <strong>decision loop</strong>: it observes its environment, reasons about the next step, acts, and then observes the result before deciding what to do next.</p>
+    <p>The key distinction: a chatbot <em>answers questions</em>. An agent <em>completes tasks</em>. When a customer emails asking to reschedule a meeting, a chatbot might reply "Sure, what time works?" An agent would check your calendar, find available slots, propose options, and book it — all without human intervention.</p>
+    <div class="notable"><strong>Key insight:</strong> The most successful first agents automate tasks that are repetitive, rule-based, and currently eat up 2–5 hours of someone's week. Start there.</div>
+  </div>
+
+  <!-- 2 -->
+  <div class="section" id="use-cases">
+    <h2><span class="num">2.</span> Best First Use Cases</h2>
+    <p>Not every process is a good candidate for your first agent. The ideal first project has three qualities: it's <strong>repetitive</strong> (happens daily or weekly), <strong>structured</strong> (clear inputs and outputs), and <strong>low-stakes</strong> (mistakes are fixable, not catastrophic).</p>
+    
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Use Case</th><th>Complexity</th><th>Time Saved</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td>Email triage &amp; drafting</td><td>Low</td><td>5–10 hrs/week</td><td>Any business</td></tr>
+        <tr><td>Meeting scheduling</td><td>Low</td><td>3–5 hrs/week</td><td>Sales, consulting</td></tr>
+        <tr><td>Invoice processing</td><td>Medium</td><td>8–15 hrs/week</td><td>Finance, operations</td></tr>
+        <tr><td>Customer FAQ handling</td><td>Low</td><td>10–20 hrs/week</td><td>Support teams</td></tr>
+        <tr><td>Lead qualification</td><td>Medium</td><td>5–8 hrs/week</td><td>Sales teams</td></tr>
+        <tr><td>Report generation</td><td>Medium</td><td>4–8 hrs/week</td><td>Management</td></tr>
+        <tr><td>Social media monitoring</td><td>Low</td><td>3–6 hrs/week</td><td>Marketing</td></tr>
+        <tr><td>Data entry &amp; CRM updates</td><td>Low</td><td>6–12 hrs/week</td><td>Sales, admin</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>For your first agent, pick something from the "Low" complexity column. You can always graduate to more sophisticated use cases once you've proven the concept.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="section" id="architecture">
+    <h2><span class="num">3.</span> Agent Architecture 101</h2>
+    <p>Every AI agent, regardless of complexity, follows the same core architecture. Understanding these components helps you make better design decisions from the start.</p>
+    
+    <div class="step-card">
+      <div class="step-num">Component 1</div>
+      <h3>The Brain — Language Model</h3>
+      <p>The LLM (Claude, GPT-4, Gemini, Mistral) that reasons about tasks and decides what action to take next. This is where you define the agent's personality, expertise, and decision-making framework through a system prompt.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Component 2</div>
+      <h3>The Hands — Tools &amp; APIs</h3>
+      <p>The external systems your agent can interact with: email APIs (Gmail, Outlook), calendar APIs (Google Calendar), CRMs (HubSpot, Salesforce), databases, file storage, messaging platforms (Slack, Telegram), and any other service with an API.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Component 3</div>
+      <h3>The Memory — Context &amp; State</h3>
+      <p>How the agent remembers what it's done and what it knows. Short-term memory holds the current conversation. Long-term memory (vector databases, knowledge bases) stores persistent information like company policies, customer profiles, or past interactions.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Component 4</div>
+      <h3>The Loop — Observe → Reason → Act</h3>
+      <p>The orchestration logic that ties everything together. The agent receives input, uses the brain to decide what to do, uses its hands to take action, observes the result, and repeats until the task is complete or escalates to a human.</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="section" id="model">
+    <h2><span class="num">4.</span> Choosing Your AI Model</h2>
+    <p>The model you choose affects cost, speed, accuracy, and capability. Here's a practical comparison for business agent use cases:</p>
+    
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Model</th><th>Best For</th><th>Speed</th><th>Cost</th><th>Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Sonnet 4</td><td>General business tasks</td><td>Fast</td><td>$$</td><td>Excellent</td></tr>
+        <tr><td>Claude Haiku 4.5</td><td>High-volume, simple tasks</td><td>Very fast</td><td>$</td><td>Good</td></tr>
+        <tr><td>Claude Opus 4</td><td>Complex reasoning, analysis</td><td>Moderate</td><td>$$$</td><td>Superior</td></tr>
+        <tr><td>GPT-4o</td><td>Multimodal tasks</td><td>Fast</td><td>$$</td><td>Very good</td></tr>
+        <tr><td>Mistral Large</td><td>EU-native processing</td><td>Fast</td><td>$$</td><td>Very good</td></tr>
+        <tr><td>Gemini 2.0 Flash</td><td>Google ecosystem</td><td>Very fast</td><td>$</td><td>Good</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Our recommendation:</strong> Start with a mid-tier model like Claude Sonnet or GPT-4o for development. Once your agent works correctly, test whether a smaller model (Haiku, Flash) can handle the task at lower cost. Reserve expensive models for complex reasoning tasks where accuracy is critical.</p>
+    
+    <div class="notable"><strong>Cost tip:</strong> A customer FAQ agent processing 500 queries per day on Claude Haiku costs roughly €15–25/month. The same agent on Opus would cost €200–400/month. Start small, upgrade only where needed.</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="section" id="tools">
+    <h2><span class="num">5.</span> Connecting Tools &amp; APIs</h2>
+    <p>Tools are what transform an LLM from a text generator into a functional agent. Modern AI models support <strong>tool calling</strong> (also called function calling) — the ability to decide which external function to call and with what parameters.</p>
+    
+    <p>Here's how tool calling works in practice:</p>
+    <ol>
+      <li>You define available tools with their names, descriptions, and parameter schemas</li>
+      <li>When the agent needs to take an action, it outputs a structured tool call</li>
+      <li>Your application executes the tool and returns the result to the agent</li>
+      <li>The agent uses the result to decide its next step</li>
+    </ol>
+
+    <p>Common tool categories for business agents:</p>
+    <ul>
+      <li><strong>Communication:</strong> Send/read emails, Slack messages, SMS, Telegram</li>
+      <li><strong>Data:</strong> Query databases, read/write spreadsheets, CRM lookups</li>
+      <li><strong>Calendar:</strong> Check availability, create/modify events</li>
+      <li><strong>Documents:</strong> Generate PDFs, fill templates, extract text</li>
+      <li><strong>Web:</strong> Search the internet, scrape pages, monitor changes</li>
+      <li><strong>Internal:</strong> Company knowledge base, policy documents, SOPs</li>
+    </ul>
+
+    <p>Start with 2–4 tools for your first agent. Each additional tool increases the agent's capability but also its potential for errors. Add tools incrementally as you validate each one works correctly.</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="section" id="system">
+    <h2><span class="num">6.</span> Writing Effective System Prompts</h2>
+    <p>The system prompt is your agent's "training manual" — it defines who the agent is, what it can do, how it should behave, and when it should ask for help. A well-crafted system prompt is the difference between a useful agent and an unpredictable one.</p>
+    
+    <p>Essential elements of a business agent system prompt:</p>
+    <ul>
+      <li><strong>Identity &amp; role:</strong> "You are [name], a [role] agent for [company name]."</li>
+      <li><strong>Scope boundaries:</strong> Explicitly state what the agent can and cannot do</li>
+      <li><strong>Decision rules:</strong> When to act autonomously vs. when to escalate to a human</li>
+      <li><strong>Tone &amp; style:</strong> How formal or casual the agent should communicate</li>
+      <li><strong>Error handling:</strong> What to do when tools fail or data is ambiguous</li>
+      <li><strong>Compliance rules:</strong> GDPR constraints, data handling policies, confidentiality</li>
+    </ul>
+
+    <div class="info-box"><strong>Pro tip:</strong> Include 3–5 example scenarios in your system prompt showing the agent the expected behavior. Examples are far more effective than abstract rules. Show the agent what "good" looks like for your specific business context.</div>
+  </div>
+
+  <!-- 7 -->
+  <div class="section" id="memory">
+    <h2><span class="num">7.</span> Adding Memory &amp; Context</h2>
+    <p>Agents without memory treat every interaction as brand new. For business use cases, this is usually unacceptable — your agent needs to remember customer preferences, ongoing projects, previous decisions, and company knowledge.</p>
+    
+    <p>Two types of memory to implement:</p>
+    
+    <h3>Short-term memory (conversation context)</h3>
+    <p>The current conversation thread. Most API-based agents maintain this automatically by sending the full message history with each request. Keep conversation windows manageable — summarize older context rather than sending unlimited history.</p>
+
+    <h3>Long-term memory (knowledge base)</h3>
+    <p>Persistent information the agent can retrieve when needed. Options include vector databases (Pinecone, Weaviate, Chroma), document stores (Notion, Confluence), or structured databases (PostgreSQL, MongoDB). Use <strong>Retrieval-Augmented Generation (RAG)</strong> to give your agent access to company knowledge without cramming it all into the system prompt.</p>
+
+    <div class="notable"><strong>Practical tip:</strong> For your first agent, start with a simple knowledge base — a Notion database or a folder of markdown files. You don't need a vector database on day one. Scale your memory infrastructure as the agent's responsibilities grow.</div>
+  </div>
+
+  <!-- 8 -->
+  <div class="section" id="testing">
+    <h2><span class="num">8.</span> Testing &amp; Guardrails</h2>
+    <p>Before deploying any agent to production, establish these safety measures:</p>
+    <ul>
+      <li><strong>Input validation:</strong> Reject or flag requests that fall outside the agent's scope</li>
+      <li><strong>Output review:</strong> For high-stakes actions (sending emails, modifying data), require human approval during the initial weeks</li>
+      <li><strong>Rate limiting:</strong> Prevent the agent from making too many API calls or sending too many messages in a short period</li>
+      <li><strong>Logging:</strong> Record every action the agent takes for audit and debugging</li>
+      <li><strong>Fallback paths:</strong> Always have a graceful way to escalate to a human</li>
+      <li><strong>Cost caps:</strong> Set maximum daily spend on API calls to prevent runaway costs</li>
+    </ul>
+    
+    <p>Test with real scenarios but in a sandboxed environment. Use test email accounts, staging databases, and dummy data. Run at least 50 realistic scenarios before going live.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="section" id="deploy">
+    <h2><span class="num">9.</span> Deployment Strategies</h2>
+    <p>Your first agent doesn't need Kubernetes clusters or microservice architectures. Start with the simplest deployment that works:</p>
+    
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Method</th><th>Complexity</th><th>Cost</th><th>Best When</th></tr></thead>
+      <tbody>
+        <tr><td>Scheduled scripts (cron)</td><td>Very low</td><td>~€5/mo</td><td>Batch processing (daily reports, email triage)</td></tr>
+        <tr><td>Webhook-triggered</td><td>Low</td><td>~€10/mo</td><td>Event-driven (new email, form submission)</td></tr>
+        <tr><td>Chat interface (Telegram, Slack)</td><td>Low</td><td>~€10/mo</td><td>Interactive agents, team assistants</td></tr>
+        <tr><td>API service</td><td>Medium</td><td>~€20/mo</td><td>Integration with existing systems</td></tr>
+        <tr><td>Full platform</td><td>High</td><td>€50+/mo</td><td>Multi-agent orchestration, dashboards</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Many successful business agents run on a simple Node.js or Python server hosted on a €5/month VPS, triggered by webhooks or cron jobs. Don't over-engineer the infrastructure for your first agent.</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="section" id="next">
+    <h2><span class="num">10.</span> What Comes After Your First Agent</h2>
+    <p>Once your first agent is running successfully, the natural next step is expanding to multiple agents that work together — what's known as <strong>agent orchestration</strong>. This is where the real business transformation begins.</p>
+    
+    <div class="book-ref">
+      <div class="book-icon">📖</div>
+      <div>
+        <strong>Go deeper:</strong> The concept of building interconnected agent systems that run businesses autonomously is explored in depth in <em>The Autonomous Business</em> by Philippe from OpenClaw Intelligence, published by Novum Imperium Press. It provides a practical framework for scaling from your first agent to a fully autonomous business operation.
+      </div>
+    </div>
+
+    <p>Your first agent is proof that AI automation works for your specific business. Use that momentum to identify the next 2–3 processes to automate, and start thinking about how your agents can share context and collaborate. Read our <a href="/resources/ai-agent-orchestration">Complete Guide to AI Agent Orchestration</a> for the next step.</p>
+  </div>
+
+
+<div class="related">
+  <h3>More Guides</h3>
+  <a href="https://openclawintelligence.com/resources/ai-dpa-compliance-guide">AI Provider DPA Compliance Guide</a>
+<a href="https://openclawintelligence.com/resources/ai-automation-roi">AI Automation ROI: Calculate the Business Case</a>
+<a href="https://openclawintelligence.com/resources/ai-agent-orchestration">Guide to AI Agent Orchestration</a>
+<a href="https://openclawintelligence.com/resources/gdpr-ai-compliance-checklist">GDPR Compliance Checklist for AI-Powered Businesses</a>
+<a href="https://openclawintelligence.com/resources/business-automation-roadmap">From Manual to Autonomous: Your Business Automation Roadmap</a>
+</div>
+<div class="cta-banner">
+  <h3>Ready to automate your business?</h3>
+  <p>OpenClaw Intelligence designs, deploys, and manages AI agent systems for businesses across Europe.</p>
+  <a href="https://openclawintelligence.com/signup">Book a Free Consultation →</a>
+</div>
+
+</div>
+</main>
+<footer class="footer">
+  <p>© 2026 OpenClaw Intelligence B.V. · KvK 70891818 · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+</footer>

@@ -21,6 +21,7 @@
     </div>
     <div class="sb-section">
       <div class="sb-label">System</div>
+      <a class="sb-link" onclick="showTab(this,'contacts')"><span class="icon">✉️</span> Contacts</a>
       <a class="sb-link" data-tab="activity" onclick="showTab(this,'activity')"><span class="icon">📋</span> Activity Log</a>
       <a class="sb-link" href="#"><span class="icon">⚙️</span> Settings</a>
       <a class="sb-link" href="#"><span class="icon">🔑</span> API Keys</a>
@@ -212,6 +213,19 @@
       </div>
     </div>
 
+    <!-- ====== CONTACTS TAB ====== -->
+    <div class="tab-page" id="tab-contacts">
+      <div class="main-header"><div><h1>Contact Requests</h1><p>Latest contact form submissions</p></div></div>
+      <div class="card"><div class="card-body">
+        <table class="table">
+          <thead><tr><th>Ticket</th><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="contactsTable">
+            <tr><td colspan="5" style="text-align:center;color:var(--t3);padding:16px">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
     <!-- ====== ACTIVITY LOG TAB ====== -->
     <div class="tab-page" id="tab-activity">
       <div class="main-header"><div><h1>Activity Log</h1><p>Full audit trail of all system events</p></div><div class="header-actions"><button class="btn-sm btn-ghost">Export ↓</button></div></div>
@@ -271,4 +285,4 @@
   </div>
 </div>
 </div>
-<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>      </div>      <div>        <div class="footer__col-title">Company</div>        <a routerLink="/services" class="footer__link">Services</a>        <a routerLink="/saas" class="footer__link">SaaS Platform</a>        <a routerLink="/pricing" class="footer__link">Pricing</a>        <a routerLink="/contact" class="footer__link">Contact</a>      </div>      <div>        <div class="footer__col-title">Resources</div>        <a routerLink="/knowledge-base" class="footer__link">Knowledge Base</a>        <a href="#" class="footer__link">Blog</a>        <a href="#" class="footer__link">Case Studies</a>        <a href="#" class="footer__link">API Docs</a>      </div>      <div>        <div class="footer__col-title">Legal</div>        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>        <a routerLink="/terms" class="footer__link">Terms of Service</a>        <a href="#" class="footer__link">GDPR</a>      </div>    </div>    <div class="footer__bottom">      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>      <span>www.OpenClawIntelligence.com</span>    </div>  </div></footer>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="nav__logo" style="margin-bottom:var(--space-sm);"><img src="/assets/logo.svg" alt="OpenClaw Intelligence" class="nav__logo-img" />  <span style="font-size:18px;font-weight:700;letter-spacing:-0.5px;">Open<span style="color:var(--accent)">Claw</span> Intelligence</span></div><p>Enterprise-grade AI agent automation for businesses that refuse to stand still.</p>      </div>      <div>        <div class="footer__col-title">Company</div>        <a routerLink="/services" class="footer__link">Services</a>        <a routerLink="/saas" class="footer__link">SaaS Platform</a>        <a routerLink="/pricing" class="footer__link">Pricing</a>        <a routerLink="/contact" class="footer__link">Contact</a>      </div>      <div>        <div class="footer__col-title">Resources</div>        <a routerLink="/ai-model-comparison" class="footer__link">AI model chooser</a>        <a routerLink="/resources" class="footer__link">Resources</a>        <a href="#" class="footer__link">Case Studies</a>              </div>      <div>        <div class="footer__col-title">Legal</div>        <a routerLink="/privacy" class="footer__link">Privacy Policy</a>        <a routerLink="/terms" class="footer__link">Terms of Use</a>              </div>    </div>    <div class="footer__bottom">      <span>© 2026 OpenClaw Intelligence. All rights reserved.</span>      <span>www.OpenClawIntelligence.com</span>    </div>  </div></footer>

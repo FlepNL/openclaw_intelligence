@@ -1,0 +1,383 @@
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__back{font-size:13px;color:var(--t2);cursor:pointer;transition:color .2s;text-decoration:none}
+.nav__back:hover{color:var(--t1)}
+
+/* WRAP / HERO */
+.wrap{max-width:820px;margin:0 auto;padding:48px 32px 100px;position:relative;z-index:1}
+.hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--bdr)}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--coral);margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:10px}
+.hero .subtitle{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:12px;max-width:620px}
+.hero .meta-line{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);display:flex;gap:16px;flex-wrap:wrap}
+
+/* TOC */
+.toc{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin-bottom:48px}
+.toc h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.toc ol{list-style:none;counter-reset:toc;padding:0}
+.toc.two-col ol{columns:2;column-gap:24px}
+.toc li{counter-increment:toc;padding:5px 0;break-inside:avoid}
+.toc li a{color:var(--t2);text-decoration:none;font-size:13.5px;transition:color .2s;display:flex;gap:8px}
+.toc li a::before{content:counter(toc) ".";font-family:'JetBrains Mono',monospace;color:var(--coral);font-weight:600;min-width:24px}
+.toc li a:hover{color:var(--coral)}
+
+/* SECTIONS */
+.section{margin-bottom:48px}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:16px;padding-top:8px;color:var(--t1)}
+.section h2 .num{font-family:'JetBrains Mono',monospace;color:var(--coral);font-size:16px;margin-right:6px}
+.section h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--t1)}
+.section p{color:var(--t2);font-size:14.5px;margin-bottom:12px;line-height:1.8}
+.section ul,.section ol{color:var(--t2);font-size:14.5px;margin:0 0 16px 20px;line-height:1.8}
+.section li{margin-bottom:6px}
+.section strong{color:var(--t1);font-weight:600}
+.section a{color:var(--coral);text-decoration:none}
+.section a:hover{text-decoration:underline}
+.section code{font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:var(--phos)}
+
+/* CARDS / BOXES */
+.info-box{background:var(--bg3);border-left:3px solid var(--coral);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0;font-size:13.5px;color:var(--t2);line-height:1.7}
+.info-box strong{color:var(--t1)}
+.notable{background:rgba(0,229,160,.05);border-left:3px solid var(--phos);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:14px 0;font-size:13px;color:var(--t2);line-height:1.7}
+.notable strong{color:var(--phos)}
+.book-ref{background:rgba(255,77,58,.04);border:1px solid rgba(255,77,58,.12);border-radius:var(--r);padding:16px 20px;margin:20px 0;font-size:13px;color:var(--t2);line-height:1.7;display:flex;gap:14px;align-items:flex-start}
+.book-ref .book-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.book-ref strong{color:var(--t1)}
+.book-ref em{color:var(--coral);font-style:italic}
+
+/* STEP CARDS */
+.step-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:20px 0}
+.step-card:hover{border-color:var(--bdr2)}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--coral);margin-bottom:8px}
+.step-card h3{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:10px}
+
+/* COMPARISON TABLE */
+.comp-wrap{overflow-x:auto;margin:16px 0 20px;border-radius:var(--r);border:1px solid var(--bdr)}
+.comp-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px}
+.comp-table th{text-align:left;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--bdr);font-weight:600;background:var(--bg3);position:sticky;top:0;white-space:nowrap}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--bdr);color:var(--t2);vertical-align:top}
+.comp-table tbody tr:hover{background:var(--bg3)}
+.comp-table td:first-child{font-weight:600;color:var(--t1);white-space:nowrap}
+.yes{color:var(--phos)}.no{color:var(--coral)}
+
+/* PROVIDER CARD (DPA guide specific) */
+.provider-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;margin:20px 0 32px;transition:border-color .3s}
+.provider-card:hover{border-color:var(--bdr2)}
+.provider-card .provider-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.provider-card .provider-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.provider-card .provider-name{font-size:18px;font-weight:700;color:var(--t1)}
+.provider-card .provider-models{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-top:2px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-bottom:16px;padding:14px 16px;background:var(--bg4);border-radius:var(--r);font-size:13px}
+.meta-grid .meta-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:2px}
+.meta-grid .meta-val{color:var(--t2)}
+.meta-grid .meta-val a{color:var(--coral);text-decoration:none;word-break:break-all;font-size:12px}
+.meta-grid .meta-val a:hover{text-decoration:underline}
+.dpa-summary{margin:0 0 14px;color:var(--t2);font-size:13.5px;line-height:1.75}
+.dpa-summary li{margin-bottom:5px}
+
+/* CHECKLIST */
+.check-list{list-style:none;margin:12px 0 20px;padding:0}
+.check-list li{padding:8px 0 8px 32px;position:relative;color:var(--t2);font-size:14px;line-height:1.7;border-bottom:1px solid var(--bdr)}
+.check-list li::before{content:'☐';position:absolute;left:4px;top:8px;font-size:15px;color:var(--coral)}
+
+/* METRIC GRID */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:20px 0}
+.metric-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;text-align:center}
+.metric-box .metric-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--coral);margin-bottom:4px}
+.metric-box .metric-label{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+
+/* CROSS-LINKS */
+.related{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:48px 0 0}
+.related h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:14px}
+.related a{display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr);transition:color .2s}
+.related a:last-child{border-bottom:none}
+.related a:hover{color:var(--coral)}
+.related a::before{content:'→ ';color:var(--coral)}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:32px;margin:48px 0 0;text-align:center}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px}
+.cta-banner p{color:var(--t2);font-size:14px;margin-bottom:20px}
+.cta-banner a{display:inline-block;background:var(--coral);color:white;padding:12px 32px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s}
+.cta-banner a:hover{background:var(--coral-h)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+/* PHASE INDICATOR */
+.phase{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--bg);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.phase-1{background:var(--coral)}
+.phase-2{background:#ff8c42}
+.phase-3{background:#ffc857}
+.phase-4{background:var(--phos)}
+.phase-5{background:#00b4d8}
+
+@media(max-width:768px){
+  .wrap{padding:32px 20px 80px}
+  .toc.two-col ol{columns:1}
+  .meta-grid{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+  .metric-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<nav class="nav">
+  <a class="nav__brand" href="https://openclawintelligence.com">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+    Open<span>Claw</span> Intelligence
+  </a>
+  <a class="nav__back" href="https://openclawintelligence.com/resources">← Back to Resources</a>
+</nav>
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-label">Resources / Guides</div>
+    <h1>The Complete Guide to AI Agent Orchestration</h1>
+    <p class="subtitle">Master AI agent orchestration for business. Learn 4 core patterns (sequential, parallel, router, hierarchical), model mixing strategies, error handling, and framework comparison — n8n, LangGraph, CrewAI & more.</p>
+    <div class="meta-line">
+      <span>Last updated: 20 February 2026</span>
+      <span>·</span>
+      <span>16 min read</span>
+      <span>·</span>
+      <span>By OpenClaw Intelligence</span>
+    </div>
+  </div>
+
+
+  <div class="info-box">
+    <strong>What you'll learn:</strong> How to coordinate multiple AI agents into a unified system that handles complex business processes. Covers orchestration patterns, architecture decisions, communication protocols, error handling, and real-world multi-agent system design.
+  </div>
+
+  <div class="toc">
+    <h3>In This Guide</h3>
+    <ol>
+      <li><a href="#what">What Is AI Agent Orchestration</a></li>
+      <li><a href="#when">When You Need Multiple Agents</a></li>
+      <li><a href="#patterns">Core Orchestration Patterns</a></li>
+      <li><a href="#arch">Architecture: The Orchestrator Layer</a></li>
+      <li><a href="#comms">Agent Communication &amp; Context Sharing</a></li>
+      <li><a href="#state">State Management &amp; Memory</a></li>
+      <li><a href="#errors">Error Handling &amp; Fallback Chains</a></li>
+      <li><a href="#models">Mixing Models for Cost &amp; Performance</a></li>
+      <li><a href="#tools">Orchestration Frameworks &amp; Tools</a></li>
+      <li><a href="#scaling">Scaling Your Multi-Agent System</a></li>
+    </ol>
+  </div>
+
+  <div class="book-ref">
+    <div class="book-icon">📖</div>
+    <div>
+      <strong>This guide's foundation:</strong> The frameworks and patterns described here are drawn from real-world multi-agent implementations. For the full strategic playbook — including organizational change management and governance models — see <em>The Autonomous Business</em> by Philippe (Novum Imperium Press), which covers agent orchestration as the central architecture for building businesses that operate with minimal human intervention.
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <div class="section" id="what">
+    <h2><span class="num">1.</span> What Is AI Agent Orchestration</h2>
+    <p>AI agent orchestration is the coordination of multiple specialized AI agents working together to complete complex business processes. Instead of one monolithic agent trying to do everything, you design a team of focused agents — each expert in a specific domain — managed by an orchestration layer that routes tasks, shares context, and ensures the overall workflow completes successfully.</p>
+    <p>Think of it as the difference between a solo consultant and a specialized firm. A single agent can handle simple tasks well. But when a customer request involves checking inventory, calculating pricing, drafting a proposal, and scheduling a follow-up call, you need multiple specialized agents coordinating through a clear workflow.</p>
+    <div class="notable"><strong>The business case:</strong> Multi-agent systems typically handle 3–5× more complex workflows than single agents while maintaining higher accuracy, because each agent focuses on what it does best rather than being a generalist.</div>
+  </div>
+
+  <!-- 2 -->
+  <div class="section" id="when">
+    <h2><span class="num">2.</span> When You Need Multiple Agents</h2>
+    <p>Not every automation needs orchestration. Here's how to decide:</p>
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Signal</th><th>Single Agent</th><th>Multi-Agent</th></tr></thead>
+      <tbody>
+        <tr><td>Task complexity</td><td>1–3 steps</td><td>4+ steps across systems</td></tr>
+        <tr><td>Tools needed</td><td>2–5 tools</td><td>6+ tools or different domains</td></tr>
+        <tr><td>Context switching</td><td>Minimal</td><td>Frequent (billing → support → scheduling)</td></tr>
+        <tr><td>Model requirements</td><td>One model fits all tasks</td><td>Different tasks need different models</td></tr>
+        <tr><td>Error impact</td><td>Contained to one process</td><td>Cascading across systems</td></tr>
+        <tr><td>Volume</td><td>&lt;500 tasks/day</td><td>&gt;500 tasks/day with variety</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>If you see 3+ signals in the "Multi-Agent" column, it's time to think about orchestration. If you're still in the "Single Agent" column, a well-designed single agent with good tool management will serve you better — and cost less to maintain.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="section" id="patterns">
+    <h2><span class="num">3.</span> Core Orchestration Patterns</h2>
+    <p>There are four fundamental patterns for coordinating multiple agents. Most real-world systems combine two or more.</p>
+
+    <div class="step-card">
+      <div class="step-num">Pattern 1</div>
+      <h3>Sequential (Pipeline)</h3>
+      <p>Agents execute in a fixed order. Agent A processes input, passes the result to Agent B, which passes to Agent C. Like an assembly line.</p>
+      <p><strong>Best for:</strong> Document processing pipelines, data transformation chains, approval workflows.</p>
+      <p><strong>Example:</strong> Email arrives → Classifier Agent categorizes it → Responder Agent drafts reply → Compliance Agent checks for sensitive data → Sender Agent dispatches.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Pattern 2</div>
+      <h3>Parallel (Fan-out/Fan-in)</h3>
+      <p>Multiple agents work on different aspects of the same task simultaneously. Results are collected and combined.</p>
+      <p><strong>Best for:</strong> Research tasks, competitive analysis, multi-source data gathering.</p>
+      <p><strong>Example:</strong> Market research request → Price Agent checks pricing data + Review Agent analyzes customer feedback + Competitor Agent scans competitor sites → Synthesis Agent combines findings into report.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Pattern 3</div>
+      <h3>Router (Dynamic Dispatch)</h3>
+      <p>A routing agent analyzes incoming requests and dispatches them to the appropriate specialist agent based on content, intent, or rules.</p>
+      <p><strong>Best for:</strong> Customer support triage, multi-department request handling, service desks.</p>
+      <p><strong>Example:</strong> Customer message arrives → Router Agent determines intent → dispatches to Billing Agent, Technical Support Agent, or Sales Agent.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">Pattern 4</div>
+      <h3>Hierarchical (Manager-Worker)</h3>
+      <p>A manager agent breaks down complex tasks into subtasks, assigns them to worker agents, monitors progress, and coordinates the overall result.</p>
+      <p><strong>Best for:</strong> Complex project management, multi-step operations, workflows requiring judgment calls.</p>
+      <p><strong>Example:</strong> Manager Agent receives "Prepare quarterly report" → assigns data collection to Data Agent, chart generation to Visualization Agent, narrative writing to Content Agent → reviews and assembles final report.</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="section" id="arch">
+    <h2><span class="num">4.</span> Architecture: The Orchestrator Layer</h2>
+    <p>The orchestrator is the central coordination component that manages the flow of work between agents. Its responsibilities include:</p>
+    <ul>
+      <li><strong>Task routing:</strong> Determining which agent should handle each step</li>
+      <li><strong>Context management:</strong> Ensuring each agent receives the information it needs</li>
+      <li><strong>State tracking:</strong> Monitoring which steps are complete, in progress, or failed</li>
+      <li><strong>Result aggregation:</strong> Combining outputs from multiple agents into coherent results</li>
+      <li><strong>Error recovery:</strong> Detecting failures and activating fallback paths</li>
+      <li><strong>Human escalation:</strong> Knowing when to involve a person</li>
+    </ul>
+    <p>The orchestrator can itself be an AI agent (using a reasoning model like Claude Opus or GPT-4) or a deterministic program (code-based routing rules). For most business use cases, we recommend starting with <strong>code-based routing with AI fallback</strong> — use deterministic rules for 80% of cases and AI reasoning for the ambiguous 20%.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="section" id="comms">
+    <h2><span class="num">5.</span> Agent Communication &amp; Context Sharing</h2>
+    <p>Agents in a multi-agent system need a structured way to pass information between each other. The two main approaches:</p>
+    
+    <h3>Shared context object</h3>
+    <p>All agents read from and write to a shared state object (JSON document, database record). Each agent adds its outputs to the shared context before the next agent picks up. Simple, predictable, and easy to debug.</p>
+    
+    <h3>Message passing</h3>
+    <p>Agents communicate through a message queue (Redis, RabbitMQ, or simple event system). More flexible and scalable, but harder to debug. Better for high-volume systems or when agents run on different servers.</p>
+    
+    <div class="info-box"><strong>Rule of thumb:</strong> Use shared context for systems with fewer than 5 agents. Switch to message passing when you exceed 5 agents or need agents to operate independently across different infrastructure.</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="section" id="state">
+    <h2><span class="num">6.</span> State Management &amp; Memory</h2>
+    <p>In multi-agent systems, state management becomes critical. You need to track:</p>
+    <ul>
+      <li><strong>Workflow state:</strong> Which step is the process currently on? What's been completed?</li>
+      <li><strong>Agent state:</strong> Is each agent available, busy, or in error?</li>
+      <li><strong>Data state:</strong> What information has been collected and transformed so far?</li>
+      <li><strong>Conversation state:</strong> If agents interact with humans, what's the conversation history?</li>
+    </ul>
+    <p>Use a persistent store (database or state management service) for workflow and data state. Never rely on in-memory state for production multi-agent systems — a server restart would lose all progress on active workflows.</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="section" id="errors">
+    <h2><span class="num">7.</span> Error Handling &amp; Fallback Chains</h2>
+    <p>In orchestrated systems, failures are inevitable. What matters is how your system handles them. Implement these patterns:</p>
+    <ul>
+      <li><strong>Retry with backoff:</strong> Transient failures (API timeouts, rate limits) resolve with retries. Use exponential backoff.</li>
+      <li><strong>Agent substitution:</strong> If a primary agent fails, route to a backup agent using a different model or approach.</li>
+      <li><strong>Graceful degradation:</strong> If a non-critical agent fails, continue the workflow with reduced functionality rather than failing entirely.</li>
+      <li><strong>Circuit breaker:</strong> If an agent fails repeatedly, temporarily remove it from the pool and alert a human.</li>
+      <li><strong>Checkpoint recovery:</strong> Save state at each step so failed workflows can resume from the last successful checkpoint.</li>
+    </ul>
+    <div class="notable"><strong>Design principle:</strong> Every agent should have a clearly defined "I can't handle this" path that either escalates to another agent or to a human. Silent failures are the most dangerous kind.</div>
+  </div>
+
+  <!-- 8 -->
+  <div class="section" id="models">
+    <h2><span class="num">8.</span> Mixing Models for Cost &amp; Performance</h2>
+    <p>One of the biggest advantages of multi-agent systems is the ability to use different AI models for different agents, optimizing for both cost and capability:</p>
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Agent Role</th><th>Recommended Model Tier</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Router / Classifier</td><td>Small (Haiku, Flash)</td><td>Fast, cheap, only needs intent detection</td></tr>
+        <tr><td>Data extraction</td><td>Small–Medium</td><td>Structured output, doesn't need deep reasoning</td></tr>
+        <tr><td>Content generation</td><td>Medium (Sonnet, GPT-4o)</td><td>Quality matters for customer-facing output</td></tr>
+        <tr><td>Complex reasoning</td><td>Large (Opus, o1)</td><td>Multi-step logic, analysis, judgment calls</td></tr>
+        <tr><td>Compliance review</td><td>Medium–Large</td><td>Accuracy critical, needs broad knowledge</td></tr>
+        <tr><td>Orchestrator</td><td>Medium or Code-based</td><td>Balance of reasoning and cost efficiency</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>A well-designed multi-agent system where 60% of agents use small models, 30% use medium, and 10% use large models can reduce total API costs by 40–60% compared to using a single large model for everything.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="section" id="tools">
+    <h2><span class="num">9.</span> Orchestration Frameworks &amp; Tools</h2>
+    <p>You don't have to build orchestration from scratch. Here's a practical overview of the available tools:</p>
+    <div class="comp-wrap">
+    <table class="comp-table">
+      <thead><tr><th>Framework</th><th>Type</th><th>Best For</th><th>Complexity</th></tr></thead>
+      <tbody>
+        <tr><td>n8n</td><td>Visual / Low-code</td><td>Business automation workflows</td><td>Low</td></tr>
+        <tr><td>LangGraph</td><td>Code-first SDK</td><td>Complex state machines</td><td>High</td></tr>
+        <tr><td>CrewAI</td><td>Code-first SDK</td><td>Role-based agent teams</td><td>Medium</td></tr>
+        <tr><td>OpenAI Agents SDK</td><td>Code-first SDK</td><td>OpenAI ecosystem</td><td>Medium</td></tr>
+        <tr><td>Amazon Bedrock Agents</td><td>Enterprise Platform</td><td>AWS infrastructure</td><td>Medium</td></tr>
+        <tr><td>Azure AI Agent Service</td><td>Enterprise Platform</td><td>Microsoft ecosystem</td><td>Medium</td></tr>
+        <tr><td>Custom (Node.js/Python)</td><td>Code-first</td><td>Full control, specific needs</td><td>High</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>For businesses getting started, <strong>n8n</strong> combined with direct API calls offers the best balance of flexibility and accessibility. For developer teams building complex systems, <strong>LangGraph</strong> or <strong>custom code</strong> provides the most control.</p>
+    <p>At OpenClaw Intelligence, we build custom orchestration layers tailored to each client's specific infrastructure, compliance requirements, and workflow complexity — because no single framework fits every business perfectly.</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="section" id="scaling">
+    <h2><span class="num">10.</span> Scaling Your Multi-Agent System</h2>
+    <p>As your multi-agent system grows, keep these principles in mind:</p>
+    <ul>
+      <li><strong>Start with 2–3 agents</strong> in a simple sequential or router pattern. Prove it works before adding complexity.</li>
+      <li><strong>Add agents one at a time.</strong> Each new agent should solve a specific, measurable problem.</li>
+      <li><strong>Monitor relentlessly.</strong> Track per-agent performance, error rates, and costs. Dashboard visibility prevents surprise failures.</li>
+      <li><strong>Version your agents.</strong> When updating a prompt or model, deploy to a subset of traffic first.</li>
+      <li><strong>Plan for human oversight.</strong> Even the most autonomous system needs a human in the loop for edge cases and continuous improvement.</li>
+    </ul>
+    <p>The path from a single AI agent to a fully orchestrated multi-agent system is the path from automation to autonomy. For the complete strategic framework, our <a href="/resources/business-automation-roadmap">Business Automation Roadmap</a> provides a phased approach to this transformation.</p>
+  </div>
+
+
+<div class="related">
+  <h3>More Guides</h3>
+  <a href="https://openclawintelligence.com/resources/ai-dpa-compliance-guide">AI Provider DPA Compliance Guide</a>
+<a href="https://openclawintelligence.com/resources/build-ai-agent-business">Build Your First AI Agent for Business</a>
+<a href="https://openclawintelligence.com/resources/ai-automation-roi">AI Automation ROI: Calculate the Business Case</a>
+<a href="https://openclawintelligence.com/resources/gdpr-ai-compliance-checklist">GDPR Compliance Checklist for AI-Powered Businesses</a>
+<a href="https://openclawintelligence.com/resources/business-automation-roadmap">From Manual to Autonomous: Your Business Automation Roadmap</a>
+</div>
+<div class="cta-banner">
+  <h3>Ready to automate your business?</h3>
+  <p>OpenClaw Intelligence designs, deploys, and manages AI agent systems for businesses across Europe.</p>
+  <a href="https://openclawintelligence.com/signup">Book a Free Consultation →</a>
+</div>
+
+</div>
+</main>
+<footer class="footer">
+  <p>© 2026 OpenClaw Intelligence B.V. · KvK 70891818 · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+</footer>

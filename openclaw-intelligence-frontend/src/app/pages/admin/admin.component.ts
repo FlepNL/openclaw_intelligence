@@ -12,18 +12,7 @@ export class AdminComponent implements AfterViewInit {
   }
 
   private initAdmin(): void {
-    const users = [
-      {init:"PV",name:"Philippe V.",email:"philippe@flepholding.com",company:"Flep Holding B.V.",industry:"SaaS / Software",color:"linear-gradient(135deg,var(--coral),#ff8c6b)",services:["retainer","setup"],status:"active",joined:"Nov 20, 2025",mrr:"€2,997",spent:"€7,988",activity:[{dot:"coral",text:"Retainer renewed (€2,997)",time:"3 hours ago"},{dot:"blue",text:"Weekly Strategy completed",time:"Yesterday"}]},
-      {init:"MW",name:"Marcus Weber",email:"marcus@weberdigital.de",company:"Weber Digital",industry:"Marketing / Agency",color:"linear-gradient(135deg,var(--blue),#7ba8ff)",services:["enterprise"],status:"active",joined:"Jan 8, 2026",mrr:"€8,500",spent:"€11,497",activity:[{dot:"phos",text:"Upgraded to Enterprise",time:"Feb 16"},{dot:"coral",text:"Payment captured €8,500",time:"Feb 16"}]},
-      {init:"SC",name:"Sarah Chen",email:"sarah@nexuslabs.io",company:"Nexus Labs",industry:"E-commerce",color:"linear-gradient(135deg,var(--phos),#4deabc)",services:["retainer"],status:"active",joined:"Nov 28, 2025",mrr:"€2,997",spent:"€9,488",activity:[{dot:"warn",text:"Rescheduled meeting",time:"Yesterday"},{dot:"coral",text:"Retainer renewed",time:"Feb 1"}]},
-      {init:"DK",name:"David Kim",email:"david@kineticai.co",company:"Kinetic AI",industry:"Consulting",color:"linear-gradient(135deg,var(--warn),#ffd280)",services:["strategy"],status:"active",joined:"Feb 3, 2026",mrr:"—",spent:"€497",activity:[{dot:"blue",text:"Strategy Session completed",time:"Yesterday"},{dot:"phos",text:"Account created",time:"Feb 3"}]},
-      {init:"EM",name:"Elena Marchetti",email:"elena@marchetti.it",company:"Marchetti & Co",industry:"Finance / Fintech",color:"linear-gradient(135deg,var(--purple),#c4adfe)",services:["discovery"],status:"trial",joined:"Feb 18, 2026",mrr:"—",spent:"Free",activity:[{dot:"phos",text:"Signed up via Google",time:"2 min ago"},{dot:"blue",text:"Discovery Call booked",time:"2 min ago"}]},
-      {init:"LS",name:"Lisa Strand",email:"lisa@nordicgroup.se",company:"Nordic Group",industry:"Manufacturing",color:"linear-gradient(135deg,#e879a8,#ff6b9d)",services:["workshop"],status:"active",joined:"Feb 10, 2026",mrr:"—",spent:"€1,997",activity:[{dot:"warn",text:"Workshop booked Feb 28",time:"Feb 14"},{dot:"coral",text:"Payment €1,997",time:"Feb 14"}]},
-      {init:"TJ",name:"Tom Jensen",email:"tom@velocitysaas.com",company:"Velocity SaaS",industry:"SaaS / Software",color:"linear-gradient(135deg,#6bb8e0,#4d9ec8)",services:["setup"],status:"active",joined:"Feb 15, 2026",mrr:"—",spent:"€1,497",activity:[{dot:"blue",text:"Agent Setup in progress",time:"Feb 15"},{dot:"phos",text:"Account created",time:"Feb 15"}]},
-      {init:"AR",name:"Anna Rossi",email:"anna@rossifreelance.com",company:"Freelance",industry:"Marketing / Agency",color:"linear-gradient(135deg,#7be09d,#52c87b)",services:["retainer"],status:"cancelled",joined:"Oct 15, 2025",mrr:"—",spent:"€14,985",activity:[{dot:"phos",text:"Cancelled retainer",time:"Feb 13"},{dot:"coral",text:"Last payment €2,997",time:"Feb 1"}]},
-      {init:"JH",name:"Johan Hofer",email:"johan@alpinetech.ch",company:"Alpine Tech",industry:"Finance / Fintech",color:"linear-gradient(135deg,#8ca0c8,#6b82b0)",services:["retainer","strategy"],status:"active",joined:"Dec 5, 2025",mrr:"€2,997",spent:"€9,488",activity:[{dot:"coral",text:"Retainer renewed",time:"Feb 1"}]},
-      {init:"RM",name:"Rachel Martinez",email:"rachel@brightspark.co",company:"BrightSpark",industry:"E-commerce",color:"linear-gradient(135deg,#f0a060,#e88838)",services:["setup"],status:"active",joined:"Feb 8, 2026",mrr:"—",spent:"€1,994",activity:[{dot:"blue",text:"Agent Setup completed",time:"Feb 15"}]},
-    ];
+    const users: any[] = [];
 
     const tagMap: Record<string, string> = {retainer:'tag--retainer',setup:'tag--setup',strategy:'tag--strategy',discovery:'tag--discovery',workshop:'tag--workshop',enterprise:'tag--enterprise'};
     const tagLabel: Record<string, string> = {retainer:'Retainer',setup:'Agent Setup',strategy:'Strategy',discovery:'Discovery',workshop:'Workshop',enterprise:'Enterprise'};
@@ -103,7 +92,56 @@ export class AdminComponent implements AfterViewInit {
       }).join('');
     };
 
-    (window as any).renderUsers(users);
+    const token = localStorage.getItem('ociToken');
+    if (token) {
+      fetch('https://openclawintelligence.com/api/admin/users', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(r => r.json()).then((data:any) => {
+        if (data?.ok && Array.isArray(data.users)) {
+          const mapped = data.users.map((u:any) => {
+            const init = ((u.first_name||'')[0]||'') + ((u.last_name||'')[0]||'');
+            return {
+              init: init || 'U',
+              name: `${u.first_name || ''} ${u.last_name || ''}`.trim() || u.email,
+              email: u.email,
+              company: u.company || '—',
+              industry: u.industry || '—',
+              color: 'linear-gradient(135deg,var(--coral),#ff8c6b)',
+              services: [],
+              status: 'active',
+              joined: new Date(u.created_at).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' }),
+              mrr: '—',
+              spent: u.total_spent ? `€${u.total_spent}` : '€0',
+              activity: []
+            };
+          });
+          (window as any).renderUsers(mapped);
+        } else {
+          (window as any).renderUsers(users);
+        }
+      }).catch(() => (window as any).renderUsers(users));
+
+      fetch('https://openclawintelligence.com/api/admin/contacts', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(r => r.json()).then((data:any) => {
+        const tbody = document.getElementById('contactsTable');
+        if (!tbody) return;
+        if (!data?.ok || !Array.isArray(data.contacts) || data.contacts.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:16px">No contacts yet.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = data.contacts.map((c:any) => `
+          <tr>
+            <td>${c.ticket_id || '—'}</td>
+            <td>${c.first_name || ''} ${c.last_name || ''}</td>
+            <td>${c.email || ''}</td>
+            <td>${(c.message || '').slice(0,80)}</td>
+            <td>${new Date(c.created_at).toLocaleString()}</td>
+          </tr>`).join('');
+      }).catch(()=>{});
+    } else {
+      (window as any).renderUsers(users);
+    }
     (window as any).buildChart();
   }
 }

@@ -1,0 +1,771 @@
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--coral-s:rgba(255,77,58,.08);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__back{font-size:13px;color:var(--t2);cursor:pointer;transition:color .2s;text-decoration:none}
+.nav__back:hover{color:var(--t1)}
+
+.wrap{max-width:820px;margin:0 auto;padding:48px 32px 100px;position:relative;z-index:1}
+.hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--bdr)}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--coral);margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:10px}
+.hero .subtitle{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:12px;max-width:620px}
+.hero .updated{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+
+.toc{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin-bottom:48px}
+.toc h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.toc ol{list-style:none;counter-reset:toc;padding:0;columns:2;column-gap:24px}
+.toc li{counter-increment:toc;padding:5px 0;break-inside:avoid}
+.toc li a{color:var(--t2);text-decoration:none;font-size:13.5px;transition:color .2s;display:flex;gap:8px}
+.toc li a::before{content:counter(toc) ".";font-family:'JetBrains Mono',monospace;color:var(--coral);font-weight:600;min-width:24px}
+.toc li a:hover{color:var(--coral)}
+
+.section{margin-bottom:48px}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:16px;padding-top:8px;color:var(--t1)}
+.section h2 .num{font-family:'JetBrains Mono',monospace;color:var(--coral);font-size:16px;margin-right:6px}
+.section h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--t1)}
+.section p{color:var(--t2);font-size:14.5px;margin-bottom:12px;line-height:1.8}
+.section ul,.section ol{color:var(--t2);font-size:14.5px;margin:0 0 16px 20px;line-height:1.8}
+.section li{margin-bottom:6px}
+.section strong{color:var(--t1);font-weight:600}
+.section a{color:var(--coral);text-decoration:none}
+.section a:hover{text-decoration:underline}
+
+.provider-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;margin:20px 0 32px;transition:border-color .3s}
+.provider-card:hover{border-color:var(--bdr2)}
+.provider-card .provider-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.provider-card .provider-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.provider-card .provider-name{font-size:18px;font-weight:700;color:var(--t1)}
+.provider-card .provider-models{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-top:2px}
+
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-bottom:16px;padding:14px 16px;background:var(--bg4);border-radius:var(--r);font-size:13px}
+.meta-grid .meta-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:2px}
+.meta-grid .meta-val{color:var(--t2)}
+.meta-grid .meta-val a{color:var(--coral);text-decoration:none;word-break:break-all;font-size:12px}
+.meta-grid .meta-val a:hover{text-decoration:underline}
+
+.dpa-summary{margin:0 0 14px;color:var(--t2);font-size:13.5px;line-height:1.75}
+.dpa-summary li{margin-bottom:5px}
+
+.notable{background:rgba(0,229,160,.05);border-left:3px solid var(--phos);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:14px 0 0;font-size:13px;color:var(--t2);line-height:1.7}
+.notable strong{color:var(--phos)}
+
+.info-box{background:var(--bg3);border-left:3px solid var(--coral);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0;font-size:13px;color:var(--t2);line-height:1.7}
+.info-box strong{color:var(--t1)}
+
+/* Comparison table */
+.comp-wrap{overflow-x:auto;margin:16px 0 20px;border-radius:var(--r);border:1px solid var(--bdr)}
+.comp-table{width:100%;border-collapse:collapse;font-size:12px;min-width:750px}
+.comp-table th{text-align:left;padding:10px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--bdr);font-weight:600;background:var(--bg3);position:sticky;top:0;white-space:nowrap}
+.comp-table td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--t2);vertical-align:middle;white-space:nowrap}
+.comp-table tbody tr:hover{background:var(--bg3)}
+.comp-table td:first-child{font-weight:600;color:var(--t1)}
+.comp-table .yes{color:var(--phos)}
+.comp-table .no{color:var(--coral)}
+
+.contact-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px;margin:16px 0}
+.contact-card p{margin-bottom:4px}
+
+.cta-banner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:32px;margin:48px 0 0;text-align:center}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px}
+.cta-banner p{color:var(--t2);font-size:14px;margin-bottom:20px}
+.cta-banner a{display:inline-block;background:var(--coral);color:white;padding:12px 32px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s}
+.cta-banner a:hover{background:var(--coral-h)}
+
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+@media(max-width:768px){
+  .wrap{padding:32px 20px 80px}
+  .toc ol{columns:1}
+  .meta-grid{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+}
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI DPA Compliance Guide 2026 — Compare 10 Providers | OpenClaw Intelligence</title>
+<meta name="description" content="AI DPA compliance made simple. Compare Data Processing Agreements from OpenAI, Anthropic, Google, AWS, Microsoft & 5 more. Signing methods, GDPR terms, and training opt-out policies side by side.">
+<meta name="keywords" content="AI DPA, data processing agreement AI, GDPR AI compliance, AI provider DPA comparison, OpenAI DPA, Anthropic DPA, AWS DPA, GDPR cloud AI, AI data processing, DPA signing">
+<meta name="author" content="OpenClaw Intelligence">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://openclawintelligence.com/resources/ai-dpa-compliance-guide">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI DPA Compliance Guide 2026 — 10 Providers Compared">
+<meta property="og:description" content="AI DPA compliance made simple. Compare Data Processing Agreements from OpenAI, Anthropic, Google, AWS, Microsoft & 5 more. Signing methods, GDPR terms, and training opt-out policies side by side.">
+<meta property="og:url" content="https://openclawintelligence.com/resources/ai-dpa-compliance-guide">
+<meta property="og:site_name" content="OpenClaw Intelligence">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-19T00:00:00Z">
+<meta property="article:modified_time" content="2026-02-20T00:00:00Z">
+<meta property="article:author" content="OpenClaw Intelligence">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI DPA Compliance Guide 2026 — 10 Providers Compared">
+<meta name="twitter:description" content="AI DPA compliance made simple. Compare Data Processing Agreements from OpenAI, Anthropic, Google, AWS, Microsoft & 5 more. Signing methods, GDPR terms, and training opt-out policies side by side.">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Provider DPA Compliance Guide",
+  "description": "Complete 2026 guide to Data Processing Agreements (DPAs) for the top 10 AI cloud providers.",
+  "author": {"@type": "Organization", "name": "OpenClaw Intelligence", "url": "https://openclawintelligence.com"},
+  "publisher": {"@type": "Organization", "name": "OpenClaw Intelligence", "url": "https://openclawintelligence.com", "logo": {"@type": "ImageObject", "url": "https://openclawintelligence.com/logo.png"}},
+  "datePublished": "2026-02-19",
+  "dateModified": "2026-02-20",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://openclawintelligence.com/resources/ai-dpa-compliance-guide"},
+  "wordCount": "4200",
+  "keywords": "AI DPA, data processing agreement AI, GDPR AI compliance, AI provider DPA comparison"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://openclawintelligence.com"},
+    {"@type":"ListItem","position":2,"name":"Resources","item":"https://openclawintelligence.com/resources"},
+    {"@type":"ListItem","position":3,"name":"Guides","item":"https://openclawintelligence.com/resources/guides"},
+    {"@type":"ListItem","position":4,"name":"AI Provider DPA Compliance Guide"}
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--bg4:#1c1c28;--t1:#f0eff4;--t2:#9895a7;--t3:#5c586b;--coral:#ff4d3a;--coral-h:#ff6b5a;--coral-g:rgba(255,77,58,.15);--coral-s:rgba(255,77,58,.08);--phos:#00e5a0;--phos-d:rgba(0,229,160,.12);--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.12);--r:10px;--rl:16px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);line-height:1.75}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bdr);position:relative;z-index:10}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--t1);text-decoration:none}
+.nav__brand span{color:var(--coral)}
+.nav__brand svg{width:28px;height:28px}
+.nav__back{font-size:13px;color:var(--t2);cursor:pointer;transition:color .2s;text-decoration:none}
+.nav__back:hover{color:var(--t1)}
+
+.wrap{max-width:820px;margin:0 auto;padding:48px 32px 100px;position:relative;z-index:1}
+.hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--bdr)}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--coral);margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:10px}
+.hero .subtitle{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:12px;max-width:620px}
+.hero .updated{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+
+.toc{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin-bottom:48px}
+.toc h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.toc ol{list-style:none;counter-reset:toc;padding:0;columns:2;column-gap:24px}
+.toc li{counter-increment:toc;padding:5px 0;break-inside:avoid}
+.toc li a{color:var(--t2);text-decoration:none;font-size:13.5px;transition:color .2s;display:flex;gap:8px}
+.toc li a::before{content:counter(toc) ".";font-family:'JetBrains Mono',monospace;color:var(--coral);font-weight:600;min-width:24px}
+.toc li a:hover{color:var(--coral)}
+
+.section{margin-bottom:48px}
+.section h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:16px;padding-top:8px;color:var(--t1)}
+.section h2 .num{font-family:'JetBrains Mono',monospace;color:var(--coral);font-size:16px;margin-right:6px}
+.section h3{font-size:15px;font-weight:600;margin:18px 0 8px;color:var(--t1)}
+.section p{color:var(--t2);font-size:14.5px;margin-bottom:12px;line-height:1.8}
+.section ul,.section ol{color:var(--t2);font-size:14.5px;margin:0 0 16px 20px;line-height:1.8}
+.section li{margin-bottom:6px}
+.section strong{color:var(--t1);font-weight:600}
+.section a{color:var(--coral);text-decoration:none}
+.section a:hover{text-decoration:underline}
+
+.provider-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;margin:20px 0 32px;transition:border-color .3s}
+.provider-card:hover{border-color:var(--bdr2)}
+.provider-card .provider-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.provider-card .provider-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.provider-card .provider-name{font-size:18px;font-weight:700;color:var(--t1)}
+.provider-card .provider-models{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-top:2px}
+
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-bottom:16px;padding:14px 16px;background:var(--bg4);border-radius:var(--r);font-size:13px}
+.meta-grid .meta-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:2px}
+.meta-grid .meta-val{color:var(--t2)}
+.meta-grid .meta-val a{color:var(--coral);text-decoration:none;word-break:break-all;font-size:12px}
+.meta-grid .meta-val a:hover{text-decoration:underline}
+
+.dpa-summary{margin:0 0 14px;color:var(--t2);font-size:13.5px;line-height:1.75}
+.dpa-summary li{margin-bottom:5px}
+
+.notable{background:rgba(0,229,160,.05);border-left:3px solid var(--phos);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:14px 0 0;font-size:13px;color:var(--t2);line-height:1.7}
+.notable strong{color:var(--phos)}
+
+.info-box{background:var(--bg3);border-left:3px solid var(--coral);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0;font-size:13px;color:var(--t2);line-height:1.7}
+.info-box strong{color:var(--t1)}
+
+/* Comparison table */
+.comp-wrap{overflow-x:auto;margin:16px 0 20px;border-radius:var(--r);border:1px solid var(--bdr)}
+.comp-table{width:100%;border-collapse:collapse;font-size:12px;min-width:750px}
+.comp-table th{text-align:left;padding:10px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--bdr);font-weight:600;background:var(--bg3);position:sticky;top:0;white-space:nowrap}
+.comp-table td{padding:9px 10px;border-bottom:1px solid var(--bdr);color:var(--t2);vertical-align:middle;white-space:nowrap}
+.comp-table tbody tr:hover{background:var(--bg3)}
+.comp-table td:first-child{font-weight:600;color:var(--t1)}
+.comp-table .yes{color:var(--phos)}
+.comp-table .no{color:var(--coral)}
+
+.contact-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px;margin:16px 0}
+.contact-card p{margin-bottom:4px}
+
+.cta-banner{background:linear-gradient(135deg,rgba(255,77,58,.08),rgba(0,229,160,.06));border:1px solid var(--bdr);border-radius:var(--rl);padding:32px;margin:48px 0 0;text-align:center}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px}
+.cta-banner p{color:var(--t2);font-size:14px;margin-bottom:20px}
+.cta-banner a{display:inline-block;background:var(--coral);color:white;padding:12px 32px;border-radius:var(--r);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s}
+.cta-banner a:hover{background:var(--coral-h)}
+
+.footer{border-top:1px solid var(--bdr);padding:32px;text-align:center;position:relative;z-index:1}
+.footer p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3)}
+.footer a{color:var(--coral);text-decoration:none}
+
+@media(max-width:768px){
+  .wrap{padding:32px 20px 80px}
+  .toc ol{columns:1}
+  .meta-grid{grid-template-columns:1fr}
+  .nav{padding:14px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav__brand" href="#">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b5a"/><stop offset="100%" stop-color="#e63a28"/></linearGradient><linearGradient id="p1" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00e5a0"/><stop offset="100%" stop-color="#00c890"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M16 18C19 16 27 14 31 20C35 26 34 32 32 36" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M32 10C36 9 42 14 43 22C44 30 40 38 34 42" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M48 18C50 22 50 30 47 36C44 42 39 45 35 45" stroke="url(#c1)" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="33" cy="44" r="4.5" fill="url(#p1)"/><circle cx="33" cy="44" r="2" fill="#0a0a0f"/></svg>
+    Open<span>Claw</span> Intelligence
+  </a>
+  <a class="nav__back" href="#">← Back to Resources</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-label">Resources / Guides</div>
+    <h1>AI Provider DPA Compliance Guide</h1>
+    <p class="subtitle">AI DPA compliance made simple. Compare Data Processing Agreements from OpenAI, Anthropic, Google, AWS, Microsoft & 5 more. Signing methods, GDPR terms, and training opt-out policies side by side.</p>
+    <div class="updated">Last updated: 20 February 2026 · 18 min read · By OpenClaw Intelligence</div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="info-box">
+    <strong>Why this matters:</strong> When using AI cloud APIs to process personal data on behalf of clients, a Data Processing Agreement (DPA) under Art. 28 GDPR is legally required. Without a valid DPA, you risk fines up to €10 million or 2% of annual global turnover. This guide maps the DPA landscape across all major AI providers.
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>Providers</h3>
+    <ol>
+      <li><a href="#openai">OpenAI</a></li>
+      <li><a href="#anthropic">Anthropic</a></li>
+      <li><a href="#google">Google Cloud</a></li>
+      <li><a href="#microsoft">Microsoft Azure</a></li>
+      <li><a href="#aws">Amazon Web Services</a></li>
+      <li><a href="#mistral">Mistral AI</a></li>
+      <li><a href="#xai">xAI</a></li>
+      <li><a href="#cohere">Cohere</a></li>
+      <li><a href="#ibm">IBM</a></li>
+      <li><a href="#huggingface">Hugging Face</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. OPENAI -->
+  <div class="section" id="openai">
+    <h2><span class="num">1.</span> OpenAI</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#10a37f,#1a7f5a)">🤖</div>
+        <div>
+          <div class="provider-name">OpenAI</div>
+          <div class="provider-models">GPT-4o · o1 · o3 · DALL·E · Whisper</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://openai.com/policies/data-processing-addendum/" target="_blank">openai.com/policies/data-processing-addendum</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Online form (requires legal name + Org ID)</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">OpenAI OpCo, LLC / OpenAI Ireland Ltd. (EEA)</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Business/API accounts only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>OpenAI acts as <strong>Data Processor</strong>; customer is Data Controller</li>
+        <li>Applies to API, ChatGPT Enterprise/Business/Team — not consumer ChatGPT</li>
+        <li>API inputs/outputs retained for <strong>max 30 days</strong>, then deleted</li>
+        <li>EU SCCs (Module 2: Controller-to-Processor) and UK Addendum included</li>
+        <li>Annual compliance audit right; SOC 2 report as alternative</li>
+        <li>Subprocessor list with 30-day objection window</li>
+        <li>Explicit CCPA commitments: will not "sell" or "share" customer data</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> OpenAI Ireland Ltd. is the contracting entity for EEA/Swiss customers, providing native GDPR jurisdiction. You must actively fill out the DPA form via the enterprise privacy page — it is not auto-incorporated. No DPA is available for free-tier consumer products.</div>
+    </div>
+  </div>
+
+  <!-- 2. ANTHROPIC -->
+  <div class="section" id="anthropic">
+    <h2><span class="num">2.</span> Anthropic</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#d4a574,#c4956a)">🧠</div>
+        <div>
+          <div class="provider-name">Anthropic</div>
+          <div class="provider-models">Claude Opus · Sonnet · Haiku</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://www.anthropic.com/legal/commercial-terms" target="_blank">anthropic.com/legal/commercial-terms</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-incorporated (accept ToS = accept DPA)</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">Anthropic PBC (Public Benefit Corporation)</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Commercial plans only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Anthropic acts as <strong>Data Processor</strong>; DPA auto-incorporated with SCCs</li>
+        <li>Applies to API, Console, Team & Enterprise plans</li>
+        <li>EU SCCs Module 2 + Module 3, UK and Swiss addenda included</li>
+        <li>15-day advance notice for new subprocessors with objection right</li>
+        <li>Explicit prohibition on selling or sharing customer data</li>
+        <li>30-day data return/deletion after termination</li>
+        <li>Zero Data Retention (ZDR) and BAA (HIPAA) agreements available</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> The simplest DPA process of any major provider — no form, no countersigning. Accepting the Commercial Terms of Service automatically incorporates the DPA with Standard Contractual Clauses. Also offers Zero Data Retention for maximum data minimisation.</div>
+    </div>
+  </div>
+
+  <!-- 3. GOOGLE -->
+  <div class="section" id="google">
+    <h2><span class="num">3.</span> Google Cloud</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#4285f4,#34a853)">☁️</div>
+        <div>
+          <div class="provider-name">Google Cloud / Gemini API</div>
+          <div class="provider-models">Gemini 2.0 · Vertex AI · Google AI Studio</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page (Cloud)</div>
+          <div class="meta-val"><a href="https://cloud.google.com/terms/data-processing-addendum" target="_blank">cloud.google.com/terms/data-processing-addendum</a></div>
+        </div>
+        <div>
+          <div class="meta-label">DPA Page (Gemini API)</div>
+          <div class="meta-val"><a href="https://business.safety.google/processorterms/" target="_blank">business.safety.google/processorterms</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-incorporated into Cloud ToS</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Paid tier only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Google acts as <strong>Data Processor</strong> for Cloud Platform and paid Gemini API</li>
+        <li>Comprehensive appendices covering GDPR, CCPA, LGPD, PIPL, and more</li>
+        <li><strong>Paid</strong> Gemini API: prompts/responses not used for model training</li>
+        <li><strong>Free/unpaid</strong> Gemini API: data may be used for model improvement</li>
+        <li>ISO 27001, SOC 2/3 audited; customer audit rights via compliance reports</li>
+        <li>Customer chooses data region; encrypted at rest and in transit</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> Google differentiates sharply between <strong>paid</strong> and <strong>unpaid</strong> tiers. On the free tier (Google AI Studio, unpaid Gemini API), prompts can be reviewed by humans and used for model improvement. On paid tiers, they are not. Only the paid tier provides proper processor-grade GDPR protections. The Cloud DPA (CDPA) is one of the most comprehensive in the industry.</div>
+    </div>
+  </div>
+
+  <!-- 4. MICROSOFT -->
+  <div class="section" id="microsoft">
+    <h2><span class="num">4.</span> Microsoft Azure</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#0078d4,#005a9e)">⚡</div>
+        <div>
+          <div class="provider-name">Microsoft Azure AI</div>
+          <div class="provider-models">Azure OpenAI · Azure AI Services · Copilot Studio</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA" target="_blank">microsoft.com/.../DPA</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-included with Azure subscription</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">Microsoft Corporation / Ireland</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Azure subscription required</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Microsoft acts as <strong>Data Processor</strong> for all Azure services including Azure OpenAI</li>
+        <li>Azure OpenAI data stays within Microsoft — <strong>not shared with OpenAI</strong></li>
+        <li>Prompts/completions <strong>not used to train</strong> any Microsoft or OpenAI models</li>
+        <li>EU Data Boundary commitments for Core Online Services</li>
+        <li>Law enforcement redirect: Microsoft will direct requests to the customer first</li>
+        <li>EU SCCs, UK Addendum; SOC 1/2, ISO 27001/27018 certified</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> Azure OpenAI operates under <strong>Microsoft's DPA</strong>, not OpenAI's. Data submitted to Azure OpenAI remains entirely within Microsoft's control and is never shared with OpenAI. Microsoft also provides EU Data Boundary services for select services. Since January 2026, Anthropic models are available as a Microsoft subprocessor under the same DPA.</div>
+    </div>
+  </div>
+
+  <!-- 5. AWS -->
+  <div class="section" id="aws">
+    <h2><span class="num">5.</span> Amazon Web Services</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#ff9900,#e68a00)">🔶</div>
+        <div>
+          <div class="provider-name">AWS</div>
+          <div class="provider-models">Amazon Bedrock · SageMaker · Titan</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://d1.awsstatic.com/legal/aws-dpa/aws-dpa.pdf" target="_blank">d1.awsstatic.com/legal/aws-dpa/aws-dpa.pdf</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-incorporated (Service Terms §1.14)</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">Amazon Web Services, Inc.</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">✅ Global DPA applies to all customers</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>AWS acts as <strong>Data Processor</strong>; customer is Controller or Processor</li>
+        <li><strong>Global DPA</strong> — applies worldwide regardless of jurisdiction</li>
+        <li>EU SCCs, UK GDPR Addendum, Swiss FDPA Addendum, CCPA Terms — all auto-incorporated</li>
+        <li>Supplementary Addendum with strengthened post-Schrems II commitments</li>
+        <li>Customer controls data region, encryption, and access via console/APIs</li>
+        <li>Annual ISO 27001 audit; SOC 2/3 reports available under NDA</li>
+        <li>90-day data retrieval window after account closure</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> AWS's <strong>Global DPA</strong> is uniquely broad — a single addendum covering all jurisdictions worldwide, eliminating the need for country-specific DPAs. First major cloud provider to adopt this approach. For Amazon Bedrock, third-party models have their own EULAs layered on top, but the AWS DPA governs infrastructure-level processing. No additional action is required from existing customers.</div>
+    </div>
+  </div>
+
+  <!-- 6. MISTRAL -->
+  <div class="section" id="mistral">
+    <h2><span class="num">6.</span> Mistral AI</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#f54f29,#d43e1b)">🇫🇷</div>
+        <div>
+          <div class="provider-name">Mistral AI</div>
+          <div class="provider-models">Mistral Large · Codestral · Pixtral · Le Chat</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://legal.mistral.ai/terms/data-processing-addendum" target="_blank">legal.mistral.ai/terms/data-processing-addendum</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-accepted with Terms of Service</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">Mistral AI (French SAS) — 🇪🇺 EU-native</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ La Plateforme (paid) only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Mistral AI acts as <strong>Data Processor</strong> under Art. 28 GDPR</li>
+        <li>French and EU data protection law as primary framework</li>
+        <li>EU SCCs Module 4 (Processor-to-Controller) for international transfers</li>
+        <li>Subprocessor list on Trust Center; email subscription for change notifications</li>
+        <li>10-day objection period for new subprocessors</li>
+        <li>Zero Data Retention available for API customers</li>
+        <li>30-day data retention post-termination, then deletion</li>
+        <li>One annual audit right with 30-day advance notice</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> As an <strong>EU-native company</strong> (headquartered in Paris), Mistral has a natural GDPR advantage. All infrastructure is hosted in the EU with no transatlantic data transfers required by default. Enterprise customers can disable features involving non-EU transfers. Le Chat Pro inputs are not used for model training. Strongest choice for EU data sovereignty.</div>
+    </div>
+  </div>
+
+  <!-- 7. XAI -->
+  <div class="section" id="xai">
+    <h2><span class="num">7.</span> xAI</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#1d1d1f,#333)">𝕏</div>
+        <div>
+          <div class="provider-name">xAI</div>
+          <div class="provider-models">Grok 3 · Grok API</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://x.ai/legal/data-processing-addendum" target="_blank">x.ai/legal/data-processing-addendum</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-incorporated into Enterprise ToS</div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">X.AI LLC (USA)</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Enterprise/API only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>xAI acts as <strong>Data Processor</strong>; applies to Enterprise/API only</li>
+        <li>Business data (inputs/outputs) <strong>not used for model training</strong> by default</li>
+        <li>EU SCCs and provisions for European & U.S. privacy laws</li>
+        <li>15-day notice for subprocessor changes with objection right</li>
+        <li>Security measures detailed in Appendix 2</li>
+        <li>xAI may modify DPA but cannot decrease protection level</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> xAI has a <strong>complex regulatory history</strong> in Europe. The Irish DPC forced X/xAI to permanently suspend EU public post data processing for Grok training (Sept 2024) and opened a statutory inquiry in April 2025. Customers are explicitly prohibited from submitting large volumes of personal data, sensitive data (Art. 9), PHI, or PCI data without prior arrangement. BAA questionnaire available for HIPAA.</div>
+    </div>
+  </div>
+
+  <!-- 8. COHERE -->
+  <div class="section" id="cohere">
+    <h2><span class="num">8.</span> Cohere</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#39d1a3,#2ba87f)">🍁</div>
+        <div>
+          <div class="provider-name">Cohere</div>
+          <div class="provider-models">Command R+ · Embed · Rerank · North</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val">On request — <a href="/cdn-cgi/l/email-protection#3f4f4d56495e5c467f5c50575a4d5a115c5052"><span class="__cf_email__" data-cfemail="8bfbf9e2fdeae8f2cbe8e4e3eef9eea5e8e4e6">[email&#160;protected]</span></a></div>
+        </div>
+        <div>
+          <div class="meta-label">Trust Center</div>
+          <div class="meta-val"><a href="https://trustcenter.cohere.com/" target="_blank">trustcenter.cohere.com</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Entity</div>
+          <div class="meta-val">Cohere Inc. (Canada 🇨🇦)</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ SaaS Platform customers only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Cohere acts as <strong>Data Processor</strong> for SaaS Platform usage</li>
+        <li>Multi-jurisdictional DPA covering GDPR, CCPA, and more</li>
+        <li>EU SCCs (approved 4 June 2021 version) included</li>
+        <li>SaaS Platform: prompts/generations <strong>auto-deleted after 30 days</strong></li>
+        <li>Training opt-out via Dashboard Settings → Data Controls</li>
+        <li>No DPA needed for private/third-party cloud deployments</li>
+        <li>SOC 2 Type II, ISO 27001 certified</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> Cohere's DPA model is <strong>deployment-dependent</strong>. For private deployments or access via AWS/GCP/Azure, Cohere never sees your data — the cloud provider's DPA covers processing. DPA is only relevant for the SaaS Platform. Cohere's "North" platform uniquely supports on-premises and air-gapped deployment for true data sovereignty.</div>
+    </div>
+  </div>
+
+  <!-- 9. IBM -->
+  <div class="section" id="ibm">
+    <h2><span class="num">9.</span> IBM</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#0f62fe,#0043ce)">🔵</div>
+        <div>
+          <div class="provider-name">IBM</div>
+          <div class="provider-models">watsonx.ai · Granite · watsonx.data</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://www.ibm.com/trust/privacy" target="_blank">ibm.com/trust/privacy</a></div>
+        </div>
+        <div>
+          <div class="meta-label">IBM Terms</div>
+          <div class="meta-val"><a href="https://www.ibm.com/support/customer/csol/terms/" target="_blank">ibm.com/support/customer/csol/terms</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Auto-applied in IBM Cloud agreement</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Cloud subscription required</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>IBM acts as <strong>Data Processor</strong>; DPA extended to all data protection laws globally</li>
+        <li>Service-specific DPA Exhibits detail data categories, retention, and TOMs</li>
+        <li>EU SCCs concluded between IBM Data Importers and customer</li>
+        <li>Auto-notification subscriptions for DPA Exhibit and subprocessor changes</li>
+        <li>SOC 2, ISO 27001/27017/27018 certified</li>
+        <li>HIPAA support via BAA with explicit opt-in</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> IBM's DPA structure is the most <strong>granular</strong> of any provider. Each Cloud Service (watsonx.ai, watsonx.data, etc.) has its own DPA Exhibit detailing exactly what data is processed, which categories, and what retention applies. This gives the most precise GDPR compliance documentation but requires reviewing multiple exhibits.</div>
+    </div>
+  </div>
+
+  <!-- 10. HUGGING FACE -->
+  <div class="section" id="huggingface">
+    <h2><span class="num">10.</span> Hugging Face</h2>
+    <div class="provider-card">
+      <div class="provider-head">
+        <div class="provider-icon" style="background:linear-gradient(135deg,#ffd21e,#ffb800)">🤗</div>
+        <div>
+          <div class="provider-name">Hugging Face</div>
+          <div class="provider-models">Inference Endpoints · Inference API · Enterprise Hub</div>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-label">DPA Page</div>
+          <div class="meta-val"><a href="https://cdn-media.huggingface.co/landing/assets/Data+Processing+Agreement.pdf" target="_blank">Hugging Face DPA (PDF)</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Enterprise Hub</div>
+          <div class="meta-val"><a href="https://huggingface.co/enterprise" target="_blank">huggingface.co/enterprise</a></div>
+        </div>
+        <div>
+          <div class="meta-label">Signing Method</div>
+          <div class="meta-val">Enterprise plan onboarding</div>
+        </div>
+        <div>
+          <div class="meta-label">Free Tier DPA</div>
+          <div class="meta-val">❌ Enterprise plan only</div>
+        </div>
+      </div>
+      <ul class="dpa-summary">
+        <li>Hugging Face Inc. acts as <strong>Data Processor</strong></li>
+        <li>Multi-jurisdictional: GDPR, CCPA, Swiss DPA, and others</li>
+        <li>EU SCCs incorporated by reference (prevail over main DPA in conflict)</li>
+        <li>Enterprise plans: log-less requests and private network access (AWS PrivateLink)</li>
+        <li>SOC 2 Type 2 certified; Role-Based Access Control on Hub</li>
+        <li>Self-hosted models from Hub require no DPA with Hugging Face</li>
+      </ul>
+      <div class="notable"><strong>Notable:</strong> Hugging Face is both a <strong>model hub</strong> and an <strong>inference provider</strong>. The DPA only applies to managed Inference Endpoints and Enterprise Hub. For self-hosted models downloaded from the Hub, no DPA is needed since Hugging Face never processes your data. The GDPR DPA is only available through the Enterprise plan — essential to upgrade for production workloads involving personal data.</div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section" id="comparison">
+    <h2>Quick Comparison Matrix</h2>
+    <div class="comp-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Location</th>
+            <th>Signing</th>
+            <th>Free DPA</th>
+            <th>No Training</th>
+            <th>ZDR</th>
+            <th>EU Hosting</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>OpenAI</td><td>US / Ireland</td><td>Online form</td><td class="no">❌</td><td class="yes">✅ API</td><td class="yes">✅</td><td>Via entity</td></tr>
+          <tr><td>Anthropic</td><td>US (PBC)</td><td>Auto</td><td class="no">❌</td><td class="yes">✅ API</td><td class="yes">✅</td><td>Via SCCs</td></tr>
+          <tr><td>Google Cloud</td><td>US / Ireland</td><td>Auto</td><td class="no">❌</td><td class="yes">✅ Paid</td><td class="no">30d</td><td class="yes">✅ Region</td></tr>
+          <tr><td>Microsoft Azure</td><td>US / Ireland</td><td>Auto</td><td class="no">❌</td><td class="yes">✅</td><td class="yes">✅</td><td class="yes">✅ EU Boundary</td></tr>
+          <tr><td>AWS</td><td>US</td><td>Auto</td><td class="yes">✅ Global</td><td class="yes">✅</td><td class="yes">✅</td><td class="yes">✅ Region</td></tr>
+          <tr><td>Mistral AI</td><td>🇫🇷 France</td><td>Auto</td><td class="no">❌</td><td class="yes">✅ Paid</td><td class="yes">✅</td><td class="yes">✅ Native</td></tr>
+          <tr><td>xAI</td><td>US</td><td>Auto</td><td class="no">❌</td><td class="yes">✅ API</td><td class="yes">✅ Partner</td><td>Via SCCs</td></tr>
+          <tr><td>Cohere</td><td>🇨🇦 Canada</td><td>Email</td><td class="no">❌</td><td class="yes">✅ Toggle</td><td class="yes">✅</td><td>Via deploy</td></tr>
+          <tr><td>IBM</td><td>US</td><td>Auto</td><td class="no">❌</td><td class="yes">✅</td><td>Svc-specific</td><td class="yes">✅ Region</td></tr>
+          <tr><td>Hugging Face</td><td>US</td><td>Enterprise</td><td class="no">❌</td><td>N/A</td><td class="yes">✅ Ent.</td><td class="yes">✅ Region</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--t3)"><strong>ZDR</strong> = Zero Data Retention · <strong>No Training</strong> = customer data not used for model training by default</p>
+  </div>
+
+  <!-- KEY TAKEAWAYS -->
+  <div class="section" id="takeaways">
+    <h2>Key Takeaways</h2>
+    <div class="info-box">
+      <p style="margin-bottom:12px"><strong>1. DPAs are mandatory.</strong> As a business processing client data through AI APIs, you need a valid DPA (Art. 28 GDPR) with every provider whose API you use to process personal data.</p>
+      <p style="margin-bottom:12px"><strong>2. Most are auto-incorporated.</strong> Anthropic, Google, Microsoft, AWS, and Mistral require no separate signing. OpenAI requires an online form. Cohere requires email. Hugging Face requires Enterprise plan.</p>
+      <p style="margin-bottom:12px"><strong>3. Free tiers lack coverage.</strong> Always use business/paid API tiers for client work involving personal data.</p>
+      <p style="margin-bottom:12px"><strong>4. EU data sovereignty.</strong> Mistral AI (France) offers the strongest EU-native option. Azure provides EU Data Boundary. AWS and Google offer region selection.</p>
+      <p style="margin-bottom:12px"><strong>5. Azure OpenAI ≠ OpenAI.</strong> Azure OpenAI data stays within Microsoft and is never shared with OpenAI — a crucial compliance distinction.</p>
+      <p style="margin-bottom:12px"><strong>6. Document everything.</strong> Maintain a register of provider DPAs per client engagement (Art. 30 GDPR). Subscribe to subprocessor notifications for each provider you use.</p>
+      <p style="margin-bottom:0"><strong>7. Review regularly.</strong> DPAs evolve. Set calendar reminders to check for updates, especially after major regulatory changes.</p>
+    </div>
+  </div>
+
+  <!-- RELATED GUIDES -->
+  <div style="background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px 28px;margin:48px 0 0">
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:14px">More Guides</h3>
+    <a href="https://openclawintelligence.com/resources/build-ai-agent-business" style="display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr)"><span style="color:var(--coral)">→</span> Build Your First AI Agent for Business</a>
+    <a href="https://openclawintelligence.com/resources/ai-automation-roi" style="display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr)"><span style="color:var(--coral)">→</span> AI Automation ROI: How to Calculate the Business Case</a>
+    <a href="https://openclawintelligence.com/resources/ai-agent-orchestration" style="display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr)"><span style="color:var(--coral)">→</span> The Complete Guide to AI Agent Orchestration</a>
+    <a href="https://openclawintelligence.com/resources/gdpr-ai-compliance-checklist" style="display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px;border-bottom:1px solid var(--bdr)"><span style="color:var(--coral)">→</span> GDPR Compliance Checklist for AI-Powered Businesses</a>
+    <a href="https://openclawintelligence.com/resources/business-automation-roadmap" style="display:block;padding:8px 0;color:var(--t2);text-decoration:none;font-size:14px"><span style="color:var(--coral)">→</span> From Manual to Autonomous: Business Automation Roadmap</a>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h3>Need help with AI compliance?</h3>
+    <p>OpenClaw Intelligence helps businesses deploy AI agents with full GDPR compliance, proper DPA coverage, and robust data governance.</p>
+    <a href="#">Book a Free Discovery Call →</a>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <p style="font-size:12px;color:var(--t3);margin-top:32px;text-align:center;line-height:1.6"><em>This guide is for reference purposes only and does not constitute legal advice. Consult a qualified data protection professional for compliance guidance specific to your use cases.</em></p>
+
+</div>
+
+<footer class="footer">
+  <p>© 2026 OpenCla

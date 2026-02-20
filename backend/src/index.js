@@ -54,6 +54,14 @@ function authRequired(req, res, next) {
   }
 }
 
+
+function adminRequired(req, res, next) {
+  if (req.user?.role !== 'admin') {
+    return res.status(403).json({ ok: false, message: 'Forbidden' });
+  }
+  next();
+}
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -212,33 +220,43 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ message: 'First name, last name, email, and message are required.' });
     }
 
+    const ticketRes = await pool.query('SELECT MAX(ticket_id) AS max_id FROM contacts');
+    const nextTicket = Math.max(1000, (ticketRes.rows?.[0]?.max_id || 999) + 1);
+
     await pool.query(
-      'INSERT INTO contacts (first_name,last_name,email,company,size,message,created_at) VALUES ($1,$2,$3,$4,$5,$6,now())',
-      [firstName, lastName, email, company, size, message]
+      'INSERT INTO contacts (ticket_id,first_name,last_name,email,company,size,message,created_at) VALUES ($1,$2,$3,$4,$5,$6,$7,now())',
+      [nextTicket, firstName, lastName, email, company, size, message]
     );
 
     const cfg = loadConfig();
     const vars = {
+      ticket_id: String(nextTicket).padStart(4, '0'),
       first_name: firstName,
+      last_name: lastName,
+      email,
+      company: company || '—',
+      size: size || '—',
       message,
       dashboard_url: 'https://openclawintelligence.com',
       privacy_url: 'https://openclawintelligence.com/privacy',
       terms_url: 'https://openclawintelligence.com/terms'
     };
 
-    if (cfg.template_contact_id) {
+    if (cfg.template_contact_received_id) {
       await sendTemplate({
-        templateId: cfg.template_contact_id,
+        templateId: cfg.template_contact_received_id,
         toEmail: email,
         toName: firstName,
         fromEmail: cfg.from_email,
         fromName: 'OpenClaw Intelligence',
         variables: vars
       });
+    }
 
+    if (cfg.template_contact_internal_id) {
       await sendTemplate({
-        templateId: cfg.template_contact_id,
-        toEmail: cfg.from_email,
+        templateId: cfg.template_contact_internal_id,
+        toEmail: 'support@openclawintelligence.com',
         toName: 'Support',
         fromEmail: cfg.from_email,
         fromName: 'OpenClaw Intelligence',
@@ -246,17 +264,23 @@ app.post('/api/contact', async (req, res) => {
       });
     }
 
-    return res.json({ ok: true });
+    return res.json({ ok: true, ticket_id: String(nextTicket).padStart(4, '0') });
   } catch (err) {
     console.error('Contact submission error:', err);
     return res.status(500).json({ message: 'Server error. Please try again.' });
   }
 });
 
-function generateOrderId() {
+async function generateOrderId(pool) {
   const year = new Date().getFullYear();
-  const rand = Math.floor(10000 + Math.random() * 90000);
-  return `OCI-${year}-${rand}`;
+  const prefix = `OCI-${year}-`;
+  const res = await pool.query(
+    "SELECT MAX(CAST(SPLIT_PART(order_id, '-', 3) AS INT)) AS max_id FROM orders WHERE order_id LIKE $1",
+    [`${prefix}%`]
+  );
+  const maxId = res.rows?.[0]?.max_id || 0;
+  const nextId = Math.max(1000, maxId + 1);
+  return `${prefix}${nextId}`;
 }
 
 function buildIcs({ title, description, startIso, endIso, location }) {
@@ -305,7 +329,7 @@ app.post('/api/order', async (req, res) => {
       return res.status(400).json({ ok: false, message: 'First name, last name, email, and plan are required.' });
     }
 
-    const orderId = generateOrderId();
+    const orderId = await generateOrderId(pool);
     await pool.query(
       'INSERT INTO orders (order_id,plan,billing_cycle,agents,currency,subtotal,vat,total,payment_method,first_name,last_name,email,company,vat_number,country,city,meeting_date,meeting_time,created_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,now())',
       [orderId, plan, billingCycle, Array.isArray(agents) ? agents : [], currency, subtotal, vat, total, paymentMethod, firstName, lastName, email, company, vatNumber, country, city, meetingDate || null, meetingTime || null]
@@ -391,6 +415,40 @@ app.get('/api/dashboard/summary', authRequired, async (req, res) => {
     });
   } catch (err) {
     console.error('dashboard summary error', err);
+    return res.status(500).json({ ok: false });
+  }
+});
+
+// Admin endpoints
+app.get('/api/admin/users', authRequired, adminRequired, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT u.id,u.first_name,u.last_name,u.email,u.company,u.industry,u.company_size,u.created_at,
+              COALESCE(SUM(o.total),0) AS total_spent
+       FROM users u
+       LEFT JOIN orders o ON o.email = u.email
+       GROUP BY u.id
+       ORDER BY u.created_at DESC
+       LIMIT 200`
+    );
+    return res.json({ ok: true, users: rows });
+  } catch (err) {
+    console.error('admin users error', err);
+    return res.status(500).json({ ok: false });
+  }
+});
+
+app.get('/api/admin/contacts', authRequired, adminRequired, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT ticket_id,first_name,last_name,email,company,size,message,created_at
+       FROM contacts
+       ORDER BY created_at DESC
+       LIMIT 200`
+    );
+    return res.json({ ok: true, contacts: rows });
+  } catch (err) {
+    console.error('admin contacts error', err);
     return res.status(500).json({ ok: false });
   }
 });

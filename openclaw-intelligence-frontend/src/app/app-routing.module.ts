@@ -5,6 +5,13 @@ import { ServicesComponent } from './pages/services/services.component';
 import { SaasComponent } from './pages/saas/saas.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
 import { KnowledgeBaseComponent } from './pages/knowledge-base/knowledge-base.component';
+import { ResourcesComponent } from './pages/resources/resources.component';
+import { AiDpaComplianceGuideComponent } from './pages/ai-dpa-compliance-guide/ai-dpa-compliance-guide.component';
+import { BuildAiAgentBusinessComponent } from './pages/build-ai-agent-business/build-ai-agent-business.component';
+import { AiAutomationRoiComponent } from './pages/ai-automation-roi/ai-automation-roi.component';
+import { AiAgentOrchestrationComponent } from './pages/ai-agent-orchestration/ai-agent-orchestration.component';
+import { GdprAiComplianceChecklistComponent } from './pages/gdpr-ai-compliance-checklist/gdpr-ai-compliance-checklist.component';
+import { BusinessAutomationRoadmapComponent } from './pages/business-automation-roadmap/business-automation-roadmap.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { OrderComponent } from './pages/order/order.component';
 import { SignupComponent } from './pages/signup/signup.component';
@@ -22,7 +29,14 @@ const routes: Routes = [
   { path: 'services', component: ServicesComponent },
   { path: 'saas', component: SaasComponent },
   { path: 'pricing', component: PricingComponent },
-  { path: 'knowledge-base', component: KnowledgeBaseComponent },
+  { path: 'knowledge-base', redirectTo: 'resources', pathMatch: 'full' },
+  { path: 'resources', component: ResourcesComponent },
+  { path: 'resources/ai-dpa-compliance-guide', component: AiDpaComplianceGuideComponent },
+  { path: 'resources/build-ai-agent-business', component: BuildAiAgentBusinessComponent },
+  { path: 'resources/ai-automation-roi', component: AiAutomationRoiComponent },
+  { path: 'resources/ai-agent-orchestration', component: AiAgentOrchestrationComponent },
+  { path: 'resources/gdpr-ai-compliance-checklist', component: GdprAiComplianceChecklistComponent },
+  { path: 'resources/business-automation-roadmap', component: BusinessAutomationRoadmapComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'order', component: OrderComponent },
   { path: 'signup', component: SignupComponent },
