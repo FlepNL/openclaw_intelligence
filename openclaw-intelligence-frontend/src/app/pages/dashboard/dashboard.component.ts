@@ -120,10 +120,11 @@ export class DashboardComponent implements AfterViewInit {
             const dateObj = new Date(m.date);
             const day = dateObj.getDate();
             const month = dateObj.toLocaleDateString('en', { month: 'short' });
+            const formattedDate = dateObj.toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' });
             return `
             <div class="meeting-card">
               <div class="meeting-date"><div class="day">${day}</div><div class="month">${month}</div></div>
-              <div class="meeting-info"><h4>${m.title}</h4><p>${m.time} · ${m.date}</p></div>
+              <div class="meeting-info"><h4>${m.title}</h4><p>${m.time} · ${formattedDate}</p></div>
               <div class="meeting-actions"><button class="btn-sm btn-ghost">Reschedule</button></div>
             </div>`;
           }).join('');
