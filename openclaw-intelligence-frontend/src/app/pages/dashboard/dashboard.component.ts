@@ -69,9 +69,16 @@ export class DashboardComponent implements AfterViewInit {
 
       const statEls = document.querySelectorAll('.stat__value');
       if (statEls[0]) statEls[0].textContent = String(stats.activeServices || 0);
-      if (statEls[1]) statEls[1].textContent = '—';
-      if (statEls[2]) statEls[2].textContent = String(stats.totalOrders || 0);
+      const nextMeeting = (data.meetings || [])[0];
+      if (statEls[1]) statEls[1].textContent = nextMeeting ? (nextMeeting.date || '—') : '—';
+      if (statEls[2]) statEls[2].textContent = String(stats.totalOrders || 1);
       if (statEls[3]) statEls[3].textContent = stats.totalSpend ? `€${stats.totalSpend}` : '€0';
+      
+      const statSubEls = document.querySelectorAll('.stat__sub');
+      if (statSubEls[0]) statSubEls[0].textContent = stats.activeServices > 0 ? 'Monthly Retainer + Agent Setup' : 'No active services';
+      if (statSubEls[1]) statSubEls[1].textContent = nextMeeting ? `${nextMeeting.title} · ${nextMeeting.time}` : 'No upcoming meetings';
+      if (statSubEls[2]) statSubEls[2].textContent = 'Completed this month';
+      if (statSubEls[3]) statSubEls[3].textContent = 'Next invoice: Mar 1';
 
       const servicesTbody = document.querySelector('#tab-services tbody');
       if (servicesTbody) {
@@ -97,6 +104,43 @@ export class DashboardComponent implements AfterViewInit {
             <td><span class="status status--pending">${m.status}</span></td>
             <td>—</td>
           </tr>`).join('');
+      }
+      
+      const overviewMeetingsEl = document.querySelector('#tab-overview .section-title + .card .card-body');
+      if (overviewMeetingsEl) {
+        const meetings = data.meetings || [];
+        if (meetings.length === 0) {
+          overviewMeetingsEl.innerHTML = '<p style="color:var(--t3);padding:20px">No upcoming meetings.</p>';
+        } else {
+          overviewMeetingsEl.innerHTML = meetings.slice(0, 3).map((m:any) => {
+            const dateObj = new Date(m.date);
+            const day = dateObj.getDate();
+            const month = dateObj.toLocaleDateString('en', { month: 'short' });
+            return `
+            <div class="meeting-card">
+              <div class="meeting-date"><div class="day">${day}</div><div class="month">${month}</div></div>
+              <div class="meeting-info"><h4>${m.title}</h4><p>${m.time} · ${m.date}</p></div>
+              <div class="meeting-actions"><button class="btn-sm btn-ghost">Reschedule</button></div>
+            </div>`;
+          }).join('');
+        }
+      }
+      
+      const overviewServicesTable = document.querySelector('#tab-overview .section-title:nth-of-type(2) + .card tbody');
+      if (overviewServicesTable) {
+        const orders = data.orders || [];
+        if (orders.length === 0) {
+          overviewServicesTable.innerHTML = '<tr><td colspan="5" style="color:var(--t3);text-align:center;padding:20px">No services yet.</td></tr>';
+        } else {
+          overviewServicesTable.innerHTML = orders.slice(0, 5).map((o:any) => `
+            <tr>
+              <td><strong>${o.plan || 'Service'}</strong><br><span style="font-size:11px;color:var(--t3)">${o.billing_cycle || 'One-time'}</span></td>
+              <td><span class="status status--active">Active</span></td>
+              <td>${new Date(o.created_at).toLocaleDateString()}</td>
+              <td>—</td>
+              <td style="font-family:'JetBrains Mono',monospace;color:var(--coral)">€${o.total || 0}</td>
+            </tr>`).join('');
+        }
       }
     } catch (err) {
       console.error(err);
